@@ -1,6 +1,8 @@
 import { pick } from "lodash";
-import { Module, IModule } from "./core";
-import { ICreateParams, ModuleType, createModule } from "./modules";
+import { IModule, IAnyAudioContext, getContext } from "./core";
+import { AnyModule, ICreateParams, ModuleType, createModule } from "./modules";
+import { OfflineAudioContext } from "standardized-audio-context";
+import { Startable } from "./core/Module";
 
 interface IUpdateModule<T extends ModuleType> {
   id: string;
@@ -9,11 +11,15 @@ interface IUpdateModule<T extends ModuleType> {
 }
 
 export class Engine {
+  context: IAnyAudioContext;
+  isStarted: boolean = false;
+
   modules: {
-    [Identifier: string]: Module<ModuleType>;
+    [Identifier: string]: AnyModule;
   };
 
   constructor() {
+    this.context = getContext();
     this.modules = {};
   }
 
@@ -40,6 +46,45 @@ export class Engine {
 
   removeModule(id: string) {
     delete this.modules[id];
+  }
+
+  connect(outputModuleId: string, inputModuleId: string) {
+    const output = this.findModule(outputModuleId);
+    const input = this.findModule(inputModuleId);
+
+    output.connect(input);
+  }
+
+  async start(time?: number) {
+    await this.resume();
+
+    time ??= this.context.currentTime;
+    this.isStarted = true;
+
+    Object.values(this.modules).forEach((m) => {
+      const module = m as unknown as Startable;
+      if (!module.start) return;
+
+      module.start(time);
+    });
+  }
+
+  stop(time?: number) {
+    time ??= this.context.currentTime;
+    this.isStarted = false;
+
+    Object.values(this.modules).forEach((m) => {
+      const module = m as unknown as Startable;
+      if (!module.stop) return;
+
+      module.stop(time);
+    });
+  }
+
+  async resume() {
+    if (this.context instanceof OfflineAudioContext) return;
+
+    return await this.context.resume();
   }
 
   findModule(id: string) {

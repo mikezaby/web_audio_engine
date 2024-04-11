@@ -1,8 +1,16 @@
 {
-  "name": "blibliki-raw-engine",
-  "private": true,
-  "version": "0.1.0",
+  "name": "dd-audio-engine",
+  "version": "0.1.2",
   "type": "module",
+  "source": "src/index.ts",
+  "main": "dist/index.umd.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "README.md",
+    "src",
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -18,10 +26,12 @@
     "eslint": "^8.57.0",
     "prettier": "^3.2.5",
     "typescript": "^5.2.2",
-    "vite": "^5.1.6"
+    "vite": "^5.1.6",
+    "vite-plugin-dts": "^3.8.3"
   },
   "dependencies": {
     "lodash": "^4.17.21",
+    "standardized-audio-context": "^25.3.70",
     "uuid": "^9.0.1"
   }
 }
