@@ -1,8 +1,8 @@
 import { assertNever } from "../utils";
-import Oscillator, { IOscillator, IOscillatorProps } from "./Oscillator";
-import Volume, { IVolume, IVolumeProps } from "./Volume";
-import Master, { IMaster, IMasterProps } from "./Master";
-import { IAnyAudioContext } from "../core";
+import Oscillator, { IOscillatorProps } from "./Oscillator";
+import Volume, { IVolumeProps } from "./Volume";
+import Master, { IMasterProps } from "./Master";
+import { IAnyAudioContext, IModule, Module } from "../core";
 
 export enum ModuleType {
   Master = "Master",
@@ -16,8 +16,8 @@ export interface ModuleTypeToPropsMapping {
   [ModuleType.Master]: IMasterProps;
 }
 
-export type AnyModule = Oscillator | Volume | Master;
-export type IAnyModule = IOscillator | IVolume | IMaster;
+export type AnyModule = Module<ModuleType>;
+export type IAnyModule = IModule<ModuleType>;
 
 export interface ICreateParams<T extends ModuleType> {
   id?: string;

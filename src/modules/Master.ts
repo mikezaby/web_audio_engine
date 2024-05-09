@@ -18,5 +18,7 @@ export default class Master extends Module<ModuleType.Master> {
     const audioNode = context.destination;
 
     super(context, { ...params, audioNode, props });
+
+    this.registerDefaultIOs("in");
   }
 }

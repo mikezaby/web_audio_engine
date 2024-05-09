@@ -16,6 +16,8 @@ export default class Oscillator
   implements IOscillatorProps, Startable
 {
   declare audioNode: OscillatorNode;
+  isStated: boolean = false;
+  detuneGain!: GainNode;
 
   constructor(
     context: IAnyAudioContext,
@@ -28,8 +30,11 @@ export default class Oscillator
       ...params,
       props,
       audioNode,
-      moduleType: ModuleType.Oscillator,
     });
+
+    this.initializeGainDetune();
+    this.registerInputs();
+    this.registerDefaultIOs("out");
   }
 
   set wave(value: IOscillatorProps["wave"]) {
@@ -41,16 +46,33 @@ export default class Oscillator
   }
 
   start(time: number) {
+    if (this.isStated) return;
+
+    this.isStated = true;
     this.audioNode.start(time);
   }
 
   stop(time: number) {
     this.audioNode.stop(time);
+    this.rePlugAll(() => {
+      this.audioNode = new OscillatorNode(this.context, {
+        type: this.props["wave"],
+        frequency: this.props["frequency"],
+      });
+    });
 
-    // After stop we create new oscillator as we cant start again the same oscillator
-    this.audioNode = new OscillatorNode(this.context, {
-      type: this.props["wave"],
-      frequency: this.props["frequency"],
+    this.isStated = false;
+  }
+
+  private initializeGainDetune() {
+    this.detuneGain = new GainNode(this.context, { gain: 100 });
+    this.detuneGain.connect(this.audioNode.detune);
+  }
+
+  private registerInputs() {
+    this.registerAudioInput({
+      name: "detune",
+      getAudioNode: () => this.detuneGain,
     });
   }
 }

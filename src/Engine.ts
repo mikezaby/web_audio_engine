@@ -1,7 +1,13 @@
 import { pick } from "lodash";
-import { IModule, IAnyAudioContext } from "./core";
+import {
+  IAnyAudioContext,
+  IModuleSerialize,
+  Startable,
+  IRoute,
+  Routes,
+} from "./core";
 import { AnyModule, ICreateParams, ModuleType, createModule } from "./modules";
-import { Startable } from "./core/Module";
+import { Optional } from "./utils/types";
 
 interface IUpdateModule<T extends ModuleType> {
   id: string;
@@ -12,6 +18,7 @@ interface IUpdateModule<T extends ModuleType> {
 export class Engine {
   context: IAnyAudioContext;
   isStarted: boolean = false;
+  routes: Routes;
 
   modules: {
     [Identifier: string]: AnyModule;
@@ -19,6 +26,7 @@ export class Engine {
 
   constructor(context: IAnyAudioContext) {
     this.context = context;
+    this.routes = new Routes(this);
     this.modules = {};
   }
 
@@ -26,7 +34,7 @@ export class Engine {
     const module = createModule<T>(this.context, params);
     this.modules[module.id] = module;
 
-    return module.serialize() as IModule<T>;
+    return module.serialize() as IModuleSerialize<T>;
   }
 
   updateModule<T extends ModuleType>(params: IUpdateModule<T>) {
@@ -40,18 +48,19 @@ export class Engine {
     const updates = pick(params.changes, ["name", "props"]);
     Object.assign(module, updates);
 
-    return module.serialize() as IModule<T>;
+    return module.serialize() as IModuleSerialize<T>;
   }
 
   removeModule(id: string) {
     delete this.modules[id];
   }
 
-  connect(outputModuleId: string, inputModuleId: string) {
-    const output = this.findModule(outputModuleId);
-    const input = this.findModule(inputModuleId);
+  addRoute(props: Optional<IRoute, "id">) {
+    this.routes.addRoute(props);
+  }
 
-    output.connect(input);
+  remoteRoute(id: string) {
+    this.routes.removeRoute(id);
   }
 
   async start(time?: number) {
@@ -89,5 +98,10 @@ export class Engine {
     if (!module) throw Error(`The module with id ${id} is not exists`);
 
     return module;
+  }
+
+  findIO(moduleId: string, ioName: string, type: "input" | "output") {
+    const module = this.findModule(moduleId);
+    return module[`${type}s`].findByName(ioName);
   }
 }

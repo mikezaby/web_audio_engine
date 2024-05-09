@@ -4,16 +4,22 @@ import { ModuleType } from "./modules";
 const context = new AudioContext();
 const engine = new Engine(context);
 
-let osc = engine.addModule({
+const osc = engine.addModule({
   name: "osc",
   moduleType: ModuleType.Oscillator,
-  props: { wave: "sine", frequency: 200 },
+  props: { wave: "sine", frequency: 440 },
 });
 
-let vol = engine.addModule({
+const lfo = engine.addModule({
+  name: "osc",
+  moduleType: ModuleType.Oscillator,
+  props: { wave: "sine", frequency: 2 },
+});
+
+const vol = engine.addModule({
   name: "vol",
   moduleType: ModuleType.Volume,
-  props: { volume: 100 },
+  props: { volume: 0.01 },
 });
 
 const master = engine.addModule({
@@ -22,19 +28,18 @@ const master = engine.addModule({
   props: {},
 });
 
-osc = engine.updateModule({
-  id: osc.id,
-  moduleType: osc.moduleType,
-  changes: { props: { frequency: 440 } },
+engine.addRoute({
+  source: { moduleId: osc.id, ioName: "out" },
+  destination: { moduleId: vol.id, ioName: "in" },
 });
-vol = engine.updateModule({
-  id: vol.id,
-  moduleType: vol.moduleType,
-  changes: { props: { volume: 0.01 } },
+engine.addRoute({
+  source: { moduleId: lfo.id, ioName: "out" },
+  destination: { moduleId: osc.id, ioName: "detune" },
 });
-
-engine.connect(osc.id, vol.id);
-engine.connect(vol.id, master.id);
+engine.addRoute({
+  source: { moduleId: vol.id, ioName: "out" },
+  destination: { moduleId: master.id, ioName: "in" },
+});
 
 declare global {
   interface Window {
@@ -45,24 +50,14 @@ declare global {
 window.toggle = async () => {
   if (engine.isStarted) {
     engine.stop();
-    // This is temporary, we will implement a automate solution for this
-    engine.connect(osc.id, vol.id);
   } else {
     await engine.start();
   }
 };
 
-setInterval(() => {
-  osc = engine.updateModule({
-    id: osc.id,
-    moduleType: osc.moduleType,
-    changes: { props: { frequency: 2000 * Math.random() } },
-  });
-}, 1000);
-
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-  <div>
-    Hello Web Audio
-    <button onclick="toggle()">toggle</button>
-  </div>
+<div>
+  Hello Web Audio
+  <button onclick="toggle()">toggle</button>
+</div>
 `;

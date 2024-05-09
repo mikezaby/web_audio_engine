@@ -27,11 +27,20 @@ export default class Volume
       ...params,
       audioNode,
       props,
-      moduleType: ModuleType.Volume,
     });
+
+    this.registerDefaultIOs();
+    this.registerAdditionalInputs();
   }
 
   set volume(value: IVolumeProps["volume"]) {
     this.audioNode.gain.value = value;
+  }
+
+  private registerAdditionalInputs() {
+    this.registerAudioInput({
+      name: "volume",
+      getAudioNode: () => this.audioNode.gain,
+    });
   }
 }
