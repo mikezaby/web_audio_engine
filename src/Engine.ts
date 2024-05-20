@@ -1,16 +1,11 @@
 import { pick } from "lodash";
 import { Module, IModule } from "./core";
-import {
-  IChildParams,
-  ICreateParams,
-  ModuleType,
-  createModule,
-} from "./modules";
+import { ICreateParams, ModuleType, createModule } from "./modules";
 
 interface IUpdateModule<T extends ModuleType> {
   id: string;
   moduleType: T;
-  changes: Partial<Omit<IChildParams<T>, "id">>;
+  changes: Partial<Omit<ICreateParams<T>, "id" | "moduleType">>;
 }
 
 class Engine {
@@ -31,8 +26,8 @@ class Engine {
     this.modules = {};
   }
 
-  addModule<T extends ModuleType>(params: ICreateParams) {
-    const module = createModule(params);
+  addModule<T extends ModuleType>(params: ICreateParams<T>) {
+    const module = createModule<T>(params);
     this.modules[module.id] = module;
 
     return module.serialize() as IModule<T>;
