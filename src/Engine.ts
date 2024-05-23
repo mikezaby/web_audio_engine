@@ -8,19 +8,10 @@ interface IUpdateModule<T extends ModuleType> {
   changes: Partial<Omit<ICreateParams<T>, "id" | "moduleType">>;
 }
 
-class Engine {
-  private static instance: Engine;
+export class Engine {
   modules: {
     [Identifier: string]: Module<ModuleType>;
   };
-
-  public static getInstance(): Engine {
-    if (!Engine.instance) {
-      Engine.instance = new Engine();
-    }
-
-    return Engine.instance;
-  }
 
   constructor() {
     this.modules = {};
@@ -58,5 +49,3 @@ class Engine {
     return module;
   }
 }
-
-export default Engine.getInstance();
