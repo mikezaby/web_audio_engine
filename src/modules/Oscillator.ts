@@ -1,4 +1,3 @@
-import { OscillatorNode } from "standardized-audio-context";
 import { ICreateParams, ModuleType } from ".";
 import { IAnyAudioContext } from "../core";
 import Module, { IModule, Startable } from "../core/Module";
@@ -16,14 +15,21 @@ export default class Oscillator
   extends Module<ModuleType.Oscillator>
   implements IOscillatorProps, Startable
 {
-  declare audioNode: OscillatorNode<IAnyAudioContext>;
+  declare audioNode: OscillatorNode;
 
-  constructor(params: ICreateParams<ModuleType.Oscillator>) {
+  constructor(
+    context: IAnyAudioContext,
+    params: ICreateParams<ModuleType.Oscillator>,
+  ) {
     const props = { ...DEFAULT_PROPS, ...params.props };
-    const audioNode = (context: IAnyAudioContext) =>
-      new OscillatorNode(context);
+    const audioNode = new OscillatorNode(context);
 
-    super({ ...params, props, audioNode, moduleType: ModuleType.Oscillator });
+    super(context, {
+      ...params,
+      props,
+      audioNode,
+      moduleType: ModuleType.Oscillator,
+    });
   }
 
   set wave(value: IOscillatorProps["wave"]) {

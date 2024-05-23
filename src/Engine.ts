@@ -1,7 +1,6 @@
 import { pick } from "lodash";
-import { IModule, IAnyAudioContext, getContext } from "./core";
+import { IModule, IAnyAudioContext } from "./core";
 import { AnyModule, ICreateParams, ModuleType, createModule } from "./modules";
-import { OfflineAudioContext } from "standardized-audio-context";
 import { Startable } from "./core/Module";
 
 interface IUpdateModule<T extends ModuleType> {
@@ -18,13 +17,13 @@ export class Engine {
     [Identifier: string]: AnyModule;
   };
 
-  constructor() {
-    this.context = getContext();
+  constructor(context: IAnyAudioContext) {
+    this.context = context;
     this.modules = {};
   }
 
   addModule<T extends ModuleType>(params: ICreateParams<T>) {
-    const module = createModule<T>(params);
+    const module = createModule<T>(this.context, params);
     this.modules[module.id] = module;
 
     return module.serialize() as IModule<T>;
@@ -82,8 +81,6 @@ export class Engine {
   }
 
   async resume() {
-    if (this.context instanceof OfflineAudioContext) return;
-
     return await this.context.resume();
   }
 

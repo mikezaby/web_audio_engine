@@ -8,9 +8,6 @@ dependencies:
   lodash:
     specifier: ^4.17.21
     version: 4.17.21
-  standardized-audio-context:
-    specifier: ^25.3.70
-    version: 25.3.70
   uuid:
     specifier: ^9.0.1
     version: 9.0.1
@@ -68,13 +65,6 @@ packages:
     dependencies:
       '@babel/types': 7.24.0
     dev: true
-
-  /@babel/runtime@7.24.4:
-    resolution: {integrity: sha512-dkxf7+hn8mFBwKjs9bvBlArzLVxVbS8usaPUDd5p2a9JCL9tB8OaOVN1isD4+Xyk4ns89/xeOmbQvgdK7IIVdA==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      regenerator-runtime: 0.14.1
-    dev: false
 
   /@babel/types@7.24.0:
     resolution: {integrity: sha512-+j7a5c253RfKh8iABBhywc8NSfP5LURe7Uh4qpsh6jc+aLJguvmIUBdjSdEMQv2bENrCR5MfRdjGo7vzS/ob7w==}
@@ -852,14 +842,6 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /automation-events@7.0.4:
-    resolution: {integrity: sha512-uM5VFyhksP/GzzOuGi/ygeI16ked+IA5enGLH9b+BvxUSDnfAWC54RZnnem/iprEKtuWV29FX5gvYcesPAgPAw==}
-    engines: {node: '>=18.2.0'}
-    dependencies:
-      '@babel/runtime': 7.24.4
-      tslib: 2.6.2
-    dev: false
-
   /balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
     dev: true
@@ -1565,10 +1547,6 @@ packages:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
     dev: true
 
-  /regenerator-runtime@0.14.1:
-    resolution: {integrity: sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==}
-    dev: false
-
   /resolve-from@4.0.0:
     resolution: {integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==}
     engines: {node: '>=4'}
@@ -1678,14 +1656,6 @@ packages:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
     dev: true
 
-  /standardized-audio-context@25.3.70:
-    resolution: {integrity: sha512-v07apb+yDztoTrYu6aU4DZGbbO/gkcyC/P+u+SCalDFq+eUp5kbQYnxS8Z/6tA2Vnm/YslhVaR5VzsCYafg3BQ==}
-    dependencies:
-      '@babel/runtime': 7.24.4
-      automation-events: 7.0.4
-      tslib: 2.6.2
-    dev: false
-
   /string-argv@0.3.2:
     resolution: {integrity: sha512-aqD2Q0144Z+/RqG52NeHEkZauTAUWJO8c6yTftGJKO3Tja5tUgIfmIl6kExvhtxSDP7fXB6DvzkfMpCd/F3G+Q==}
     engines: {node: '>=0.6.19'}
@@ -1746,10 +1716,6 @@ packages:
     dependencies:
       typescript: 5.4.2
     dev: true
-
-  /tslib@2.6.2:
-    resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
-    dev: false
 
   /type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}

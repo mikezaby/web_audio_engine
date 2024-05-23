@@ -2,6 +2,7 @@ import { assertNever } from "../utils";
 import Oscillator, { IOscillator, IOscillatorProps } from "./Oscillator";
 import Volume, { IVolume, IVolumeProps } from "./Volume";
 import Master, { IMaster, IMasterProps } from "./Master";
+import { IAnyAudioContext } from "../core";
 
 export enum ModuleType {
   Master = "Master",
@@ -26,15 +27,19 @@ export interface ICreateParams<T extends ModuleType> {
 }
 
 export function createModule<T extends ModuleType>(
+  context: IAnyAudioContext,
   params: ICreateParams<T>,
 ): AnyModule {
   switch (params.moduleType) {
     case ModuleType.Oscillator:
-      return new Oscillator(params as ICreateParams<ModuleType.Oscillator>);
+      return new Oscillator(
+        context,
+        params as ICreateParams<ModuleType.Oscillator>,
+      );
     case ModuleType.Volume:
-      return new Volume(params as ICreateParams<ModuleType.Volume>);
+      return new Volume(context, params as ICreateParams<ModuleType.Volume>);
     case ModuleType.Master:
-      return new Master(params as ICreateParams<ModuleType.Master>);
+      return new Master(context, params as ICreateParams<ModuleType.Master>);
     default:
       assertNever(params.moduleType);
   }

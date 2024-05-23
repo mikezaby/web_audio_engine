@@ -1,2 +1,2 @@
-export { default } from "./Engine";
+export { Engine } from "./Engine";
 export { ModuleType } from "./modules";

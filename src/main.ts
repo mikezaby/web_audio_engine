@@ -1,7 +1,8 @@
-import { Engine } from "./Engine";
+import { Engine } from ".";
 import { ModuleType } from "./modules";
 
-const engine = new Engine();
+const context = new AudioContext();
+const engine = new Engine(context);
 
 let osc = engine.addModule({
   name: "osc",

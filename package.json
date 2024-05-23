@@ -31,7 +31,6 @@
   },
   "dependencies": {
     "lodash": "^4.17.21",
-    "standardized-audio-context": "^25.3.70",
     "uuid": "^9.0.1"
   }
 }

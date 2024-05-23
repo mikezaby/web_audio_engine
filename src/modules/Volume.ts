@@ -1,4 +1,3 @@
-import { GainNode } from "standardized-audio-context";
 import { ICreateParams, ModuleType } from ".";
 import Module, { IModule } from "../core/Module";
 import { IAnyAudioContext } from "../core";
@@ -15,13 +14,21 @@ export default class Volume
   extends Module<ModuleType.Volume>
   implements IVolumeProps
 {
-  declare audioNode: GainNode<IAnyAudioContext>;
+  declare audioNode: GainNode;
 
-  constructor(params: ICreateParams<ModuleType.Volume>) {
+  constructor(
+    context: IAnyAudioContext,
+    params: ICreateParams<ModuleType.Volume>,
+  ) {
     const props = { ...DEFAULT_PROPS, ...params.props };
-    const audioNode = (context: IAnyAudioContext) => new GainNode(context);
+    const audioNode = new GainNode(context);
 
-    super({ ...params, audioNode, props, moduleType: ModuleType.Volume });
+    super(context, {
+      ...params,
+      audioNode,
+      props,
+      moduleType: ModuleType.Volume,
+    });
   }
 
   set volume(value: IVolumeProps["volume"]) {
