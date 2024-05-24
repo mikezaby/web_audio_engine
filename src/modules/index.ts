@@ -16,6 +16,10 @@ export interface ModuleTypeToPropsMapping {
   [ModuleType.Master]: IMasterProps;
 }
 
+export type { IOscillator } from "./Oscillator";
+export type { IVolume } from "./Volume";
+export type { IMaster } from "./Master";
+
 export type AnyModule = Module<ModuleType>;
 export type IAnyModule = IModule<ModuleType>;
 
