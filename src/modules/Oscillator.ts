@@ -59,6 +59,7 @@ export default class Oscillator
         type: this.props["wave"],
         frequency: this.props["frequency"],
       });
+      this.detuneGain.connect(this.audioNode.detune);
     });
 
     this.isStated = false;
