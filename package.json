@@ -1,6 +1,6 @@
 {
   "name": "blibliki",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "type": "module",
   "source": "src/index.ts",
   "main": "dist/index.umd.cjs",
