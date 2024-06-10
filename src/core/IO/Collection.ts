@@ -7,6 +7,12 @@ import {
   AudioOutputProps,
 } from "./AudioIO";
 import { Base, IOType } from "./Base";
+import {
+  MidiInput,
+  MidiInputProps,
+  MidiOutput,
+  MidiOutputProps,
+} from "./MidiIO";
 
 export enum CollectionType {
   Input = "Input",
@@ -14,8 +20,8 @@ export enum CollectionType {
 }
 
 interface IMappedIOProps {
-  [CollectionType.Input]: AudioInputProps;
-  [CollectionType.Output]: AudioOutputProps;
+  [CollectionType.Input]: AudioInputProps | MidiInputProps;
+  [CollectionType.Output]: AudioOutputProps | MidiOutputProps;
 }
 
 export default abstract class IOCollection<T extends CollectionType> {
@@ -28,8 +34,18 @@ export default abstract class IOCollection<T extends CollectionType> {
     this.module = module;
   }
 
-  add(props: IMappedIOProps[T]) {
-    let io: Base;
+  add<TT extends IMappedIOProps[T]>(
+    props: TT,
+  ): TT extends AudioInputProps
+    ? AudioInput
+    : TT extends AudioOutputProps
+      ? AudioOutput
+      : TT extends MidiInputProps
+        ? MidiInput
+        : TT extends MidiOutputProps
+          ? MidiOutput
+          : never {
+    let io: AudioInput | AudioOutput | MidiInput | MidiOutput;
     this.validateUniqName(props.name);
 
     switch (props.ioType) {
@@ -39,13 +55,20 @@ export default abstract class IOCollection<T extends CollectionType> {
       case IOType.AudioOutput:
         io = new AudioOutput(this.module, props);
         break;
+      case IOType.MidiInput:
+        io = new MidiInput(this.module, props);
+        break;
+      case IOType.MidiOutput:
+        io = new MidiOutput(this.module, props);
+        break;
       default:
         assertNever(props);
     }
 
     this.collection.push(io);
 
-    return io;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return
+    return io as any;
   }
 
   unPlugAll() {

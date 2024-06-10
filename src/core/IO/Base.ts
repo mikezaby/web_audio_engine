@@ -14,6 +14,8 @@ export interface IIOSerialize extends IOProps {
 export enum IOType {
   AudioInput = "audioInput",
   AudioOutput = "audioOutput",
+  MidiOutput = "midiOutput",
+  MidiInput = "midiInput",
 }
 
 export interface IIO extends IOProps {
