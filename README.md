@@ -5,3 +5,4 @@ This is the repository that keeps the code from the series of post about how to 
 - [Part 1](https://mikezaby.com/posts/web-audio-engine-part1)
 - [Part 2](https://mikezaby.com/posts/web-audio-engine-part2)
 - [Part 3](https://mikezaby.com/posts/web-audio-engine-part3)
+- [Part 4](https://mikezaby.com/posts/web-audio-engine-part4)
