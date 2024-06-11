@@ -5,3 +5,7 @@ export type IAnyAudioContext = AudioContext | OfflineAudioContext;
 
 export { Routes } from "./Route";
 export type { IRoute } from "./Route";
+
+export { default as MidiDeviceManager } from "./midi/MidiDeviceManager";
+
+export type { MidiOutput, MidiInput, AudioInput, AudioOutput } from "./IO";
