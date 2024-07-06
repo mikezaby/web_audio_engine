@@ -9,10 +9,10 @@ const EventType: { [key: number]: MidiEventType } = {
 export type MidiEventType = "noteOn" | "noteOff" | "cc";
 
 export default class MidiEvent {
-  note: Note;
+  note!: Note;
   voiceNo?: number;
   readonly triggeredAt: number;
-  _type: MidiEventType;
+  _type!: MidiEventType;
   private data: Uint8Array;
   private event: MIDIMessageEvent;
 
