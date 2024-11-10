@@ -55,7 +55,12 @@ window.toggle = async () => {
   }
 };
 
-document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
+const appEl = document.querySelector<HTMLDivElement>("#app");
+if (!appEl) {
+  throw Error("Application container #app not found");
+}
+
+appEl.innerHTML = `
 <div>
   Hello Web Audio
   <button onclick="toggle()">toggle</button>

@@ -2,12 +2,11 @@ import { ICreateParams, ModuleType } from ".";
 import { IAnyAudioContext } from "../core";
 import Module, { IModule, Startable } from "../core/Module";
 
-export interface IOscillator extends IModule<ModuleType.Oscillator> {}
-
-export interface IOscillatorProps {
+export type IOscillator = IModule<ModuleType.Oscillator>;
+export type IOscillatorProps = {
   wave: OscillatorType;
   frequency: number;
-}
+};
 
 const DEFAULT_PROPS: IOscillatorProps = { wave: "sine", frequency: 440 };
 

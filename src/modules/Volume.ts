@@ -2,11 +2,10 @@ import { ICreateParams, ModuleType } from ".";
 import Module, { IModule } from "../core/Module";
 import { IAnyAudioContext } from "../core";
 
-export interface IVolume extends IModule<ModuleType.Volume> {}
-
-export interface IVolumeProps {
+export type IVolume = IModule<ModuleType.Volume>;
+export type IVolumeProps = {
   volume: number;
-}
+};
 
 const DEFAULT_PROPS: IVolumeProps = { volume: 100 };
 

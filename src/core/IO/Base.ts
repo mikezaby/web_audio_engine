@@ -53,11 +53,15 @@ export abstract class Base implements IIO {
     this.unPlugAll();
     if (callback) callback();
 
-    connections.forEach((otherIO) => this.plug(otherIO));
+    connections.forEach((otherIO) => {
+      this.plug(otherIO);
+    });
   }
 
   unPlugAll() {
-    this.connections.forEach((otherIO) => this.unPlug(otherIO));
+    this.connections.forEach((otherIO) => {
+      this.unPlug(otherIO);
+    });
   }
 
   serialize(): IIOSerialize {
@@ -72,10 +76,6 @@ export abstract class Base implements IIO {
 
 export default abstract class IO<Connection extends Base> extends Base {
   declare connections: Connection[];
-
-  constructor(module: AnyModule, props: IOProps) {
-    super(module, props);
-  }
 
   plug(io: Connection, plugOther?: boolean): void {
     super.plug(io, plugOther);

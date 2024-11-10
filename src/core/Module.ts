@@ -28,6 +28,15 @@ export interface Startable {
   stop(time: number): void;
 }
 
+export function isStartable<T>(value: T): value is T & Startable {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    typeof (value as unknown as Startable).start === "function" &&
+    typeof (value as unknown as Startable).stop === "function"
+  );
+}
+
 interface IModuleConstructor<T extends ModuleType>
   extends Optional<IModule<T>, "id"> {
   audioNode: AudioNode;

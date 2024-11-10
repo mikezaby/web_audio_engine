@@ -1,13 +1,8 @@
 import { pick } from "lodash";
-import {
-  IAnyAudioContext,
-  IModuleSerialize,
-  Startable,
-  IRoute,
-  Routes,
-} from "./core";
+import { IAnyAudioContext, IModuleSerialize, IRoute, Routes } from "./core";
 import { AnyModule, ICreateParams, ModuleType, createModule } from "./modules";
 import { Optional } from "./utils/types";
+import { isStartable } from "./core/Module";
 
 interface IUpdateModule<T extends ModuleType> {
   id: string;
@@ -19,20 +14,17 @@ export class Engine {
   context: IAnyAudioContext;
   isStarted: boolean = false;
   routes: Routes;
-
-  modules: {
-    [Identifier: string]: AnyModule;
-  };
+  modules: Map<string, AnyModule>;
 
   constructor(context: IAnyAudioContext) {
     this.context = context;
     this.routes = new Routes(this);
-    this.modules = {};
+    this.modules = new Map();
   }
 
   addModule<T extends ModuleType>(params: ICreateParams<T>) {
     const module = createModule<T>(this.context, params);
-    this.modules[module.id] = module;
+    this.modules.set(module.id, module);
 
     return module.serialize() as IModuleSerialize<T>;
   }
@@ -52,7 +44,7 @@ export class Engine {
   }
 
   removeModule(id: string) {
-    delete this.modules[id];
+    this.modules.delete(id);
   }
 
   addRoute(props: Optional<IRoute, "id">) {
@@ -69,9 +61,8 @@ export class Engine {
     time ??= this.context.currentTime;
     this.isStarted = true;
 
-    Object.values(this.modules).forEach((m) => {
-      const module = m as unknown as Startable;
-      if (!module.start) return;
+    this.modules.forEach((module) => {
+      if (!isStartable(module)) return;
 
       module.start(time);
     });
@@ -81,20 +72,19 @@ export class Engine {
     time ??= this.context.currentTime;
     this.isStarted = false;
 
-    Object.values(this.modules).forEach((m) => {
-      const module = m as unknown as Startable;
-      if (!module.stop) return;
+    this.modules.forEach((module) => {
+      if (!isStartable(module)) return;
 
       module.stop(time);
     });
   }
 
   async resume() {
-    return await this.context.resume();
+    await this.context.resume();
   }
 
   findModule(id: string) {
-    const module = this.modules[id];
+    const module = this.modules.get(id);
     if (!module) throw Error(`The module with id ${id} is not exists`);
 
     return module;

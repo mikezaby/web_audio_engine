@@ -15,23 +15,23 @@ export interface IRoute {
 
 export class Routes {
   engine: Engine;
-  routes: { [key: string]: IRoute };
+  routes: Map<string, IRoute>;
 
   constructor(engine: Engine) {
     this.engine = engine;
-    this.routes = {};
+    this.routes = new Map();
   }
 
   addRoute(props: Optional<IRoute, "id">) {
     const id = props.id || uuidv4();
-    this.routes[id] = { ...props, id };
+    this.routes.set(id, { ...props, id });
 
     this.plug(id);
   }
 
   removeRoute(id: string) {
     this.unPlug(id);
-    delete this.routes[id];
+    this.routes.delete(id);
   }
 
   private plug(id: string) {
@@ -45,9 +45,10 @@ export class Routes {
   }
 
   private find(id: string): IRoute {
-    if (!this.routes[id]) throw Error(`Route with id ${id} not found`);
+    const route = this.routes.get(id);
+    if (!route) throw Error(`Route with id ${id} not found`);
 
-    return this.routes[id];
+    return route;
   }
 
   private getIOs(id: string) {

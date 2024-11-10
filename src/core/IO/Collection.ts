@@ -49,11 +49,11 @@ export default abstract class IOCollection<T extends CollectionType> {
   }
 
   unPlugAll() {
-    this.collection.forEach((io) => io.unPlugAll());
+    this.collection.forEach((io) => { io.unPlugAll(); });
   }
 
   rePlugAll(callback?: () => void) {
-    this.collection.forEach((io) => io.rePlugAll(callback));
+    this.collection.forEach((io) => { io.rePlugAll(callback); });
   }
 
   find(id: string) {

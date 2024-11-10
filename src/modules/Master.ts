@@ -1,10 +1,11 @@
 import { ICreateParams, ModuleType } from ".";
 import Module, { IModule } from "../core/Module";
 import { IAnyAudioContext } from "../core";
+import { EmptyObject } from "../utils/types";
 
-export interface IMaster extends IModule<ModuleType.Master> {}
+export type IMaster = IModule<ModuleType.Master>;
+export type IMasterProps = EmptyObject;
 
-export interface IMasterProps {}
 const DEFAULT_PROPS: IMasterProps = {};
 
 export default class Master extends Module<ModuleType.Master> {
