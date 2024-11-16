@@ -1,5 +1,5 @@
-import { AnyModule } from "../../modules";
-import { deterministicId } from "../../utils";
+import { AnyModule } from "@/modules";
+import { deterministicId } from "@/utils";
 
 export interface IOProps {
   name: string;

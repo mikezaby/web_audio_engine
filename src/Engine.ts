@@ -1,8 +1,13 @@
 import { pick } from "lodash";
-import { IAnyAudioContext, IModuleSerialize, IRoute, Routes } from "./core";
-import { AnyModule, ICreateParams, ModuleType, createModule } from "./modules";
-import { Optional } from "./utils/types";
-import { isStartable } from "./core/Module";
+import {
+  IAnyAudioContext,
+  IModuleSerialize,
+  IRoute,
+  Routes,
+  isStartable,
+} from "@/core";
+import { AnyModule, ICreateParams, ModuleType, createModule } from "@/modules";
+import { Optional } from "@/utils";
 
 interface IUpdateModule<T extends ModuleType> {
   id: string;

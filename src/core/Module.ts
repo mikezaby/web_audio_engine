@@ -1,5 +1,5 @@
-import { ModuleType, ModuleTypeToPropsMapping } from "../modules";
-import { Optional } from "../utils/types";
+import { ModuleType, ModuleTypeToPropsMapping } from "@/modules";
+import { Optional } from "@/utils";
 import { v4 as uuidv4 } from "uuid";
 import { IAnyAudioContext } from ".";
 import {

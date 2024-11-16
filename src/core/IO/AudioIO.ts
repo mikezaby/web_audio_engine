@@ -1,5 +1,5 @@
 import IO, { IOProps, IOType } from "./Base";
-import { AnyModule } from "../../modules";
+import { AnyModule } from "@/modules";
 
 export type AudioIO = AudioInput | AudioOutput;
 
