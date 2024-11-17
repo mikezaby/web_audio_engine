@@ -1,6 +1,5 @@
-import { v4 as uuidv4 } from "uuid";
 import { Engine } from "@/Engine";
-import { Optional } from "@/utils";
+import { Optional, uuidv4 } from "@/utils";
 
 interface IPlug {
   moduleId: string;

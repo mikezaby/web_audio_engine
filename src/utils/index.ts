@@ -6,3 +6,7 @@ export function assertNever(value: never, message?: string): never {
   message ??= "Not possible value";
   throw Error(message);
 }
+
+export function uuidv4() {
+  return crypto.randomUUID();
+}

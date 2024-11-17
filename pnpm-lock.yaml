@@ -14,9 +14,6 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
-      uuid:
-        specifier: ^11.0.3
-        version: 11.0.3
     devDependencies:
       '@eslint/js':
         specifier: ^9.14.0
@@ -1183,10 +1180,6 @@ packages:
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
-  uuid@11.0.3:
-    resolution: {integrity: sha512-d0z310fCWv5dJwnX1Y/MncBAqGMKEzlBb1AOf7z9K8ALnd0utBX/msg/fA0+sbyN1ihbMsLhrBlnl1ak7Wa0rg==}
-    hasBin: true
-
   vite-plugin-dts@4.3.0:
     resolution: {integrity: sha512-LkBJh9IbLwL6/rxh0C1/bOurDrIEmRE7joC+jFdOEEciAFPbpEKOLSAr5nNh5R7CJ45cMbksTrFfy52szzC5eA==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -2327,8 +2320,6 @@ snapshots:
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
-
-  uuid@11.0.3: {}
 
   vite-plugin-dts@4.3.0(rollup@4.25.0)(typescript@5.6.3)(vite@5.4.10):
     dependencies:
