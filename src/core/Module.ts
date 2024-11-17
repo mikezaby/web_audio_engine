@@ -1,6 +1,6 @@
+import { v4 as uuidv4 } from "uuid";
 import { ModuleType, ModuleTypeToPropsMapping } from "@/modules";
 import { Optional } from "@/utils";
-import { v4 as uuidv4 } from "uuid";
 import { IAnyAudioContext } from ".";
 import {
   AudioInputProps,

@@ -1,5 +1,5 @@
+import { IAnyAudioContext, IModule, Module } from "@/core";
 import { ICreateParams, ModuleType } from ".";
-import { Module, IModule, IAnyAudioContext } from "@/core";
 
 export type IVolume = IModule<ModuleType.Volume>;
 export type IVolumeProps = {

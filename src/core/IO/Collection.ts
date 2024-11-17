@@ -2,8 +2,8 @@ import { AnyModule } from "@/modules";
 import { assertNever } from "@/utils";
 import {
   AudioInput,
-  AudioOutput,
   AudioInputProps,
+  AudioOutput,
   AudioOutputProps,
 } from "./AudioIO";
 import { Base, IOType } from "./Base";

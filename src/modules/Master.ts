@@ -1,6 +1,6 @@
-import { ICreateParams, ModuleType } from ".";
-import { Module, IModule, IAnyAudioContext } from "@/core";
+import { IAnyAudioContext, IModule, Module } from "@/core";
 import { EmptyObject } from "@/utils";
+import { ICreateParams, ModuleType } from ".";
 
 export type IMaster = IModule<ModuleType.Master>;
 export type IMasterProps = EmptyObject;

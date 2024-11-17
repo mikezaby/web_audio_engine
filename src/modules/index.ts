@@ -1,8 +1,8 @@
+import { IAnyAudioContext, IModule, Module } from "@/core";
 import { assertNever } from "@/utils";
+import Master, { IMasterProps } from "./Master";
 import Oscillator, { IOscillatorProps } from "./Oscillator";
 import Volume, { IVolumeProps } from "./Volume";
-import Master, { IMasterProps } from "./Master";
-import { IAnyAudioContext, IModule, Module } from "@/core";
 
 export enum ModuleType {
   Master = "Master",

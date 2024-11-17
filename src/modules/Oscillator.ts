@@ -1,5 +1,5 @@
+import { IAnyAudioContext, IModule, Module, Startable } from "@/core";
 import { ICreateParams, ModuleType } from ".";
-import { Module, IModule, Startable, IAnyAudioContext } from "@/core";
 
 export type IOscillator = IModule<ModuleType.Oscillator>;
 export type IOscillatorProps = {
