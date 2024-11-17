@@ -16,7 +16,9 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint src",
-    "tsc": "tsc --noEmit"
+    "tsc": "tsc --noEmit",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check"
   },
   "devDependencies": {
     "@eslint/js": "^9.14.0",
