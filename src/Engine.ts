@@ -16,15 +16,37 @@ interface IUpdateModule<T extends ModuleType> {
 }
 
 export class Engine {
+  private static _current?: Engine;
+
   context: IAnyAudioContext;
   isStarted: boolean = false;
   routes: Routes;
   modules: Map<string, AnyModule>;
 
+  public static get current(): Engine {
+    if (!Engine._current) {
+      throw Error("There is not current engine");
+    }
+
+    return Engine._current;
+  }
+
+  public static set current(engine: Engine) {
+    Engine._current = engine;
+  }
+
+  public static get hasCurrent(): boolean {
+    return !!Engine._current;
+  }
+
   constructor(context: IAnyAudioContext) {
     this.context = context;
     this.routes = new Routes(this);
     this.modules = new Map();
+
+    if (!Engine.hasCurrent) {
+      Engine.current = this;
+    }
   }
 
   addModule<T extends ModuleType>(params: ICreateParams<T>) {
