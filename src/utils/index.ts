@@ -1,3 +1,5 @@
+import { Engine } from "@/Engine";
+
 export { deterministicId } from "./deterministicId";
 export type { AtLeast, Optional, EmptyObject } from "./types";
 
@@ -9,4 +11,8 @@ export function assertNever(value: never, message?: string): never {
 
 export function uuidv4() {
   return crypto.randomUUID();
+}
+
+export function now() {
+  return Engine.current.context.currentTime;
 }
