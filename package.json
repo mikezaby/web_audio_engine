@@ -1,6 +1,7 @@
 {
   "name": "blibliki",
   "version": "0.1.7",
+  "packageManager": "pnpm@9.12.3",
   "type": "module",
   "source": "src/index.ts",
   "main": "dist/index.umd.cjs",
@@ -35,7 +36,7 @@
   },
   "dependencies": {
     "crypto-js": "^4.2.0",
-    "lodash": "^4.17.21"
-  },
-  "packageManager": "pnpm@9.12.3"
+    "lodash": "^4.17.21",
+    "webmidi": "^3.1.12"
+  }
 }

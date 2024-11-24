@@ -5,6 +5,7 @@ import {
   IRoute,
   Routes,
   isStartable,
+  MidiDeviceManager,
 } from "@/core";
 import { AnyModule, ICreateParams, ModuleType, createModule } from "@/modules";
 import { Optional } from "@/utils";
@@ -16,15 +17,44 @@ interface IUpdateModule<T extends ModuleType> {
 }
 
 export class Engine {
+  private static _current?: Engine;
+
   context: IAnyAudioContext;
   isStarted: boolean = false;
   routes: Routes;
   modules: Map<string, AnyModule>;
 
+  private midiDeviceManager: MidiDeviceManager;
+
+  public static get current(): Engine {
+    if (!Engine._current) {
+      throw Error("There is not current engine");
+    }
+
+    return Engine._current;
+  }
+
+  public static set current(engine: Engine) {
+    Engine._current = engine;
+  }
+
+  public static get hasCurrent(): boolean {
+    return !!Engine._current;
+  }
+
   constructor(context: IAnyAudioContext) {
     this.context = context;
     this.routes = new Routes(this);
     this.modules = new Map();
+    this.midiDeviceManager = new MidiDeviceManager();
+
+    if (!Engine.hasCurrent) {
+      Engine.current = this;
+    }
+  }
+
+  async initialize() {
+    await this.midiDeviceManager.initialize();
   }
 
   addModule<T extends ModuleType>(params: ICreateParams<T>) {
@@ -98,5 +128,9 @@ export class Engine {
   findIO(moduleId: string, ioName: string, type: "input" | "output") {
     const module = this.findModule(moduleId);
     return module[`${type}s`].findByName(ioName);
+  }
+
+  findMidiDevice(id: string) {
+    return this.midiDeviceManager.find(id);
   }
 }
