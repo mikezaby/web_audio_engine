@@ -1,4 +1,5 @@
 import { IAnyAudioContext, IModule, Module, Startable } from "@/core";
+import Note from "@/core/Note";
 import { ICreateParams, ModuleType } from ".";
 
 export type IOscillator = IModule<ModuleType.Oscillator>;
@@ -62,6 +63,15 @@ export default class Oscillator
 
     this.isStated = false;
   }
+
+  triggerAttack = (note: Note, triggeredAt: number) => {
+    this.audioNode.frequency.value = note.frequency;
+    this.start(triggeredAt);
+  };
+
+  triggerRelease = () => {
+    // Do nothing
+  };
 
   private initializeGainDetune() {
     this.detuneGain = new GainNode(this.context, { gain: 100 });
