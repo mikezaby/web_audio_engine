@@ -1,3 +1,4 @@
+import { Engine } from "@/Engine";
 import { ModuleType, ModuleTypeToPropsMapping } from "@/modules";
 import { Optional, uuidv4 } from "@/utils";
 import { IAnyAudioContext } from ".";
@@ -120,5 +121,9 @@ export default abstract class Module<T extends ModuleType>
 
   protected registerAudioOutput(props: Omit<AudioOutputProps, "ioType">) {
     this.outputs.add({ ...props, ioType: IOType.AudioOutput });
+  }
+
+  protected get engine() {
+    return Engine.current;
   }
 }
