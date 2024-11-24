@@ -9,7 +9,11 @@ import {
   IOType,
   InputCollection,
   OutputCollection,
+  MidiInputProps,
+  MidiOutputProps,
 } from "./IO";
+import Note from "./Note";
+import MidiEvent, { MidiEventType } from "./midi/MidiEvent";
 
 export interface IModule<T extends ModuleType> {
   id: string;
@@ -39,7 +43,7 @@ export function isStartable<T>(value: T): value is T & Startable {
 
 interface IModuleConstructor<T extends ModuleType>
   extends Optional<IModule<T>, "id"> {
-  audioNode: AudioNode;
+  audioNode: AudioNode | undefined;
 }
 
 export default abstract class Module<T extends ModuleType>
@@ -49,7 +53,7 @@ export default abstract class Module<T extends ModuleType>
   name: string;
   moduleType: T;
   context: IAnyAudioContext;
-  audioNode: AudioNode;
+  audioNode: AudioNode | undefined;
   inputs: InputCollection;
   outputs: OutputCollection;
   protected _props!: ModuleTypeToPropsMapping[T];
@@ -99,28 +103,82 @@ export default abstract class Module<T extends ModuleType>
     this.outputs.unPlugAll();
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  triggerAttack = (_note: Note, _triggeredAt: number): void => {
+    throw Error("triggerAttack not implemented");
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  triggerRelease = (_note: Note, _triggeredAt: number): void => {
+    throw Error("triggerRelease not implemented");
+  };
+
+  onMidiEvent = (midiEvent: MidiEvent) => {
+    const { note, triggeredAt } = midiEvent;
+
+    switch (midiEvent.type) {
+      case MidiEventType.noteOn: {
+        this.triggerer(this.triggerAttack, note, triggeredAt);
+        break;
+      }
+      case MidiEventType.noteOff:
+        this.triggerer(this.triggerRelease, note, triggeredAt);
+        break;
+      default:
+        throw Error("This type is not a note");
+    }
+  };
+
+  private triggerer(
+    trigger: (note: Note, triggeredAt: number) => void,
+    note: Note | undefined,
+    triggeredAt: number,
+  ) {
+    if (!note) return;
+
+    trigger(note, triggeredAt);
+  }
+
   protected registerDefaultIOs(value: "both" | "in" | "out" = "both") {
+    this.registerMidiInput({
+      name: "midi in",
+      onMidiEvent: this.onMidiEvent,
+    });
+
+    if (!this.audioNode) return;
+
     if (value === "in" || value === "both") {
       this.registerAudioInput({
         name: "in",
-        getAudioNode: () => this.audioNode,
+        getAudioNode: () => this.audioNode!,
       });
     }
 
     if (value === "out" || value === "both") {
       this.registerAudioOutput({
         name: "out",
-        getAudioNode: () => this.audioNode,
+        getAudioNode: () => this.audioNode!,
       });
     }
   }
 
   protected registerAudioInput(props: Omit<AudioInputProps, "ioType">) {
-    this.inputs.add({ ...props, ioType: IOType.AudioInput });
+    return this.inputs.add({ ...props, ioType: IOType.AudioInput });
   }
 
   protected registerAudioOutput(props: Omit<AudioOutputProps, "ioType">) {
-    this.outputs.add({ ...props, ioType: IOType.AudioOutput });
+    return this.outputs.add({ ...props, ioType: IOType.AudioOutput });
+  }
+
+  protected registerMidiInput(props: Omit<MidiInputProps, "ioType">) {
+    return this.inputs.add({ ...props, ioType: IOType.MidiInput });
+  }
+
+  protected registerMidiOutput(props: Omit<MidiOutputProps, "ioType">) {
+    return this.outputs.add({
+      ...props,
+      ioType: IOType.MidiOutput,
+    });
   }
 
   protected get engine() {
