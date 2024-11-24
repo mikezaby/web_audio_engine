@@ -3,6 +3,13 @@ import { ModuleType } from "./modules";
 
 const context = new AudioContext();
 const engine = new Engine(context);
+await engine.initialize();
+
+const midiSelector = engine.addModule({
+  name: "midi selector",
+  moduleType: ModuleType.MidiSelector,
+  props: { selectedId: "1695389404" },
+});
 
 const osc = engine.addModule({
   name: "osc",
@@ -39,6 +46,10 @@ engine.addRoute({
 engine.addRoute({
   source: { moduleId: vol.id, ioName: "out" },
   destination: { moduleId: master.id, ioName: "in" },
+});
+engine.addRoute({
+  source: { moduleId: midiSelector.id, ioName: "midi out" },
+  destination: { moduleId: osc.id, ioName: "midi in" },
 });
 
 declare global {
