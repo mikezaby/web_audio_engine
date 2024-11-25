@@ -86,7 +86,7 @@ export class Engine {
     this.routes.addRoute(props);
   }
 
-  remoteRoute(id: string) {
+  removeRoute(id: string) {
     this.routes.removeRoute(id);
   }
 
