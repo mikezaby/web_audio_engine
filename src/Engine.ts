@@ -9,6 +9,7 @@ import {
 } from "@/core";
 import { AnyModule, ICreateParams, ModuleType, createModule } from "@/modules";
 import { Optional } from "@/utils";
+import Transport from "./core/Transport";
 
 interface IUpdateModule<T extends ModuleType> {
   id: string;
@@ -22,6 +23,7 @@ export class Engine {
   context: IAnyAudioContext;
   isStarted: boolean = false;
   routes: Routes;
+  transport: Transport;
   modules: Map<string, AnyModule>;
 
   private midiDeviceManager: MidiDeviceManager;
@@ -44,6 +46,7 @@ export class Engine {
 
   constructor(context: IAnyAudioContext) {
     this.context = context;
+    this.transport = new Transport(this);
     this.routes = new Routes(this);
     this.modules = new Map();
     this.midiDeviceManager = new MidiDeviceManager();
@@ -54,6 +57,7 @@ export class Engine {
   }
 
   async initialize() {
+    await this.resume();
     await this.midiDeviceManager.initialize();
   }
 
@@ -90,28 +94,16 @@ export class Engine {
     this.routes.removeRoute(id);
   }
 
-  async start(time?: number) {
-    await this.resume();
-
-    time ??= this.context.currentTime;
-    this.isStarted = true;
-
-    this.modules.forEach((module) => {
-      if (!isStartable(module)) return;
-
-      module.start(time);
-    });
+  start(props: { offset?: number; actionAt?: number }) {
+    this.transport.start(props);
   }
 
-  stop(time?: number) {
-    time ??= this.context.currentTime;
-    this.isStarted = false;
+  stop(props: { actionAt?: number }) {
+    this.transport.stop(props);
+  }
 
-    this.modules.forEach((module) => {
-      if (!isStartable(module)) return;
-
-      module.stop(time);
-    });
+  pause(props: { actionAt?: number }) {
+    this.transport.pause(props);
   }
 
   async resume() {
