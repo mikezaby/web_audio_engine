@@ -129,6 +129,13 @@ export default abstract class Module<T extends ModuleType>
     }
   };
 
+  start(): void {
+    this.onStart(); // Ensure this is always called
+  }
+
+  // Protected method that subclasses must override
+  protected abstract onStart(): void;
+
   private triggerer(
     trigger: (note: Note, triggeredAt: number) => void,
     note: Note | undefined,
