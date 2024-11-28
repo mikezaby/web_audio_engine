@@ -24,6 +24,13 @@ interface IMappedIOProps {
   [CollectionType.Output]: AudioOutputProps | MidiOutputProps;
 }
 
+interface IIOTypeTOClass {
+  [IOType.AudioInput]: AudioInput;
+  [IOType.AudioOutput]: AudioOutput;
+  [IOType.MidiInput]: MidiInput;
+  [IOType.MidiOutput]: MidiOutput;
+}
+
 export default abstract class IOCollection<T extends CollectionType> {
   module: AnyModule;
   collection: Base[] = [];
@@ -34,17 +41,7 @@ export default abstract class IOCollection<T extends CollectionType> {
     this.module = module;
   }
 
-  add<TT extends IMappedIOProps[T]>(
-    props: TT,
-  ): TT extends AudioInputProps
-    ? AudioInput
-    : TT extends AudioOutputProps
-      ? AudioOutput
-      : TT extends MidiInputProps
-        ? MidiInput
-        : TT extends MidiOutputProps
-          ? MidiOutput
-          : never {
+  add<TT extends IMappedIOProps[T]>(props: TT): IIOTypeTOClass[TT["ioType"]] {
     let io: AudioInput | AudioOutput | MidiInput | MidiOutput;
     this.validateUniqName(props.name);
 
@@ -67,8 +64,7 @@ export default abstract class IOCollection<T extends CollectionType> {
 
     this.collection.push(io);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return
-    return io as any;
+    return io as IIOTypeTOClass[TT["ioType"]];
   }
 
   unPlugAll() {
