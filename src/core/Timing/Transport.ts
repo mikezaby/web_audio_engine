@@ -1,3 +1,4 @@
+import Scheduler from "./Scheduler";
 import { now, realNow } from "./utils";
 
 export enum TransportState {
@@ -27,10 +28,12 @@ export default class Transport {
   private startTime: number = 0;
   private onStart: TransportProps["onStart"];
   private onStop: TransportProps["onStop"];
+  private scheduler: Scheduler;
 
   constructor(props: TransportProps) {
     this.onStart = props.onStart;
     this.onStop = props.onStop;
+    this.scheduler = new Scheduler(this);
   }
 
   start({
@@ -44,9 +47,11 @@ export default class Transport {
 
     this.validateFutureTime(actionAt);
 
-    this.state = TransportState.playing;
-    this.offset = offset;
-    this.startTime = actionAt - this.offset;
+    this.scheduler.start(actionAt, () => {
+      this.state = TransportState.playing;
+      this.offset = offset;
+      this.startTime = actionAt - this.offset;
+    });
     this.onStart?.(actionAt);
 
     return actionAt;
@@ -57,8 +62,10 @@ export default class Transport {
 
     this.validateFutureTime(actionAt);
 
-    this.state = TransportState.stopped;
-    this.offset = 0;
+    this.scheduler.stop(actionAt, () => {
+      this.state = TransportState.stopped;
+      this.offset = 0;
+    });
     this.onStop?.(actionAt);
 
     return actionAt;
@@ -69,8 +76,10 @@ export default class Transport {
 
     this.validateFutureTime(actionAt);
 
-    this.state = TransportState.paused;
-    this.offset = actionAt - this.startTime;
+    this.scheduler.stop(actionAt, () => {
+      this.state = TransportState.paused;
+      this.offset = actionAt - this.startTime;
+    });
     this.onStop?.(actionAt);
 
     return actionAt;
