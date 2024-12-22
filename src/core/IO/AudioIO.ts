@@ -53,8 +53,8 @@ export class AudioOutput extends IO<AudioInput> implements AudioOutputProps {
       } else {
         this.getAudioNode().disconnect(input);
       }
-    } catch (e) {
-      console.error(e);
+    } catch {
+      // Ignore disconnect errors
     }
   }
 }
