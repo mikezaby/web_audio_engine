@@ -32,6 +32,7 @@
     "typescript-eslint": "^8.13.0"
   },
   "dependencies": {
+    "@ircam/sc-scheduling": "^1.0.0",
     "crypto-js": "^4.2.0",
     "lodash": "^4.17.21",
     "webmidi": "^3.1.12"
