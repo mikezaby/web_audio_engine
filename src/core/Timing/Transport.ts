@@ -1,4 +1,5 @@
 import Scheduler from "./Scheduler";
+import Time, { time } from "./Time";
 import { now, realNow } from "./utils";
 
 export enum TransportState {
@@ -22,6 +23,10 @@ type TransportProps = {
 
 export default class Transport {
   bpm: number = 95;
+  timeSignature: [number, number] = [4, 4];
+  loopStart: Time;
+  loopEnd?: Time;
+
   state: TransportState = TransportState.stopped;
   offset: number = 0;
 
@@ -33,6 +38,7 @@ export default class Transport {
   constructor(props: TransportProps) {
     this.onStart = props.onStart;
     this.onStop = props.onStop;
+    this.loopStart = time("0:0:0");
     this.scheduler = new Scheduler(this);
   }
 

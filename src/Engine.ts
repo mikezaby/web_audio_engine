@@ -28,6 +28,10 @@ export class Engine {
 
   private midiDeviceManager: MidiDeviceManager;
 
+  public static get hasEngine() {
+    return !!Engine._current;
+  }
+
   public static get current(): Engine {
     if (!Engine._current) {
       throw Error("There is not current engine");
