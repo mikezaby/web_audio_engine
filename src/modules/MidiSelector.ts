@@ -9,10 +9,7 @@ export type IMidiSelectorProps = {
 
 const DEFAULT_PROPS: IMidiSelectorProps = { selectedId: null };
 
-export default class MidiSelector
-  extends Module<ModuleType.MidiSelector>
-  implements IMidiSelector
-{
+export default class MidiSelector extends Module<ModuleType.MidiSelector> {
   midiOutput!: MidiOutput;
   _forwardMidiEvent?: (midiEvent: MidiEvent) => void;
 
@@ -31,7 +28,7 @@ export default class MidiSelector
     this.registerOutputs();
   }
 
-  set selectedId(value: string | null) {
+  protected onSetSelectedId(value: string | null) {
     this.removeEventListener();
     this.addEventListener(value);
   }
@@ -54,9 +51,9 @@ export default class MidiSelector
   }
 
   private removeEventListener() {
-    if (!this.selectedId) return;
+    if (!this.props["selectedId"]) return;
 
-    const midiDevice = this.engine.findMidiDevice(this.selectedId);
+    const midiDevice = this.engine.findMidiDevice(this.props["selectedId"]);
     midiDevice?.removeEventListener(this.forwardMidiEvent);
   }
 

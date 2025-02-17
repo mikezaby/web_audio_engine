@@ -8,10 +8,7 @@ export type IVolumeProps = {
 
 const DEFAULT_PROPS: IVolumeProps = { volume: 100 };
 
-export default class Volume
-  extends Module<ModuleType.Volume>
-  implements IVolumeProps
-{
+export default class Volume extends Module<ModuleType.Volume> {
   declare audioNode: GainNode;
 
   constructor(
@@ -31,7 +28,7 @@ export default class Volume
     this.registerAdditionalInputs();
   }
 
-  set volume(value: IVolumeProps["volume"]) {
+  protected onSetVolume(value: IVolumeProps["volume"]) {
     this.audioNode.gain.value = value;
   }
 

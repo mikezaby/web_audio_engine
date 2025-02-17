@@ -1,3 +1,4 @@
+import { upperFirst } from "lodash";
 import { Engine } from "@/Engine";
 import { ModuleType, ModuleTypeToPropsMapping } from "@/modules";
 import { Optional, uuidv4 } from "@/utils";
@@ -78,8 +79,15 @@ export default abstract class Module<T extends ModuleType>
   }
 
   set props(value: Partial<ModuleTypeToPropsMapping[T]>) {
+    Object.keys(value).forEach((key) => {
+      const onSetAttr = `onSet${upperFirst(key)}`;
+
+      // @ts-expect-error TS7053 ignore this error
+      // eslint-disable-next-line
+      this[onSetAttr]?.(value[key]);
+    });
+
     this._props = { ...this._props, ...value };
-    Object.assign(this, value);
   }
 
   serialize(): IModuleSerialize<T> {

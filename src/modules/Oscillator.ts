@@ -12,7 +12,7 @@ const DEFAULT_PROPS: IOscillatorProps = { wave: "sine", frequency: 440 };
 
 export default class Oscillator
   extends Module<ModuleType.Oscillator>
-  implements IOscillatorProps, Startable
+  implements Startable
 {
   declare audioNode: OscillatorNode;
   isStated: boolean = false;
@@ -36,11 +36,11 @@ export default class Oscillator
     this.registerDefaultIOs("out");
   }
 
-  set wave(value: IOscillatorProps["wave"]) {
+  protected onSetWave(value: IOscillatorProps["wave"]) {
     this.audioNode.type = value;
   }
 
-  set frequency(value: IOscillatorProps["frequency"]) {
+  protected onSetFrequency(value: IOscillatorProps["frequency"]) {
     this.audioNode.frequency.value = value;
   }
 
