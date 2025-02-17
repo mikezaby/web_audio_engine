@@ -24,7 +24,7 @@ export class Engine {
   routes: Routes;
   modules: Map<string, AnyModule>;
 
-  private midiDeviceManager: MidiDeviceManager;
+  midiDeviceManager: MidiDeviceManager;
 
   public static get current(): Engine {
     if (!Engine._current) {
