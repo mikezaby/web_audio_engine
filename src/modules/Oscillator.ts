@@ -65,7 +65,7 @@ export default class Oscillator
   }
 
   triggerAttack = (note: Note, triggeredAt: number) => {
-    this.audioNode.frequency.value = note.frequency;
+    this.audioNode.frequency.setValueAtTime(note.frequency, triggeredAt);
     this.start(triggeredAt);
   };
 
