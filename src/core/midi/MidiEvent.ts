@@ -1,5 +1,5 @@
-import { now } from "lodash";
 import { Message } from "webmidi";
+import { now } from "@/utils";
 import Note, { INote } from "../Note";
 
 export enum MidiEventType {

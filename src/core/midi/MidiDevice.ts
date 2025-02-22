@@ -1,4 +1,5 @@
 import { Input, MessageEvent } from "webmidi";
+import { browserToContextTime } from "@/utils";
 import MidiEvent, { MidiEventType } from "./MidiEvent";
 
 export enum TMidiPortState {
@@ -60,7 +61,10 @@ export default class MidiDevice implements MidiDeviceInterface {
   }
 
   private processEvent(event: MessageEvent) {
-    const midiEvent = new MidiEvent(event.message, event.timestamp);
+    const midiEvent = new MidiEvent(
+      event.message,
+      browserToContextTime(event.timestamp),
+    );
 
     switch (midiEvent.type) {
       case MidiEventType.noteOn:
