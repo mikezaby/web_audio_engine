@@ -21,3 +21,38 @@ export function browserToContextTime(time: number): number {
   const differenceBetweenClocks = performance.now() / 1000 - now();
   return time / 1000 - differenceBetweenClocks;
 }
+
+enum ScaleType {
+  linear = "LINEAR",
+  exponential = "EXPONENTIAL",
+}
+
+export function scaleNormalized({
+  value,
+  min,
+  max,
+  type = ScaleType.linear,
+}: {
+  value: number;
+  min: number;
+  max: number;
+  type?: ScaleType;
+}): number {
+  if (type === ScaleType.linear) {
+    return min + (max - min) * value;
+  }
+
+  return min * Math.pow(max / min, value);
+}
+
+export function createScaleNormalized({
+  min,
+  max,
+  type = ScaleType.linear,
+}: {
+  min: number;
+  max: number;
+  type?: ScaleType;
+}): (value: number) => number {
+  return (value: number) => scaleNormalized({ value, min, max, type });
+}
