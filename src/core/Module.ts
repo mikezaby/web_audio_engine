@@ -58,6 +58,7 @@ export default abstract class Module<T extends ModuleType>
   inputs: InputCollection;
   outputs: OutputCollection;
   protected _props!: ModuleTypeToPropsMapping[T];
+  protected superInitialized: boolean = false;
 
   constructor(context: IAnyAudioContext, params: IModuleConstructor<T>) {
     const { id, name, moduleType, audioNode, props } = params;
@@ -72,6 +73,8 @@ export default abstract class Module<T extends ModuleType>
 
     this.inputs = new InputCollection(this);
     this.outputs = new OutputCollection(this);
+
+    this.superInitialized = true;
   }
 
   get props(): ModuleTypeToPropsMapping[T] {
