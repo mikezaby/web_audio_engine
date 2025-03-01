@@ -11,5 +11,8 @@
   "devDependencies": {
     "typescript": "~5.7.2",
     "vite": "^6.1.0"
+  },
+  "dependencies": {
+    "blibliki": "link:/Users/mikezaby/projects/blibliki/web_audio_engine"
   }
 }
