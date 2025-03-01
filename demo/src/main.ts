@@ -15,19 +15,46 @@ const midiSelector = engine.addModule({
 const osc = engine.addModule({
   name: "osc",
   moduleType: ModuleType.Oscillator,
-  props: { wave: "sine", frequency: 440 },
+  props: { wave: "sawtooth", frequency: 440 },
 });
-
-const lfo = engine.addModule({
+const osc2 = engine.addModule({
   name: "osc",
   moduleType: ModuleType.Oscillator,
-  props: { wave: "sine", frequency: 2 },
+  props: { wave: "sine", frequency: 0.5 },
 });
 
 const vol = engine.addModule({
   name: "vol",
   moduleType: ModuleType.Volume,
-  props: { volume: 0.01 },
+  props: { volume: 0.1 },
+});
+
+const envelope = engine.addModule({
+  name: "envelope",
+  moduleType: ModuleType.Envelope,
+  props: {
+    attack: 0,
+    decay: 0,
+    sustain: 1,
+    release: 0.3,
+  },
+});
+
+const filterEnv = engine.addModule({
+  name: "filterEnv",
+  moduleType: ModuleType.Envelope,
+  props: {
+    attack: 0.3,
+    decay: 0.2,
+    sustain: 0,
+    release: 0.3,
+  },
+});
+
+const filter = engine.addModule({
+  name: "filter",
+  moduleType: ModuleType.Filter,
+  props: { cutoff: 100, envelopeAmount: 1 },
 });
 
 const master = engine.addModule({
@@ -41,16 +68,33 @@ engine.addRoute({
   destination: { moduleId: vol.id, ioName: "in" },
 });
 engine.addRoute({
-  source: { moduleId: lfo.id, ioName: "out" },
-  destination: { moduleId: osc.id, ioName: "detune" },
+  source: { moduleId: vol.id, ioName: "out" },
+  destination: { moduleId: envelope.id, ioName: "in" },
 });
 engine.addRoute({
-  source: { moduleId: vol.id, ioName: "out" },
+  source: { moduleId: envelope.id, ioName: "out" },
+  destination: { moduleId: filter.id, ioName: "in" },
+});
+engine.addRoute({
+  source: { moduleId: osc2.id, ioName: "out" },
+  destination: { moduleId: filter.id, ioName: "cutoff" },
+});
+engine.addRoute({
+  source: { moduleId: filter.id, ioName: "out" },
   destination: { moduleId: master.id, ioName: "in" },
 });
+
 engine.addRoute({
   source: { moduleId: midiSelector.id, ioName: "midi out" },
   destination: { moduleId: osc.id, ioName: "midi in" },
+});
+engine.addRoute({
+  source: { moduleId: midiSelector.id, ioName: "midi out" },
+  destination: { moduleId: envelope.id, ioName: "midi in" },
+});
+engine.addRoute({
+  source: { moduleId: midiSelector.id, ioName: "midi out" },
+  destination: { moduleId: filterEnv.id, ioName: "midi in" },
 });
 
 declare global {
