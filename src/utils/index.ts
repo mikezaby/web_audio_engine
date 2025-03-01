@@ -11,7 +11,6 @@ export function uuidv4() {
   return crypto.randomUUID();
 }
 
-
 enum ScaleType {
   linear = "LINEAR",
   exponential = "EXPONENTIAL",
