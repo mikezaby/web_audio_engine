@@ -5,6 +5,7 @@ import Filter, { IFilterProps } from "./Filter";
 import Master, { IMasterProps } from "./Master";
 import MidiSelector, { IMidiSelectorProps } from "./MidiSelector";
 import Oscillator, { IOscillatorProps } from "./Oscillator";
+import Scale, { IScaleProps } from "./Scale";
 import Volume, { IVolumeProps } from "./Volume";
 
 export enum ModuleType {
@@ -14,6 +15,7 @@ export enum ModuleType {
   MidiSelector = "MidiSelector",
   Envelope = "Envelope",
   Filter = "Filter",
+  Scale = "Scale",
 }
 
 export interface ModuleTypeToPropsMapping {
@@ -23,6 +25,7 @@ export interface ModuleTypeToPropsMapping {
   [ModuleType.MidiSelector]: IMidiSelectorProps;
   [ModuleType.Envelope]: IEnvelopeProps;
   [ModuleType.Filter]: IFilterProps;
+  [ModuleType.Scale]: IScaleProps;
 }
 
 export type { IOscillator } from "./Oscillator";
@@ -66,6 +69,8 @@ export function createModule<T extends ModuleType>(
       );
     case ModuleType.Filter:
       return new Filter(context, params as ICreateParams<ModuleType.Filter>);
+    case ModuleType.Scale:
+      return new Scale(context, params as ICreateParams<ModuleType.Scale>);
     default:
       assertNever(params.moduleType);
   }
