@@ -9,6 +9,7 @@ import {
 } from "@/core";
 import { AnyModule, ICreateParams, ModuleType, createModule } from "@/modules";
 import { Optional } from "@/utils";
+import { loadProcessors } from "./processors";
 
 interface IUpdateModule<T extends ModuleType> {
   id: string;
@@ -54,6 +55,7 @@ export class Engine {
   }
 
   async initialize() {
+    await loadProcessors(this.context);
     await this.midiDeviceManager.initialize();
   }
 
