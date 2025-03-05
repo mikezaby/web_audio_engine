@@ -27,6 +27,9 @@ importers:
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^4.3.0
         version: 4.3.0(prettier@3.3.3)
+      '@types/audioworklet':
+        specifier: ^0.0.71
+        version: 0.0.71
       '@types/crypto-js':
         specifier: ^4.2.2
         version: 4.2.2
@@ -755,6 +758,9 @@ packages:
 
   '@types/argparse@1.0.38':
     resolution: {integrity: sha512-ebDJ9b0e702Yr7pWgB0jzm+CX4Srzz8RcXtLJDJB+BSccqMa36uyH/zUsSYao5+BD1ytv3k3rPYCq4mAE1hsXA==}
+
+  '@types/audioworklet@0.0.71':
+    resolution: {integrity: sha512-bi5UKn9UXQaDPN9C3gVIT7D1CbPRlJyUPqfTqpLOUVh2cRoPdCscrVPuBkXiJV2JvHH/4bXvmYDSg7SmC7wuXA==}
 
   '@types/crypto-js@4.2.2':
     resolution: {integrity: sha512-sDOLlVbHhXpAUAL0YHDUUwDZf3iN4Bwi4W6a0W0b+QcAezUbRtH4FVb+9J4h+XFPW7l/gQ9F8qC7P+Ec4k8QVQ==}
@@ -2398,6 +2404,8 @@ snapshots:
 
   '@types/argparse@1.0.38':
     optional: true
+
+  '@types/audioworklet@0.0.71': {}
 
   '@types/crypto-js@4.2.2': {}
 
