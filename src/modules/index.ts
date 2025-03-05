@@ -2,6 +2,7 @@ import { IAnyAudioContext, IModule, Module } from "@/core";
 import { assertNever } from "@/utils";
 import Envelope, { IEnvelopeProps } from "./Envelope";
 import Filter, { IFilterProps } from "./Filter";
+import Inspector, { IInspectorProps } from "./Inspector";
 import Master, { IMasterProps } from "./Master";
 import MidiSelector, { IMidiSelectorProps } from "./MidiSelector";
 import Oscillator, { IOscillatorProps } from "./Oscillator";
@@ -16,6 +17,7 @@ export enum ModuleType {
   Envelope = "Envelope",
   Filter = "Filter",
   Scale = "Scale",
+  Inspector = "Inspector",
 }
 
 export interface ModuleTypeToPropsMapping {
@@ -26,6 +28,7 @@ export interface ModuleTypeToPropsMapping {
   [ModuleType.Envelope]: IEnvelopeProps;
   [ModuleType.Filter]: IFilterProps;
   [ModuleType.Scale]: IScaleProps;
+  [ModuleType.Inspector]: IInspectorProps;
 }
 
 export type { IOscillator } from "./Oscillator";
@@ -71,6 +74,11 @@ export function createModule<T extends ModuleType>(
       return new Filter(context, params as ICreateParams<ModuleType.Filter>);
     case ModuleType.Scale:
       return new Scale(context, params as ICreateParams<ModuleType.Scale>);
+    case ModuleType.Inspector:
+      return new Inspector(
+        context,
+        params as ICreateParams<ModuleType.Inspector>,
+      );
     default:
       assertNever(params.moduleType);
   }
