@@ -2,31 +2,24 @@ import { describe, it, expect, beforeEach } from "vitest";
 import { createModule, ModuleType } from "@/modules";
 import Inspector from "@/modules/Inspector";
 import Scale from "@/modules/Scale";
-import { loadProcessors } from "@/processors";
-import "@/utils/nodePolyfill";
 import { sleep } from "@/utils/time";
 
 describe("Scale", () => {
-  let context: AudioContext;
   let scale: Scale;
   let amount: ConstantSourceNode;
   let inspector: Inspector;
 
-  beforeEach(async () => {
-    context = new AudioContext();
-    await context.resume();
-    await loadProcessors(context);
-
-    scale = createModule(context, {
+  beforeEach((ctx) => {
+    scale = createModule(ctx.audioContext, {
       name: "filterScale",
       moduleType: ModuleType.Scale,
       props: { min: 20, max: 20000, current: 440 },
     }) as Scale;
 
-    amount = new ConstantSourceNode(context);
+    amount = new ConstantSourceNode(ctx.audioContext);
     amount.start();
 
-    inspector = createModule(context, {
+    inspector = createModule(ctx.audioContext, {
       name: "inspector",
       moduleType: ModuleType.Inspector,
       props: {},

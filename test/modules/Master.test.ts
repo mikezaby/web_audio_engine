@@ -1,15 +1,12 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { createModule, ModuleType } from "@/modules";
 import Master from "@/modules/Master";
-import "@/utils/nodePolyfill";
 
 describe("Master", () => {
-  let context: AudioContext;
   let master: Master;
 
-  beforeEach(() => {
-    context = new AudioContext();
-    master = createModule(context, {
+  beforeEach((ctx) => {
+    master = createModule(ctx.audioContext, {
       name: "master",
       moduleType: ModuleType.Master,
       props: {},

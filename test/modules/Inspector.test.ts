@@ -1,17 +1,12 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { createModule, ModuleType } from "@/modules";
 import Inspector from "@/modules/Inspector";
-import "@/utils/nodePolyfill";
 
 describe("Inspector", () => {
-  let context: AudioContext;
   let currentModule: Inspector;
 
-  beforeEach(async () => {
-    context = new AudioContext();
-    await context.resume();
-
-    currentModule = createModule(context, {
+  beforeEach((ctx) => {
+    currentModule = createModule(ctx.audioContext, {
       name: "inspector",
       moduleType: ModuleType.Inspector,
       props: {},
