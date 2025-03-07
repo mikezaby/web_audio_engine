@@ -1,6 +1,6 @@
 import { upperFirst } from "lodash";
 import { Engine } from "@/Engine";
-import { ModuleType, ModuleTypeToPropsMapping } from "@/modules";
+import { AnyModule, ModuleType, ModuleTypeToPropsMapping } from "@/modules";
 import { Optional, uuidv4 } from "@/utils";
 import { IAnyAudioContext } from ".";
 import {
@@ -102,6 +102,21 @@ export default abstract class Module<T extends ModuleType>
       inputs: this.inputs.serialize(),
       outputs: this.outputs.serialize(),
     };
+  }
+
+  plug({
+    audioModule,
+    from,
+    to,
+  }: {
+    audioModule: AnyModule;
+    from: string;
+    to: string;
+  }) {
+    const output = this.outputs.findByName(from);
+    const input = audioModule.inputs.findByName(to);
+
+    output.plug(input);
   }
 
   protected rePlugAll(callback?: () => void) {
