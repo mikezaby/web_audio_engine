@@ -77,7 +77,7 @@ engine.addRoute({
 });
 engine.addRoute({
   source: { moduleId: osc2.id, ioName: "out" },
-  destination: { moduleId: filter.id, ioName: "cutoff" },
+  destination: { moduleId: filter.id, ioName: "cutoffMod" },
 });
 engine.addRoute({
   source: { moduleId: filter.id, ioName: "out" },
