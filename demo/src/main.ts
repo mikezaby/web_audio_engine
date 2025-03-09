@@ -1,4 +1,4 @@
-import { Engine, ModuleType } from "blibliki";
+import { Engine, ModuleType, TransportState } from "blibliki";
 
 const context = new AudioContext();
 const engine = new Engine(context);
@@ -99,16 +99,16 @@ engine.addRoute({
 
 declare global {
   interface Window {
-    toggle: () => Promise<void>;
+    toggle: () => void;
     handleDeviceChange: (selectedId: string) => void;
   }
 }
 
-window.toggle = async () => {
-  if (engine.isStarted) {
+window.toggle = () => {
+  if (engine.state === TransportState.playing) {
     engine.stop();
   } else {
-    await engine.start();
+    engine.start();
   }
 };
 

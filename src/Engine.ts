@@ -7,6 +7,7 @@ import {
   isStartable,
   MidiDeviceManager,
 } from "@/core";
+import { Transport } from "@/core/Timing";
 import { AnyModule, ICreateParams, ModuleType, createModule } from "@/modules";
 import { Optional } from "@/utils";
 import { loadProcessors } from "./processors";
@@ -21,11 +22,16 @@ export class Engine {
   private static _current?: Engine;
 
   context: IAnyAudioContext;
-  isStarted: boolean = false;
+  isInitialized: boolean = false;
   routes: Routes;
+  transport: Transport;
   modules: Map<string, AnyModule>;
 
   midiDeviceManager: MidiDeviceManager;
+
+  public static get hasEngine() {
+    return !!Engine._current;
+  }
 
   public static get current(): Engine {
     if (!Engine._current) {
@@ -45,6 +51,10 @@ export class Engine {
 
   constructor(context: IAnyAudioContext) {
     this.context = context;
+    this.transport = new Transport({
+      onStart: this.onStart,
+      onStop: this.onStop,
+    });
     this.routes = new Routes(this);
     this.modules = new Map();
     this.midiDeviceManager = new MidiDeviceManager();
@@ -54,9 +64,16 @@ export class Engine {
     }
   }
 
+  get state() {
+    return this.transport.state;
+  }
+
   async initialize() {
+    if (this.isInitialized) return;
+
     await loadProcessors(this.context);
     await this.midiDeviceManager.initialize();
+    this.isInitialized = true;
   }
 
   addModule<T extends ModuleType>(params: ICreateParams<T>) {
@@ -92,28 +109,16 @@ export class Engine {
     this.routes.removeRoute(id);
   }
 
-  async start(time?: number) {
-    await this.resume();
-
-    time ??= this.context.currentTime;
-    this.isStarted = true;
-
-    this.modules.forEach((module) => {
-      if (!isStartable(module)) return;
-
-      module.start(time);
-    });
+  start(props: { offset?: number; actionAt?: number } = {}) {
+    this.transport.start(props);
   }
 
-  stop(time?: number) {
-    time ??= this.context.currentTime;
-    this.isStarted = false;
+  stop(props: { actionAt?: number } = {}) {
+    this.transport.stop(props);
+  }
 
-    this.modules.forEach((module) => {
-      if (!isStartable(module)) return;
-
-      module.stop(time);
-    });
+  pause(props: { actionAt?: number } = {}) {
+    this.transport.pause(props);
   }
 
   async resume() {
@@ -135,4 +140,20 @@ export class Engine {
   findMidiDevice(id: string) {
     return this.midiDeviceManager.find(id);
   }
+
+  private onStart = (actionAt: number) => {
+    this.modules.forEach((module) => {
+      if (!isStartable(module)) return;
+
+      module.start(actionAt);
+    });
+  };
+
+  private onStop = (actionAt: number) => {
+    this.modules.forEach((module) => {
+      if (!isStartable(module)) return;
+
+      module.stop(actionAt);
+    });
+  };
 }
