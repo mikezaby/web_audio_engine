@@ -5,7 +5,7 @@ type BarsBeatsSixteenths = `${number}:${number}:${number}`;
 
 type TTime = number | BarsBeatsSixteenths;
 
-export const time = (value: TTime) => new Time(value);
+export const t = (value: TTime) => new Time(value);
 
 export default class Time {
   value: TTime;

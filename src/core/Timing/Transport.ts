@@ -1,6 +1,6 @@
 import { now } from "@/utils/time";
 import Scheduler from "./Scheduler";
-import Time, { time } from "./Time";
+import Time, { t } from "./Time";
 
 export enum TransportState {
   playing = "playing",
@@ -38,7 +38,7 @@ export default class Transport {
   constructor(props: TransportProps) {
     this.onStart = props.onStart;
     this.onStop = props.onStop;
-    this.loopStart = time("0:0:0");
+    this.loopStart = t("0:0:0");
     this.scheduler = new Scheduler(this);
   }
 
@@ -92,10 +92,10 @@ export default class Transport {
   }
 
   get playhead(): Time {
-    if (this.state === TransportState.stopped) return new Time(0);
-    if (this.state === TransportState.paused) return new Time(this.offset);
+    if (this.state === TransportState.stopped) return t(0);
+    if (this.state === TransportState.paused) return t(this.offset);
 
-    return new Time(now() - this.startTime);
+    return t(now() - this.startTime);
   }
 
   private validateFutureTime(time: number) {
