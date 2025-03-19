@@ -3,15 +3,15 @@ import { Engine } from "@/Engine";
 
 type BarsBeatsSixteenths = `${number}:${number}:${number}`;
 
-type TTime = number | BarsBeatsSixteenths;
+type TTime = number | BarsBeatsSixteenths | Time;
 
 export const t = (value: TTime) => new Time(value);
 
 export default class Time {
-  value: TTime;
+  private value: number | BarsBeatsSixteenths;
 
   constructor(value: TTime) {
-    this.value = value;
+    this.value = value instanceof Time ? value.value : value;
   }
 
   toNotation(): BarsBeatsSixteenths {
