@@ -8,6 +8,7 @@ import Master, { IMasterProps } from "./Master";
 import MidiSelector, { IMidiSelectorProps } from "./MidiSelector";
 import Oscillator, { IOscillatorProps } from "./Oscillator";
 import Scale, { IScaleProps } from "./Scale";
+import Sequencer, { ISequencerProps } from "./Sequencer";
 import Volume, { IVolumeProps } from "./Volume";
 
 export enum ModuleType {
@@ -20,6 +21,7 @@ export enum ModuleType {
   Scale = "Scale",
   Inspector = "Inspector",
   Constant = "Constant",
+  Sequencer = "Sequencer",
 }
 
 export interface ModuleTypeToPropsMapping {
@@ -32,6 +34,7 @@ export interface ModuleTypeToPropsMapping {
   [ModuleType.Scale]: IScaleProps;
   [ModuleType.Inspector]: IInspectorProps;
   [ModuleType.Constant]: IConstantProps;
+  [ModuleType.Sequencer]: ISequencerProps;
 }
 
 export type { IOscillator } from "./Oscillator";
@@ -86,6 +89,11 @@ export function createModule<T extends ModuleType>(
       return new Constant(
         context,
         params as ICreateParams<ModuleType.Constant>,
+      );
+    case ModuleType.Sequencer:
+      return new Sequencer(
+        context,
+        params as ICreateParams<ModuleType.Sequencer>,
       );
     default:
       assertNever(params.moduleType);
