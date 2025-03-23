@@ -1,6 +1,6 @@
 import { now } from "@/utils/time";
 import Scheduler from "./Scheduler";
-import Time, { t } from "./Time";
+import Time, { t, TTime } from "./Time";
 
 export enum TransportState {
   playing = "playing",
@@ -9,12 +9,12 @@ export enum TransportState {
 }
 
 export type TransportEvents = {
-  start: { actionAt: number; offset: number };
-  stop: { actionAt: number };
-  pause: { actionAt: number };
+  start: { actionAt: TTime; offset: TTime };
+  stop: { actionAt: TTime };
+  pause: { actionAt: TTime };
 };
 
-type TPlaybackCallback = (actionAt: number) => void;
+type TPlaybackCallback = (actionAt: TTime) => void;
 
 type TransportProps = {
   onStart?: TPlaybackCallback;
@@ -24,13 +24,13 @@ type TransportProps = {
 export default class Transport {
   bpm: number = 120;
   timeSignature: [number, number] = [4, 4];
-  loopStart: Time;
-  loopEnd?: Time;
+  loopStart: TTime;
+  loopEnd?: TTime;
 
   state: TransportState = TransportState.stopped;
-  offset: number = 0;
+  offset: TTime = 0;
 
-  private startTime: number = 0;
+  private startTime: TTime = 0;
   private onStart: TransportProps["onStart"];
   private onStop: TransportProps["onStop"];
   private scheduler: Scheduler;
@@ -46,8 +46,8 @@ export default class Transport {
     offset = this.offset,
     actionAt = now(),
   }: {
-    offset?: number;
-    actionAt?: number;
+    offset?: TTime;
+    actionAt?: TTime;
   }) {
     if (this.state === TransportState.playing) return;
 
@@ -56,14 +56,14 @@ export default class Transport {
     this.scheduler.start(actionAt, () => {
       this.state = TransportState.playing;
       this.offset = offset;
-      this.startTime = actionAt - this.offset;
+      this.startTime = t(actionAt).subtrack(this.offset);
     });
     this.onStart?.(actionAt);
 
     return actionAt;
   }
 
-  stop({ actionAt: actionAt = now() }: { actionAt?: number }) {
+  stop({ actionAt: actionAt = now() }: { actionAt?: TTime }) {
     if (this.state === TransportState.stopped) return;
 
     this.validateFutureTime(actionAt);
@@ -77,14 +77,14 @@ export default class Transport {
     return actionAt;
   }
 
-  pause({ actionAt: actionAt = now() }: { actionAt?: number }) {
+  pause({ actionAt: actionAt = now() }: { actionAt?: TTime }) {
     if (this.state === TransportState.paused) return;
 
     this.validateFutureTime(actionAt);
 
     this.scheduler.stop(actionAt, () => {
       this.state = TransportState.paused;
-      this.offset = actionAt - this.startTime;
+      this.offset = t(actionAt).subtrack(this.startTime);
     });
     this.onStop?.(actionAt);
 
@@ -95,10 +95,10 @@ export default class Transport {
     if (this.state === TransportState.stopped) return t(0);
     if (this.state === TransportState.paused) return t(this.offset);
 
-    return t(now() - this.startTime);
+    return t(now()).subtrack(this.startTime);
   }
 
-  private validateFutureTime(time: number) {
-    if (time < now()) throw Error("Past time not allowed");
+  private validateFutureTime(time: TTime) {
+    if (t(time).isBefore(now())) throw Error("Past time not allowed");
   }
 }

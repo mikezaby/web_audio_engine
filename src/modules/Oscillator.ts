@@ -1,5 +1,6 @@
 import { IAnyAudioContext, IModule, Module, Startable } from "@/core";
 import Note from "@/core/Note";
+import { nt, TTime } from "@/core/Timing/Time";
 import { ICreateParams, ModuleType } from ".";
 
 export type IOscillator = IModule<ModuleType.Oscillator>;
@@ -44,15 +45,15 @@ export default class Oscillator
     this.audioNode.frequency.value = value;
   }
 
-  start(time: number) {
+  start(time: TTime) {
     if (this.isStated) return;
 
     this.isStated = true;
-    this.audioNode.start(time);
+    this.audioNode.start(nt(time));
   }
 
-  stop(time: number) {
-    this.audioNode.stop(time);
+  stop(time: TTime) {
+    this.audioNode.stop(nt(time));
     this.rePlugAll(() => {
       this.audioNode = new OscillatorNode(this.context, {
         type: this.props["wave"],
@@ -64,8 +65,10 @@ export default class Oscillator
     this.isStated = false;
   }
 
-  triggerAttack = (note: Note, triggeredAt: number) => {
-    this.audioNode.frequency.setValueAtTime(note.frequency, triggeredAt);
+  triggerAttack = (note: Note, triggeredAt: TTime) => {
+    const triggeredAtNum = nt(triggeredAt);
+
+    this.audioNode.frequency.setValueAtTime(note.frequency, triggeredAtNum);
     this.start(triggeredAt);
   };
 

@@ -14,6 +14,7 @@ import {
   MidiOutputProps,
 } from "./IO";
 import Note from "./Note";
+import { t, TTime } from "./Timing/Time";
 import MidiEvent, { MidiEventType } from "./midi/MidiEvent";
 
 export interface IModule<T extends ModuleType> {
@@ -29,8 +30,8 @@ export interface IModuleSerialize<T extends ModuleType> extends IModule<T> {
 }
 
 export interface Startable {
-  start(time: number): void;
-  stop(time: number): void;
+  start(time: TTime): void;
+  stop(time: TTime): void;
 }
 
 export function isStartable<T>(value: T): value is T & Startable {
@@ -130,12 +131,12 @@ export default abstract class Module<T extends ModuleType>
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  triggerAttack = (_note: Note, _triggeredAt: number): void => {
+  triggerAttack = (_note: Note, _triggeredAt: TTime): void => {
     throw Error("triggerAttack not implemented");
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  triggerRelease = (_note: Note, _triggeredAt: number): void => {
+  triggerRelease = (_note: Note, _triggeredAt: TTime): void => {
     throw Error("triggerRelease not implemented");
   };
 
@@ -156,13 +157,13 @@ export default abstract class Module<T extends ModuleType>
   };
 
   private triggerer(
-    trigger: (note: Note, triggeredAt: number) => void,
+    trigger: (note: Note, triggeredAt: TTime) => void,
     note: Note | undefined,
-    triggeredAt: number,
+    triggeredAt: TTime,
   ) {
     if (!note) return;
 
-    trigger(note, triggeredAt);
+    trigger(note, t(triggeredAt));
   }
 
   protected registerDefaultIOs(value: "both" | "in" | "out" = "both") {

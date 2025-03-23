@@ -1,5 +1,6 @@
 import { IAnyAudioContext, IModule, Module, Startable } from "@/core";
 import Note from "@/core/Note";
+import { nt, TTime } from "@/core/Timing/Time";
 import { ICreateParams, ModuleType } from ".";
 
 export type IConstant = IModule<ModuleType.Constant>;
@@ -36,20 +37,20 @@ export default class Constant
     this.audioNode.offset.value = value;
   }
 
-  start(time: number) {
+  start(time: TTime) {
     if (this.isStated) return;
 
     this.isStated = true;
-    this.audioNode.start(time);
+    this.audioNode.start(nt(time));
   }
 
-  stop(time: number) {
-    this.audioNode.stop(time);
+  stop(time: TTime) {
+    this.audioNode.stop(nt(time));
     this.isStated = false;
   }
 
-  triggerAttack = (note: Note, triggeredAt: number) => {
-    this.audioNode.offset.setValueAtTime(note.frequency, triggeredAt);
+  triggerAttack = (note: Note, triggeredAt: TTime) => {
+    this.audioNode.offset.setValueAtTime(note.frequency, nt(triggeredAt));
     this.start(triggeredAt);
   };
 

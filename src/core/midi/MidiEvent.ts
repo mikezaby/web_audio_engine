@@ -1,6 +1,7 @@
 import { Message } from "webmidi";
 import { now } from "@/utils/time";
 import Note, { INote } from "../Note";
+import { TTime } from "../Timing/Time";
 
 export enum MidiEventType {
   noteOn = "noteon",
@@ -10,27 +11,27 @@ export enum MidiEventType {
 
 export default class MidiEvent {
   note?: Note;
-  readonly triggeredAt: number;
+  readonly triggeredAt: TTime;
   private message: Message;
 
   static fromNote(
-    noteName: string | Note | INote,
+    noteName: string | Note | Omit<INote, "frequency">,
     noteOn: boolean = true,
-    triggeredAt?: number,
+    triggeredAt?: TTime,
   ): MidiEvent {
     const note = noteName instanceof Note ? noteName : new Note(noteName);
 
     return new MidiEvent(new Message(note.midiData(noteOn)), triggeredAt);
   }
 
-  static fromCC(cc: number, value: number, triggeredAt?: number): MidiEvent {
+  static fromCC(cc: number, value: number, triggeredAt?: TTime): MidiEvent {
     return new MidiEvent(
       new Message(new Uint8Array([0xb0, cc, value])),
       triggeredAt,
     );
   }
 
-  constructor(message: Message, triggeredAt?: number) {
+  constructor(message: Message, triggeredAt?: TTime) {
     this.message = message;
     this.triggeredAt = triggeredAt || now();
     this.defineNotes();

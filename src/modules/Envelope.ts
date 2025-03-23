@@ -1,5 +1,6 @@
 import { IAnyAudioContext, Module } from "@/core";
 import Note from "@/core/Note";
+import { nt, TTime } from "@/core/Timing/Time";
 import { createScaleNormalized } from "@/utils";
 import { ICreateParams, ModuleType } from ".";
 
@@ -48,41 +49,49 @@ export default class Envelope extends Module<ModuleType.Envelope> {
     this.registerDefaultIOs();
   }
 
-  triggerAttack = (note: Note, triggeredAt: number) => {
+  triggerAttack = (note: Note, triggeredAt: TTime) => {
     this.currentNote = note;
 
     const attack = this.scaledAttack();
     const decay = this.scaledDecay();
     const sustain = this.props.sustain;
+    const triggeredAtNum = nt(triggeredAt);
 
-    this.audioNode.gain.cancelAndHoldAtTime(triggeredAt);
+    this.audioNode.gain.cancelAndHoldAtTime(triggeredAtNum);
 
     if (this.audioNode.gain.value === 0) {
-      this.audioNode.gain.setValueAtTime(0.001, triggeredAt);
+      this.audioNode.gain.setValueAtTime(0.001, triggeredAtNum);
     }
 
     // Attack
-    this.audioNode.gain.exponentialRampToValueAtTime(1.0, triggeredAt + attack);
+    this.audioNode.gain.exponentialRampToValueAtTime(
+      1.0,
+      triggeredAtNum + attack,
+    );
     // Decay
     this.audioNode.gain.exponentialRampToValueAtTime(
       sustain || 0.001,
-      triggeredAt + (attack + decay),
+      triggeredAtNum + (attack + decay),
     );
 
-    this.audioNode.gain.setValueAtTime(sustain, triggeredAt + (attack + decay));
+    this.audioNode.gain.setValueAtTime(
+      sustain,
+      triggeredAtNum + (attack + decay),
+    );
   };
 
-  triggerRelease = (note: Note, triggeredAt: number) => {
+  triggerRelease = (note: Note, triggeredAt: TTime) => {
     if (note.fullName !== this.currentNote?.fullName) return;
 
     const release = this.scaledRelease();
+    const triggeredAtNum = nt(triggeredAt);
 
-    this.audioNode.gain.cancelAndHoldAtTime(triggeredAt);
+    this.audioNode.gain.cancelAndHoldAtTime(triggeredAtNum);
     this.audioNode.gain.exponentialRampToValueAtTime(
       0.001,
-      triggeredAt + release - 0.01,
+      triggeredAtNum + release - 0.01,
     );
-    this.audioNode.gain.setValueAtTime(0, triggeredAt + release);
+    this.audioNode.gain.setValueAtTime(0, triggeredAtNum + release);
     this.currentNote = undefined;
   };
 

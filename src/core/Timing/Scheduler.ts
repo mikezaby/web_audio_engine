@@ -1,6 +1,6 @@
 import { Scheduler as InternalScheduler } from "@ircam/sc-scheduling";
 import { now } from "@/utils/time";
-import Time from "./Time";
+import { nt, t, TTime } from "./Time";
 import Transport from "./Transport";
 
 export default class Scheduler {
@@ -14,24 +14,24 @@ export default class Scheduler {
     });
   }
 
-  start(actionAt: number, callback: () => void) {
-    this.internalScheduler.add(this.processor, actionAt);
+  start(actionAt: TTime, callback: () => void) {
+    this.internalScheduler.add(this.processor, nt(actionAt));
     this.defer(callback, actionAt);
   }
 
-  stop(actionAt: number, callback: () => void) {
+  stop(actionAt: TTime, callback: () => void) {
     this.defer(() => {
       this.internalScheduler.remove(this.processor);
       callback();
     }, actionAt);
   }
 
-  defer(callback: () => void, actionAt: number) {
-    this.internalScheduler.defer(callback, actionAt);
+  defer(callback: () => void, actionAt: TTime) {
+    this.internalScheduler.defer(callback, nt(actionAt));
   }
 
-  private processor = (currentTime: number, playhead: Time) => {
-    console.log(`playhead: ${playhead.toNotation()}`);
+  private processor = (currentTime: number, playhead: TTime) => {
+    console.log(`playhead: ${t(playhead).toNotation()}`);
     return currentTime + 0.5;
   };
 }

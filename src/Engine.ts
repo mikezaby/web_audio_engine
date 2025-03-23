@@ -10,6 +10,7 @@ import {
 import { Transport } from "@/core/Timing";
 import { AnyModule, ICreateParams, ModuleType, createModule } from "@/modules";
 import { Optional } from "@/utils";
+import { TTime } from "./core/Timing/Time";
 import { loadProcessors } from "./processors";
 
 interface IUpdateModule<T extends ModuleType> {
@@ -109,15 +110,15 @@ export class Engine {
     this.routes.removeRoute(id);
   }
 
-  start(props: { offset?: number; actionAt?: number } = {}) {
+  start(props: { offset?: TTime; actionAt?: TTime } = {}) {
     this.transport.start(props);
   }
 
-  stop(props: { actionAt?: number } = {}) {
+  stop(props: { actionAt?: TTime } = {}) {
     this.transport.stop(props);
   }
 
-  pause(props: { actionAt?: number } = {}) {
+  pause(props: { actionAt?: TTime } = {}) {
     this.transport.pause(props);
   }
 
@@ -141,7 +142,7 @@ export class Engine {
     return this.midiDeviceManager.find(id);
   }
 
-  private onStart = (actionAt: number) => {
+  private onStart = (actionAt: TTime) => {
     this.modules.forEach((module) => {
       if (!isStartable(module)) return;
 
@@ -149,7 +150,7 @@ export class Engine {
     });
   };
 
-  private onStop = (actionAt: number) => {
+  private onStop = (actionAt: TTime) => {
     this.modules.forEach((module) => {
       if (!isStartable(module)) return;
 

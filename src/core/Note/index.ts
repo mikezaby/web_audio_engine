@@ -1,4 +1,5 @@
 import { Message } from "webmidi";
+import { TTime } from "../Timing/Time";
 import frequencyTable from "./frequencyTable";
 
 const Notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
@@ -9,7 +10,7 @@ export interface INote {
   name: string;
   octave: number;
   frequency: number;
-  duration?: string;
+  duration?: TTime;
   velocity?: number;
 }
 
@@ -18,7 +19,7 @@ export default class Note implements INote {
   name!: string;
   octave!: number;
   velocity: number = 1;
-  duration?: string;
+  duration?: TTime;
 
   static fromFrequency(frequency: number) {
     let noteName: string | undefined;
