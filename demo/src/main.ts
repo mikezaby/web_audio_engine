@@ -6,6 +6,105 @@ await engine.initialize();
 
 const midiDevices = Array.from(engine.midiDeviceManager.devices.values());
 
+const sequencer = engine.addModule({
+  name: "sequencer",
+  moduleType: ModuleType.Sequencer,
+  props: {
+    bars: 1,
+    steps: 16,
+    sequences: [
+      [
+        {
+          active: true,
+          time: "0:0:0",
+          notes: [
+            {
+              name: "D",
+              octave: 4,
+              duration: "16n",
+            },
+          ],
+        },
+        {
+          active: true,
+          time: "0:0:1",
+          notes: [],
+        },
+        {
+          active: true,
+          time: "0:0:2",
+          notes: [],
+        },
+        {
+          active: false,
+          time: "0:0:3",
+          notes: [],
+        },
+        {
+          active: false,
+          time: "0:0:4",
+          notes: [],
+        },
+        {
+          active: false,
+          time: "0:0:5",
+          notes: [],
+        },
+        {
+          active: false,
+          time: "0:0:6",
+          notes: [],
+        },
+        {
+          active: false,
+          time: "0:0:7",
+          notes: [],
+        },
+        {
+          active: false,
+          time: "0:0:8",
+          notes: [],
+        },
+        {
+          active: false,
+          time: "0:0:9",
+          notes: [],
+        },
+        {
+          active: false,
+          time: "0:0:10",
+          notes: [],
+        },
+        {
+          active: false,
+          time: "0:0:11",
+          notes: [],
+        },
+        {
+          active: false,
+          time: "0:0:12",
+          notes: [],
+        },
+        {
+          active: false,
+          time: "0:0:13",
+          notes: [],
+        },
+        {
+          active: false,
+          time: "0:0:14",
+          notes: [],
+        },
+        {
+          active: false,
+          time: "0:0:15",
+          notes: [],
+        },
+      ],
+    ],
+  },
+});
+
 const midiSelector = engine.addModule({
   name: "midi selector",
   moduleType: ModuleType.MidiSelector,
@@ -94,6 +193,19 @@ engine.addRoute({
 });
 engine.addRoute({
   source: { moduleId: midiSelector.id, ioName: "midi out" },
+  destination: { moduleId: filterEnv.id, ioName: "midi in" },
+});
+
+engine.addRoute({
+  source: { moduleId: sequencer.id, ioName: "midi out" },
+  destination: { moduleId: osc.id, ioName: "midi in" },
+});
+engine.addRoute({
+  source: { moduleId: sequencer.id, ioName: "midi out" },
+  destination: { moduleId: envelope.id, ioName: "midi in" },
+});
+engine.addRoute({
+  source: { moduleId: sequencer.id, ioName: "midi out" },
   destination: { moduleId: filterEnv.id, ioName: "midi in" },
 });
 

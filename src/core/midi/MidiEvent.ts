@@ -1,4 +1,5 @@
 import { Message } from "webmidi";
+import { IStepSequence } from "@/modules/Sequencer";
 import { now } from "@/utils/time";
 import Note, { INote } from "../Note";
 import { TTime } from "../Timing/Time";
@@ -13,6 +14,15 @@ export default class MidiEvent {
   note?: Note;
   readonly triggeredAt: TTime;
   private message: Message;
+
+  static fromSequence(
+    sequence: IStepSequence,
+    triggeredAt: TTime,
+  ): MidiEvent[] {
+    return sequence.notes.map((noteName) =>
+      this.fromNote(noteName, true, triggeredAt),
+    );
+  }
 
   static fromNote(
     noteName: string | Note | Omit<INote, "frequency">,

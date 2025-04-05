@@ -1,32 +1,37 @@
 import { IAnyAudioContext, IModule, Module, MidiOutput } from "@/core";
 import { INote } from "@/core/Note";
 import Part from "@/core/Timing/Part";
+import { BarsBeatsSixteenths } from "@/core/Timing/Time";
 import MidiEvent from "@/core/midi/MidiEvent";
 import { ICreateParams, ModuleType } from ".";
 
-export type ISequencer = IModule<ModuleType.Sequencer>;
+export type IStepSequencer = IModule<ModuleType.StepSequencer>;
 
-export interface ISequence {
+export interface IStepSequence {
   active: boolean;
-  time: string;
+  time: BarsBeatsSixteenths;
   notes: Omit<INote, "frequency">[];
 }
 
-export type ISequencerProps = {
-  sequences: ISequence[][];
+export type IStepSequencerProps = {
+  sequences: IStepSequence[][];
   steps: number;
   bars: number;
 };
 
-const DEFAULT_PROPS: ISequencerProps = { bars: 1, steps: 16, sequences: [] };
+const DEFAULT_PROPS: IStepSequencerProps = {
+  bars: 1,
+  steps: 16,
+  sequences: [],
+};
 
-export default class Sequencer extends Module<ModuleType.Sequencer> {
+export default class StepSequencer extends Module<ModuleType.StepSequencer> {
   midiOutput!: MidiOutput;
   private part!: Part;
 
   constructor(
     context: IAnyAudioContext,
-    params: ICreateParams<ModuleType.Sequencer>,
+    params: ICreateParams<ModuleType.StepSequencer>,
   ) {
     const props = { ...DEFAULT_PROPS, ...params.props };
 
@@ -66,7 +71,7 @@ export default class Sequencer extends Module<ModuleType.Sequencer> {
   }
 
   private initializePart() {
-    this.part = new Part(this.onPartEvent, [] as ISequence[]);
+    this.part = new Part(this.onPartEvent, [] as IStepSequence[]);
     this.part.loop = true;
     this.part.loopEnd = this.loopEnd;
     this.adjust();
@@ -140,7 +145,7 @@ export default class Sequencer extends Module<ModuleType.Sequencer> {
     return `${this.props.bars}:0:0`;
   }
 
-  private onPartEvent = (time: number, sequence: ISequence) => {
+  private onPartEvent = (time: number, sequence: IStepSequence) => {
     if (!sequence.active) return;
 
     MidiEvent.fromSequence(sequence, time).forEach((event) => {
