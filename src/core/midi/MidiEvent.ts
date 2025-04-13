@@ -1,7 +1,6 @@
 import { Message } from "webmidi";
-import { now } from "@/utils/time";
 import Note, { INote } from "../Note";
-import { TTime } from "../Timing/Time";
+import { t, TTime } from "../Timing/Time";
 
 export enum MidiEventType {
   noteOn = "noteon",
@@ -33,7 +32,7 @@ export default class MidiEvent {
 
   constructor(message: Message, triggeredAt?: TTime) {
     this.message = message;
-    this.triggeredAt = triggeredAt || now();
+    this.triggeredAt = triggeredAt || t();
     this.defineNotes();
   }
 

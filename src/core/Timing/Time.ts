@@ -1,16 +1,21 @@
 import { isNumber } from "lodash";
 import { Engine } from "@/Engine";
+import { now } from "@/utils/time";
 
 export type BarsBeatsSixteenths = `${number}:${number}:${number}`;
 export type TTime = number | BarsBeatsSixteenths | Time;
 
-export const t = (value: TTime): Time => {
+export const t = (value?: TTime): Time => {
+  value ??= now();
+
   if (value instanceof Time) return value;
 
   return new Time(value);
 };
 
-export const nt = (value: TTime): number => {
+export const nt = (value?: TTime): number => {
+  value ??= now();
+
   if (typeof value === "number") return value;
 
   return t(value).toNumber();
