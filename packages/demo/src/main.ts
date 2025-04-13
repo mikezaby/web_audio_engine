@@ -1,4 +1,4 @@
-import { Engine, ModuleType, TransportState } from "blibliki";
+import { Engine, ModuleType, TransportState } from "@blibliki/engine";
 
 const context = new AudioContext();
 const engine = new Engine(context);
