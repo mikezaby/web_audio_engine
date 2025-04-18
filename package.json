@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "author": "Michalis Zabaras",
   "license": "ISC",
+  "scripts": {
+    "dev": "pnpm -r --parallel run dev",
+    "build": "pnpm -r --parallel run build",
+    "tsc": "pnpm -r --parallel run tsc",
+    "test": "pnpm -r --parallel --if-present run test"
+  },
   "workspaces": [
     "packages/*"
   ],
