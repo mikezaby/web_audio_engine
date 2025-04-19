@@ -30,7 +30,6 @@
     "globals": "^15.12.0",
     "prettier": "^3.5.3",
     "tsup": "^8.4.0",
-    "typescript": "^5.8.2",
     "typescript-eslint": "^8.26.0",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.7"

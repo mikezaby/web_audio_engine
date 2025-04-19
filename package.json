@@ -6,11 +6,14 @@
   "scripts": {
     "dev": "pnpm -r --parallel run dev",
     "build": "pnpm -r --parallel run build",
-    "tsc": "pnpm -r --parallel run tsc",
+    "tsc": "pnpm -r --parallel --no-bail exec tsc --noEmit",
     "test": "pnpm -r --parallel --if-present run test"
   },
   "workspaces": [
     "packages/*"
   ],
-  "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee"
+  "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee",
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
 }

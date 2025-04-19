@@ -28,8 +28,6 @@
     "tailwind-merge": "^2.2.1",
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7",
-    "tone": "^14.7.77",
-    "typescript": "^5.3.0",
     "uuid": "^9.0.0"
   },
   "scripts": {
