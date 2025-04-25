@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import ReactFlow, {
   MiniMap,
   Controls,
@@ -7,12 +8,10 @@ import ReactFlow, {
   Viewport,
   useReactFlow,
 } from "reactflow";
-
-import { NodeTypes } from "./AudioNode";
 import { useAppDispatch, useGridNodes, usePatch } from "@/hooks";
+import { NodeTypes } from "./AudioNode";
 import { setViewport } from "./gridNodesSlice";
 import useDrag from "./useDrag";
-import { useEffect } from "react";
 
 const DEFAULT_REACT_FLOW_PROPS = {
   hideAttribution: true,

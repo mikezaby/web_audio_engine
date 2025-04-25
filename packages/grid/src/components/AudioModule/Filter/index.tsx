@@ -1,10 +1,10 @@
 import Fader, { MarkProps } from "@/components/Fader";
-import Cutoff from "./Cutoff";
-import Resonance from "./Resonance";
-import FilterType from "./FilterType";
-import Slope from "./Slope";
-import Container from "../Container";
 import { TUpdateProps } from "..";
+import Container from "../Container";
+import Cutoff from "./Cutoff";
+import FilterType from "./FilterType";
+import Resonance from "./Resonance";
+import Slope from "./Slope";
 
 interface FilterProps {
   id: string;

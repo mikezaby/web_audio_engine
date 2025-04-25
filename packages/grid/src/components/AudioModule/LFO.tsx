@@ -1,8 +1,8 @@
+import { ChangeEvent } from "react";
 import Fader, { MarkProps } from "@/components/Fader";
 import { TUpdateProps } from ".";
-import Container from "./Container";
 import { Input, Label } from "../ui";
-import { ChangeEvent } from "react";
+import Container from "./Container";
 
 const WAVES = ["sine", "triangle", "square", "sawtooth"];
 

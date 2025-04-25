@@ -11,9 +11,8 @@ import {
   applyEdgeChanges,
   Viewport,
 } from "reactflow";
-
-import { AppDispatch, RootState } from "@/store";
 import { removeModule } from "@/components/AudioModule/modulesSlice";
+import { AppDispatch, RootState } from "@/store";
 
 export interface IGridNodes {
   nodes: Node[];

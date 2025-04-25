@@ -1,7 +1,7 @@
+import Link from "next/link";
 import Modal, { close as closeModal } from "@/components/Modal";
 import { buttonVariants } from "@/components/ui";
 import { useAppDispatch, usePatches } from "@/hooks";
-import Link from "next/link";
 
 export default function SavePatch() {
   const dispatch = useAppDispatch();

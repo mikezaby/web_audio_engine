@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-
 import { useAppDispatch } from "@/hooks";
 import { open, close } from "./modalSlice";
 

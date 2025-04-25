@@ -1,8 +1,10 @@
 import { IOProps } from "@blibliki/engine";
-import AudioModule from "@/components/AudioModule";
-import { useAudioModule } from "@/hooks";
 import { ReactNode, useMemo } from "react";
 import { Handle, HandleType, NodeProps, Position } from "reactflow";
+import AudioModule from "@/components/AudioModule";
+import { useAudioModule } from "@/hooks";
+import Name from "../AudioModule/attributes/Name";
+import Voices from "../AudioModule/attributes/Voices";
 import {
   Card,
   CardContent,
@@ -10,8 +12,6 @@ import {
   ContextMenuContent,
   ContextMenuTrigger,
 } from "../ui";
-import Name from "../AudioModule/attributes/Name";
-import Voices from "../AudioModule/attributes/Voices";
 
 export const NodeTypes = {
   audioNode: AudioNode,

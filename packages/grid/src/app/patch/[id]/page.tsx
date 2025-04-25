@@ -1,10 +1,10 @@
 "use client";
 
+import { useParams } from "next/navigation";
+import { useEffect } from "react";
 import Grid from "@/components/Grid";
 import { useAppDispatch } from "@/hooks";
 import { loadById } from "@/patchSlice";
-import { useParams } from "next/navigation";
-import { useEffect } from "react";
 
 export default function RoomComponent() {
   const dispatch = useAppDispatch();

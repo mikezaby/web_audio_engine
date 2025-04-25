@@ -1,7 +1,7 @@
 import { DragEvent } from "react";
-import { addNewModule } from "../AudioModule/modulesSlice";
-import { useAppDispatch } from "@/hooks";
 import { useReactFlow } from "reactflow";
+import { useAppDispatch } from "@/hooks";
+import { addNewModule } from "../AudioModule/modulesSlice";
 
 function onDragStart(event: DragEvent, nodeType: string) {
   event.dataTransfer.setData("application/reactflow", nodeType);

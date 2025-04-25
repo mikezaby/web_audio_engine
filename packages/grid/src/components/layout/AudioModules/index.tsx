@@ -1,9 +1,10 @@
 "use client";
+
+import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { useState, DragEvent } from "react";
 import { AvailableModules } from "@/components/AudioModule/modulesSlice";
 import useDrag from "@/components/Grid/useDrag";
 import { Button } from "@/components/ui";
-import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
-import { useState, DragEvent } from "react";
 
 export default function AudioModules() {
   const [visible, setVisible] = useState<boolean>(true);

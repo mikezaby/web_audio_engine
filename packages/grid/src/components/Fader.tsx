@@ -1,5 +1,5 @@
-import { Slider } from "./ui";
 import { throttle } from "lodash";
+import { Slider } from "./ui";
 
 export interface MarkProps {
   value: number;

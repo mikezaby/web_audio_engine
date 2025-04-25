@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import { ReactNode } from "react";
-
-import Providers from "@/Providers";
-
 import "reactflow/dist/style.css";
-import "@/index.css";
+import Providers from "@/Providers";
 import "@/app.css";
+import "@/index.css";
 
 export const metadata: Metadata = {
   title: "Blibliki Grid",

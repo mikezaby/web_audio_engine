@@ -1,9 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
 import Engine from "@blibliki/engine";
-
-import { AppDispatch, RootState } from "@/store";
+import { createSlice } from "@reduxjs/toolkit";
 import { updatePlainModule } from "@/components/AudioModule/modulesSlice";
 import { initialize as patchInitialize, loadById } from "@/patchSlice";
+import { AppDispatch, RootState } from "@/store";
 
 interface IContext {
   latencyHint: "interactive" | "playback";

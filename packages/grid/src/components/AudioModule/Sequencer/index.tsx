@@ -1,11 +1,10 @@
-import { useState } from "react";
 import { ISequence } from "@blibliki/engine";
-
-import GlobalProps from "./GlobalProps";
-import StepProps from "./StepProps";
-import Step from "./Step";
-import Container from "../Container";
+import { useState } from "react";
 import { TUpdateProps } from "..";
+import Container from "../Container";
+import GlobalProps from "./GlobalProps";
+import Step from "./Step";
+import StepProps from "./StepProps";
 
 export interface SequenceProps extends ISequence {
   duration: string;

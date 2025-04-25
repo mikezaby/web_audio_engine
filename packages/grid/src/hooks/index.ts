@@ -1,22 +1,21 @@
 "use client";
 
-import { Connection, EdgeChange, Node, NodeChange } from "reactflow";
-import { useDispatch, useSelector } from "react-redux";
-import type { TypedUseSelectorHook } from "react-redux";
-import { useCallback, useEffect, useState } from "react";
+import Engine from "@blibliki/engine";
 import { useAuth, useUser } from "@clerk/nextjs";
 import { getAuth, signInWithCustomToken } from "firebase/auth";
-import Engine from "@blibliki/engine";
-
-import type { RootState, AppDispatch } from "@/store";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import type { TypedUseSelectorHook } from "react-redux";
+import { Connection, EdgeChange, Node, NodeChange } from "reactflow";
+import { modulesSelector } from "@/components/AudioModule/modulesSlice";
 import {
   onNodesChange as _onNodesChange,
   onEdgesChange as _onEdgesChange,
   onConnect as _onConnect,
   addNode as _addNode,
 } from "@/components/Grid/gridNodesSlice";
-import { modulesSelector } from "@/components/AudioModule/modulesSlice";
 import Patch, { IPatch } from "@/models/Patch";
+import type { RootState, AppDispatch } from "@/store";
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useAppDispatch: () => AppDispatch = useDispatch;

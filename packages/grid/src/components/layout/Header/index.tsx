@@ -1,18 +1,16 @@
 "use client";
 
-import { ChangeEvent, ReactNode } from "react";
 import { SignedIn, SignedOut, UserButton, useClerk } from "@clerk/nextjs";
-
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import { start, stop, setBpm } from "@/globalSlice";
-import { setName as setPatchName } from "@/patchSlice";
+import { LogIn, Octagon, Play } from "lucide-react";
+import Link from "next/link";
+import { ChangeEvent, ReactNode } from "react";
 import { Button, Input, buttonVariants } from "@/components/ui";
-
+import { start, stop, setBpm } from "@/globalSlice";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { setName as setPatchName } from "@/patchSlice";
 import ColorSchemeToggle from "./ColorSchemeToggle";
 import Patch from "./Patch";
 import LoadModal from "./Patch/LoadModal";
-import Link from "next/link";
-import { LogIn, Octagon, Play } from "lucide-react";
 
 export default function Header() {
   const dispatch = useAppDispatch();

@@ -1,14 +1,13 @@
 "use client";
 
-import { Provider } from "react-redux";
-import { ReactNode } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
-
-import { store } from "@/store";
-import EngineInitializer from "@/EngineInitializer";
-import { ThemeProvider } from "./components/ThemeProvider";
-import FirebaseInitializer from "./FirebaseInitializer";
+import { ReactNode } from "react";
+import { Provider } from "react-redux";
 import { ReactFlowProvider } from "reactflow";
+import EngineInitializer from "@/EngineInitializer";
+import { store } from "@/store";
+import FirebaseInitializer from "./FirebaseInitializer";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 export default function Providers(props: { children: ReactNode }) {
   const { children } = props;

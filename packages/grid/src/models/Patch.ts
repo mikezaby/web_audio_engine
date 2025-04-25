@@ -1,7 +1,3 @@
-import { db, getDb } from "./db";
-import { ModuleProps } from "@/components/AudioModule/modulesSlice";
-import { IGridNodes } from "@/components/Grid/gridNodesSlice";
-import { Optional } from "@/types";
 import {
   collection,
   addDoc,
@@ -12,6 +8,10 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { pick } from "lodash";
+import { ModuleProps } from "@/components/AudioModule/modulesSlice";
+import { IGridNodes } from "@/components/Grid/gridNodesSlice";
+import { Optional } from "@/types";
+import { db, getDb } from "./db";
 
 export interface IPatch {
   id: string;

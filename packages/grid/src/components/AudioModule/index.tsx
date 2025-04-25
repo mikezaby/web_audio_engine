@@ -1,21 +1,20 @@
-import { updateModule } from "./modulesSlice";
 import { useAppDispatch } from "@/hooks";
-
-import Oscillator from "./Oscillator";
-import Envelope from "./Envelope";
-import Filter from "./Filter";
-import Volume from "./Volume";
-import MidiDeviceSelector from "./MidiDeviceSelector";
-import VoiceScheduler from "./VoiceScheduler";
-import Keyboard from "./Keyboard";
-import Reverb from "./Reverb";
+import { AnyObject } from "@/types";
+import BitCrusher from "./BitCrusher";
 import Delay from "./Delay";
 import Distortion from "./Distortion";
-import BitCrusher from "./BitCrusher";
-import Sequencer from "./Sequencer";
-import Master from "./Master";
+import Envelope from "./Envelope";
+import Filter from "./Filter";
+import Keyboard from "./Keyboard";
 import LFO from "./LFO";
-import { AnyObject } from "@/types";
+import Master from "./Master";
+import MidiDeviceSelector from "./MidiDeviceSelector";
+import Oscillator from "./Oscillator";
+import Reverb from "./Reverb";
+import Sequencer from "./Sequencer";
+import VoiceScheduler from "./VoiceScheduler";
+import Volume from "./Volume";
+import { updateModule } from "./modulesSlice";
 
 export interface AudioModuleProps {
   id: string;

@@ -1,20 +1,17 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Engine from "@blibliki/engine";
-
-import Patch, { IPatch } from "@/models/Patch";
-
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   addModule,
   ModuleProps,
   modulesSelector,
   removeAllModules,
 } from "@/components/AudioModule/modulesSlice";
-
-import { AppDispatch, RootState } from "@/store";
 import {
   removeAllGridNodes,
   setGridNodes,
 } from "@/components/Grid/gridNodesSlice";
+import Patch, { IPatch } from "@/models/Patch";
+import { AppDispatch, RootState } from "@/store";
 
 interface PatchProps {
   patch: Omit<IPatch, "config">;

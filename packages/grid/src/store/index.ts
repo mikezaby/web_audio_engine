@@ -1,11 +1,11 @@
 "use client";
 
 import { configureStore } from "@reduxjs/toolkit";
-import globalReducer from "@/globalSlice";
 import midiDevicesReducer from "@/components/AudioModule/MidiDeviceSelector/midiDevicesSlice";
 import modulesReducer from "@/components/AudioModule/modulesSlice";
-import modalReducer from "@/components/Modal/modalSlice";
 import gridNodesReducer from "@/components/Grid/gridNodesSlice";
+import modalReducer from "@/components/Modal/modalSlice";
+import globalReducer from "@/globalSlice";
 import patchReducer from "@/patchSlice";
 
 export const store = configureStore({

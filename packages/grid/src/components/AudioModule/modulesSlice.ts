@@ -1,16 +1,15 @@
+import Engine, { IOProps } from "@blibliki/engine";
+import { UpdateModuleProps } from "@blibliki/engine/dist/src/Engine";
 import {
   createSlice,
   createSelector,
   createEntityAdapter,
   PayloadAction,
 } from "@reduxjs/toolkit";
-
-import Engine, { IOProps } from "@blibliki/engine";
+import { XYPosition } from "reactflow";
+import { addNode } from "@/components/Grid/gridNodesSlice";
 import { AppDispatch, RootState } from "@/store";
 import { AnyObject, Optional } from "@/types";
-import { addNode } from "@/components/Grid/gridNodesSlice";
-import { XYPosition } from "reactflow";
-import { UpdateModuleProps } from "@blibliki/engine/dist/src/Engine";
 
 interface ModuleInterface {
   name: string;
