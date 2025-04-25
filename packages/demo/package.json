@@ -8,6 +8,8 @@
     "build": "tsc && vite build",
     "tsc": "tsc --noEmit",
     "lint": "eslint src",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
     "preview": "vite preview"
   },
   "devDependencies": {
