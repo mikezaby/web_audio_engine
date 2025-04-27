@@ -102,8 +102,8 @@ export class Engine {
     this.modules.delete(id);
   }
 
-  addRoute(props: Optional<IRoute, "id">) {
-    this.routes.addRoute(props);
+  addRoute(props: Optional<IRoute, "id">): IRoute {
+    return this.routes.addRoute(props);
   }
 
   removeRoute(id: string) {

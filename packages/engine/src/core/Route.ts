@@ -21,11 +21,14 @@ export class Routes {
     this.routes = new Map();
   }
 
-  addRoute(props: Optional<IRoute, "id">) {
+  addRoute(props: Optional<IRoute, "id">): IRoute {
     const id = props.id || uuidv4();
-    this.routes.set(id, { ...props, id });
+    const route = { ...props, id };
+    this.routes.set(id, route);
 
     this.plug(id);
+
+    return route;
   }
 
   removeRoute(id: string) {
