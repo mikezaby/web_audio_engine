@@ -122,6 +122,14 @@ export class Engine {
     this.transport.pause(props);
   }
 
+  get bpm() {
+    return this.transport.bpm;
+  }
+
+  set bpm(value: number) {
+    this.transport.bpm = value;
+  }
+
   async resume() {
     await this.context.resume();
   }
