@@ -134,6 +134,10 @@ export class Engine {
     await this.context.resume();
   }
 
+  dispose() {
+    this.modules.forEach((module) => module.dispose());
+  }
+
   findModule(id: string) {
     const module = this.modules.get(id);
     if (!module) throw Error(`The module with id ${id} is not exists`);

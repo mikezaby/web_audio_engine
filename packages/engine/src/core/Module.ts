@@ -156,6 +156,11 @@ export default abstract class Module<T extends ModuleType>
     }
   };
 
+  dispose() {
+    this.inputs.unPlugAll();
+    this.outputs.unPlugAll();
+  }
+
   private triggerer(
     trigger: (note: Note, triggeredAt: TTime) => void,
     note: Note | undefined,
