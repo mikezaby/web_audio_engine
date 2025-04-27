@@ -110,6 +110,22 @@ export class Engine {
     this.routes.removeRoute(id);
   }
 
+  validRoute(props: Optional<IRoute, "id">): boolean {
+    const { source, destination } = props;
+
+    const output = this.findIO(source.moduleId, source.ioName, "output");
+    const input = this.findIO(
+      destination.moduleId,
+      destination.ioName,
+      "input",
+    );
+
+    return (
+      (output.isMidi() && input.isMidi()) ||
+      (output.isAudio() && input.isAudio())
+    );
+  }
+
   start(props: { offset?: TTime; actionAt?: TTime } = {}) {
     this.transport.start(props);
   }
