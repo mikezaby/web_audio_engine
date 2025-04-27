@@ -8,4 +8,10 @@ export type { IRoute } from "./Route";
 
 export { default as MidiDeviceManager } from "./midi/MidiDeviceManager";
 
-export type { MidiOutput, MidiInput, AudioInput, AudioOutput } from "./IO";
+export type {
+  MidiOutput,
+  MidiInput,
+  AudioInput,
+  AudioOutput,
+  IIOSerialize,
+} from "./IO";

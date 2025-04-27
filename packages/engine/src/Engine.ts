@@ -13,7 +13,7 @@ import { Optional } from "@/utils";
 import { TTime } from "./core/Timing/Time";
 import { loadProcessors } from "./processors";
 
-interface IUpdateModule<T extends ModuleType> {
+export interface IUpdateModule<T extends ModuleType> {
   id: string;
   moduleType: T;
   changes: Partial<Omit<ICreateParams<T>, "id" | "moduleType">>;
