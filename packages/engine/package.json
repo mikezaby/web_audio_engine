@@ -22,14 +22,13 @@
   },
   "devDependencies": {
     "@types/audioworklet": "^0.0.71",
-    "@types/crypto-js": "^4.2.2",
     "@types/lodash": "^4.17.0",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.7"
   },
   "dependencies": {
+    "@blibliki/utils": "workspace:^",
     "@ircam/sc-scheduling": "^1.0.0",
-    "crypto-js": "^4.2.0",
     "lodash": "^4.17.21",
     "node-web-audio-api": "^1.0.3",
     "webmidi": "^3.1.12"

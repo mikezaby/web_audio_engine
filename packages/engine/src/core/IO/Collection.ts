@@ -1,5 +1,5 @@
+import { assertNever } from "@blibliki/utils";
 import { AnyModule } from "@/modules";
-import { assertNever } from "@/utils";
 import {
   AudioInput,
   AudioInputProps,

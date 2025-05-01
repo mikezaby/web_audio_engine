@@ -1,3 +1,4 @@
+import { Optional } from "@blibliki/utils";
 import { pick } from "lodash";
 import {
   IAnyAudioContext,
@@ -9,7 +10,6 @@ import {
 } from "@/core";
 import { Transport } from "@/core/Timing";
 import { AnyModule, ICreateParams, ModuleType, createModule } from "@/modules";
-import { Optional } from "@/utils";
 import { TTime } from "./core/Timing/Time";
 import { loadProcessors } from "./processors";
 
@@ -151,7 +151,9 @@ export class Engine {
   }
 
   dispose() {
-    this.modules.forEach((module) => module.dispose());
+    this.modules.forEach((module) => {
+      module.dispose();
+    });
   }
 
   findModule(id: string) {

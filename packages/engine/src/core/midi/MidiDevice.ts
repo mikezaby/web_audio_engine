@@ -1,5 +1,5 @@
 import { Input, MessageEvent } from "webmidi";
-import { browserToContextTime } from "@/utils/time";
+import { browserToContextTime } from "../Timing";
 import MidiEvent, { MidiEventType } from "./MidiEvent";
 
 export enum TMidiPortState {

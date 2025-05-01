@@ -1,5 +1,5 @@
+import { Optional, uuidv4 } from "@blibliki/utils";
 import { Engine } from "@/Engine";
-import { Optional, uuidv4 } from "@/utils";
 
 interface IPlug {
   moduleId: string;

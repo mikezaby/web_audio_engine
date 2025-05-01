@@ -1,4 +1,4 @@
-import { now } from "@/utils/time";
+import { now } from ".";
 import Scheduler from "./Scheduler";
 import Time, { t, TTime } from "./Time";
 

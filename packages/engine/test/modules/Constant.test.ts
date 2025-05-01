@@ -1,8 +1,8 @@
+import { sleep } from "@blibliki/utils";
 import { describe, it, expect, beforeEach } from "vitest";
 import { createModule, ModuleType } from "@/modules";
 import Constant from "@/modules/Constant";
 import Inspector from "@/modules/Inspector";
-import { sleep } from "@/utils/time";
 
 describe("Constant", () => {
   let constant: Constant;

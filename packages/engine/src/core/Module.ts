@@ -1,7 +1,7 @@
+import { Optional, uuidv4 } from "@blibliki/utils";
 import { upperFirst } from "lodash";
 import { Engine } from "@/Engine";
 import { AnyModule, ModuleType, ModuleTypeToPropsMapping } from "@/modules";
-import { Optional, uuidv4 } from "@/utils";
 import { IAnyAudioContext } from ".";
 import {
   AudioInputProps,

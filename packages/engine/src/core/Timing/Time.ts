@@ -1,6 +1,6 @@
 import { isNumber } from "lodash";
 import { Engine } from "@/Engine";
-import { now } from "@/utils/time";
+import { now } from ".";
 
 export type BarsBeatsSixteenths = `${number}:${number}:${number}`;
 export type TTime = number | BarsBeatsSixteenths | Time;

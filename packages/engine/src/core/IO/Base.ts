@@ -1,5 +1,5 @@
+import { deterministicId } from "@blibliki/utils";
 import { AnyModule } from "@/modules";
-import { deterministicId } from "@/utils";
 import { AudioInput, AudioOutput } from "./AudioIO";
 import { MidiInput, MidiOutput } from "./MidiIO";
 
