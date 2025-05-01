@@ -49,3 +49,9 @@ export function createScaleNormalized({
 export function sleep(time: number): Promise<unknown> {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
+
+export function notImplemented(message?: string): never {
+  message ??= "Not implemented";
+  console.error(message);
+  throw Error(message);
+}
