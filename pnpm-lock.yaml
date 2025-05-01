@@ -20,6 +20,9 @@ importers:
       prettier:
         specifier: ^3.5.3
         version: 3.5.3
+      tsup:
+        specifier: ^8.4.0
+        version: 8.4.0(jiti@1.21.7)(postcss@8.5.3)(typescript@5.8.3)(yaml@2.7.1)
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -67,9 +70,6 @@ importers:
       globals:
         specifier: ^15.12.0
         version: 15.15.0
-      tsup:
-        specifier: ^8.4.0
-        version: 8.4.0(jiti@1.21.7)(postcss@8.5.3)(typescript@5.8.3)(yaml@2.7.1)
       vite-tsconfig-paths:
         specifier: ^5.1.4
         version: 5.1.4(typescript@5.8.3)(vite@6.2.6(jiti@1.21.7)(yaml@2.7.1))
@@ -191,6 +191,28 @@ importers:
       postcss:
         specifier: ^8.4.35
         version: 8.5.3
+
+  packages/utils:
+    dependencies:
+      crypto-js:
+        specifier: ^4.2.0
+        version: 4.2.0
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+    devDependencies:
+      '@types/crypto-js':
+        specifier: ^4.2.2
+        version: 4.2.2
+      '@types/lodash':
+        specifier: ^4.17.0
+        version: 4.17.16
+      globals:
+        specifier: ^15.12.0
+        version: 15.15.0
+      tsup:
+        specifier: ^8.4.0
+        version: 8.4.0(jiti@1.21.7)(postcss@8.5.3)(typescript@5.8.3)(yaml@2.7.1)
 
 packages:
 
