@@ -1,9 +1,12 @@
 import { Input, Output, WebMidi } from "webmidi";
 import MidiDevice from "./MidiDevice";
 
+type ListenerCallback = (device: MidiDevice) => void;
+
 export default class MidiDeviceManager {
   devices: Map<string, MidiDevice> = new Map();
   private initialized = false;
+  private listeners: ListenerCallback[] = [];
 
   async initialize() {
     await this.initializeDevices()
@@ -16,6 +19,10 @@ export default class MidiDeviceManager {
 
   find(id: string): MidiDevice | undefined {
     return this.devices.get(id);
+  }
+
+  addListener(callback: ListenerCallback) {
+    this.listeners.push(callback);
   }
 
   private async initializeDevices() {
@@ -43,6 +50,10 @@ export default class MidiDeviceManager {
 
       const device = new MidiDevice(port);
       this.devices.set(device.id, device);
+
+      this.listeners.forEach((listener) => {
+        listener(device);
+      });
     });
 
     WebMidi.addListener("disconnected", (event) => {
@@ -54,6 +65,10 @@ export default class MidiDeviceManager {
 
       device.disconnect();
       this.devices.delete(device.id);
+
+      this.listeners.forEach((listener) => {
+        listener(device);
+      });
     });
   }
 }

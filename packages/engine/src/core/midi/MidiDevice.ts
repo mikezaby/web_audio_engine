@@ -7,7 +7,7 @@ export enum TMidiPortState {
   disconnected = "disconnected",
 }
 
-export interface MidiDeviceInterface {
+export interface IMidiDevice {
   id: string;
   name: string;
   state: TMidiPortState;
@@ -15,7 +15,7 @@ export interface MidiDeviceInterface {
 
 export type EventListerCallback = (event: MidiEvent) => void;
 
-export default class MidiDevice implements MidiDeviceInterface {
+export default class MidiDevice implements IMidiDevice {
   id: string;
   name: string;
   eventListerCallbacks: EventListerCallback[] = [];
