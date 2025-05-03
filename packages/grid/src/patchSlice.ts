@@ -1,4 +1,4 @@
-import Engine from "@blibliki/engine";
+import { Engine } from "@blibliki/engine";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   addModule,
@@ -91,7 +91,7 @@ export const destroy =
 export const { setAttributes, setName } = patchSlice.actions;
 
 const clearEngine = () => (dispatch: AppDispatch) => {
-  Engine.dispose();
+  Engine.current.dispose();
   dispatch(removeAllModules());
   dispatch(removeAllGridNodes());
 };

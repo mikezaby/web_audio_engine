@@ -1,5 +1,10 @@
-import Engine, { IOProps } from "@blibliki/engine";
-import { UpdateModuleProps } from "@blibliki/engine/dist/src/Engine";
+import {
+  Engine,
+  IIOSerialize,
+  IModule,
+  IUpdateModule,
+  ModuleType,
+} from "@blibliki/engine";
 import {
   createSlice,
   createSelector,
@@ -9,55 +14,40 @@ import {
 import { XYPosition } from "reactflow";
 import { addNode } from "@/components/Grid/gridNodesSlice";
 import { AppDispatch, RootState } from "@/store";
-import { AnyObject, Optional } from "@/types";
+import { Optional } from "@/types";
 
-interface ModuleInterface {
-  name: string;
-  type: string;
-  numberOfVoices?: number;
-  props: AnyObject;
+interface ModuleInterface extends Omit<IModule<ModuleType>, "id"> {
+  numberOfVoices?: number; // TODO: TO be re-implemented
 }
 
 export interface ModuleProps extends ModuleInterface {
   id: string;
-  inputs: IOProps[];
-  outputs: IOProps[];
+  inputs: IIOSerialize[];
+  outputs: IIOSerialize[];
 }
 
-export const AvailableModules: {
-  [key: string]: Optional<ModuleInterface, "props">;
-} = {
-  Master: { name: "Master", type: "Master" },
-  Oscillator: { name: "Oscilator", type: "Oscillator" },
-  Envelope: {
-    name: "Envelope",
-    type: "Envelope",
+export const AvailableModules: Record<
+  ModuleType,
+  Optional<ModuleInterface, "props">
+> = {
+  [ModuleType.Master]: { name: "Master", moduleType: ModuleType.Master },
+  [ModuleType.Oscillator]: {
+    name: "Oscillator",
+    moduleType: ModuleType.Oscillator,
   },
-  AmpEnvelope: {
-    name: "Amp Envelope",
-    type: "AmpEnvelope",
-  },
-  Filter: { name: "Filter", type: "Filter" },
-  Volume: { name: "Volume", type: "Volume" },
-  MidiSelector: {
+  [ModuleType.Envelope]: { name: "Envelope", moduleType: ModuleType.Envelope },
+  [ModuleType.Filter]: { name: "Filter", moduleType: ModuleType.Filter },
+  [ModuleType.Volume]: { name: "Volume", moduleType: ModuleType.Volume },
+  [ModuleType.MidiSelector]: {
     name: "Midi Selector",
-    type: "MidiSelector",
+    moduleType: ModuleType.MidiSelector,
   },
-  VoiceScheduler: {
-    name: "Voice Scheduler",
-    type: "VoiceScheduler",
-    props: { numberOfVoices: 1 },
+  [ModuleType.Scale]: { name: "Scale", moduleType: ModuleType.Scale },
+  [ModuleType.Inspector]: {
+    name: "Inspector",
+    moduleType: ModuleType.Inspector,
   },
-  VirtualMidi: { name: "VirtualMidi", type: "VirtualMidi" },
-  Reverb: { name: "Reverb", type: "Reverb" },
-  Delay: { name: "Delay", type: "Delay" },
-  Distortion: { name: "Distortion", type: "Distortion" },
-  BitCrusher: { name: "BitCrusher", type: "BitCrusher" },
-  LFO: { name: "LFO", type: "LFO" },
-  Sequencer: {
-    name: "Sequencer",
-    type: "Sequencer",
-  },
+  [ModuleType.Constant]: { name: "Constant", moduleType: ModuleType.Constant },
 };
 
 const modulesAdapter = createEntityAdapter<ModuleProps>({});
@@ -67,8 +57,10 @@ export const modulesSlice = createSlice({
   initialState: modulesAdapter.getInitialState(),
   reducers: {
     addModule: modulesAdapter.addOne,
-    updateModule: (state, update: PayloadAction<UpdateModuleProps>) => {
-      const { id, ...changes } = Engine.updateModule(update.payload);
+    updateModule: (state, update: PayloadAction<IUpdateModule<ModuleType>>) => {
+      const { id, moduleType, ...changes } = Engine.current.updateModule(
+        update.payload,
+      );
       return modulesAdapter.updateOne(state, {
         id,
         changes,
@@ -89,7 +81,7 @@ export const addModule =
   (params: { audioModule: ModuleInterface; position?: XYPosition }) =>
   (dispatch: AppDispatch) => {
     const { audioModule, position = { x: 0, y: 0 } } = params;
-    const serializedModule = Engine.addModule(audioModule);
+    const serializedModule = Engine.current.addModule(audioModule);
     dispatch(_addModule(serializedModule));
 
     dispatch(
@@ -117,7 +109,7 @@ export const removeModule =
     const audioModule = modulesSelector.selectById(getState(), id);
     if (!audioModule) throw Error(`Audio module with id ${id} not exists`);
 
-    Engine.removeModule(id);
+    Engine.current.removeModule(id);
     dispatch(modulesSlice.actions.removeModule(id));
   };
 
@@ -128,8 +120,8 @@ export const modulesSelector = modulesAdapter.getSelectors(
 export const selectModulesByType = createSelector(
   (state: RootState) => modulesSelector.selectAll(state),
   (_: RootState, type: string) => type,
-  (modules: ModuleProps[], type: string) =>
-    modules.filter((m) => m.type === type),
+  (modules: ModuleProps[], type: ModuleType) =>
+    modules.filter((m) => m.moduleType === type),
 );
 
 export default modulesSlice.reducer;

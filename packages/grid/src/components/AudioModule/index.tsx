@@ -1,26 +1,21 @@
+import { ModuleType } from "@blibliki/engine";
+import { assertNever, notImplemented } from "@blibliki/utils";
+import { JSX } from "react";
 import { useAppDispatch } from "@/hooks";
 import { AnyObject } from "@/types";
-import BitCrusher from "./BitCrusher";
-import Delay from "./Delay";
-import Distortion from "./Distortion";
 import Envelope from "./Envelope";
 import Filter from "./Filter";
-import Keyboard from "./Keyboard";
-import LFO from "./LFO";
 import Master from "./Master";
 import MidiDeviceSelector from "./MidiDeviceSelector";
 import Oscillator from "./Oscillator";
-import Reverb from "./Reverb";
-import Sequencer from "./Sequencer";
-import VoiceScheduler from "./VoiceScheduler";
 import Volume from "./Volume";
 import { updateModule } from "./modulesSlice";
 
 export interface AudioModuleProps {
   id: string;
   name: string;
-  type: string;
-  props?: AnyObject;
+  moduleType: ModuleType;
+  props: any; // TODO: Make a solid solution with specific typy
 }
 
 export type TUpdateProps = (id: string, props?: object) => void;
@@ -31,64 +26,54 @@ export default function AudioModule(audioModuleProps: {
 }) {
   const dispatch = useAppDispatch();
 
-  const { id, name, type, props } = audioModuleProps.audioModule;
+  const { id, name, moduleType, props } = audioModuleProps.audioModule;
 
-  let Component;
+  let Component: (
+    props: AudioModuleProps & {
+      updateProps: (id: string, props: AnyObject) => void;
+    },
+  ) => JSX.Element;
 
-  const updateProps = (id: string, props: object) => {
-    dispatch(updateModule({ id, changes: { props } }));
+  const updateProps = (id: string, props: AnyObject) => {
+    dispatch(updateModule({ id, moduleType, changes: { props } }));
   };
 
-  switch (type) {
-    case "Master":
+  switch (moduleType) {
+    case ModuleType.Master:
       Component = Master;
       break;
-    case "Oscillator":
+    case ModuleType.Oscillator:
       Component = Oscillator;
       break;
-    case "Filter":
+    case ModuleType.Filter:
       Component = Filter;
       break;
-    case "Volume":
+    case ModuleType.Volume:
       Component = Volume;
       break;
-    case "Envelope":
-    case "AmpEnvelope":
-    case "FreqEnvelope":
+    case ModuleType.Envelope:
       Component = Envelope;
       break;
-    case "MidiSelector":
+    case ModuleType.MidiSelector:
       Component = MidiDeviceSelector;
       break;
-    case "VoiceScheduler":
-      Component = VoiceScheduler;
-      break;
-    case "VirtualMidi":
-      Component = Keyboard;
-      break;
-    case "Reverb":
-      Component = Reverb;
-      break;
-    case "Delay":
-      Component = Delay;
-      break;
-    case "Distortion":
-      Component = Distortion;
-      break;
-    case "BitCrusher":
-      Component = BitCrusher;
-      break;
-    case "Sequencer":
-      Component = Sequencer;
-      break;
-    case "LFO":
-      Component = LFO;
-      break;
+    case ModuleType.Inspector:
+      notImplemented();
+    case ModuleType.Constant:
+      notImplemented();
+    case ModuleType.Scale:
+      notImplemented();
     default:
-      throw Error(`Unknown audio module type ${type}`);
+      assertNever(moduleType);
   }
 
   return (
-    <Component id={id} name={name} props={props} updateProps={updateProps} />
+    <Component
+      id={id}
+      moduleType={moduleType}
+      name={name}
+      props={props}
+      updateProps={updateProps}
+    />
   );
 }

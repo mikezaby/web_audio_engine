@@ -5,6 +5,7 @@
   "homepage": "https://blibliki-js.github.io/grid",
   "dependencies": {
     "@blibliki/engine": "workspace:^",
+    "@blibliki/utils": "workspace:^",
     "@clerk/nextjs": "^4.29.7",
     "@radix-ui/react-context-menu": "^2.1.5",
     "@radix-ui/react-dialog": "^1.0.5",

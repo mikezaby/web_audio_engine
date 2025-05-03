@@ -1,4 +1,4 @@
-import { IOProps } from "@blibliki/engine";
+import { IIOSerialize } from "@blibliki/engine";
 import { ReactNode, useMemo } from "react";
 import { Handle, HandleType, NodeProps, Position } from "reactflow";
 import AudioModule from "@/components/AudioModule";
@@ -47,7 +47,11 @@ export default function AudioNode(props: NodeProps) {
       <ContextMenuContent className="p-0 border-0">
         <Card>
           <CardContent>
-            <Name id={audioModule.id} value={audioModule.name} />
+            <Name
+              id={audioModule.id}
+              moduleType={audioModule.moduleType}
+              value={audioModule.name}
+            />
             {audioModule.numberOfVoices && (
               <Voices id={audioModule.id} value={audioModule.numberOfVoices} />
             )}
@@ -58,7 +62,7 @@ export default function AudioNode(props: NodeProps) {
   );
 }
 
-function IO({ io }: { io: IOProps }) {
+function IO({ io }: { io: IIOSerialize }) {
   const handleProps = useMemo(() => {
     const position = io.ioType.includes("Input")
       ? Position.Left
@@ -75,7 +79,7 @@ function IO({ io }: { io: IOProps }) {
     <div className="relative">
       <div className="px-2">{io.name}</div>
       <Handle
-        id={io.id}
+        id={io.name}
         type={handleProps.type}
         position={handleProps.position}
         className={`${handleProps.className} block rounded w-auto h-6 text-white text-xs -bottom-5 p-1`}

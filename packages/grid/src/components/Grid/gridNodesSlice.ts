@@ -1,4 +1,4 @@
-import Engine, { RouteInterface, RouteProps } from "@blibliki/engine";
+import { Engine, IRoute } from "@blibliki/engine";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   Connection,
@@ -32,11 +32,11 @@ export const gridNodesSlice = createSlice({
   reducers: {
     setGridNodes: (_, action: PayloadAction<IGridNodes>) => {
       action.payload.edges.forEach((edge) => {
-        const route: RouteInterface = {
+        const route: IRoute = {
           id: edge.id,
           ...connectionToRoute(edge as Connection),
         };
-        Engine.addRoute(route);
+        Engine.current.addRoute(route);
       });
       return action.payload;
     },
@@ -56,11 +56,11 @@ export const gridNodesSlice = createSlice({
       changes.forEach((change) => {
         if (change.type !== "remove") return;
 
-        Engine.removeRoute(change.id);
+        Engine.current.removeRoute(change.id);
       });
     },
     onConnect: (state, action: PayloadAction<Connection>) => {
-      const route = Engine.addRoute(connectionToRoute(action.payload));
+      const route = Engine.current.addRoute(connectionToRoute(action.payload));
       state.edges = addEdge({ id: route.id, ...action.payload }, state.edges);
     },
     setViewport: (state, action: PayloadAction<Viewport>) => {
@@ -93,7 +93,7 @@ export const onNodesChange =
     });
   };
 
-function connectionToRoute(connection: Connection): RouteProps {
+function connectionToRoute(connection: Connection): Omit<IRoute, "id"> {
   const {
     source: sourceId,
     sourceHandle: sourceIOId,
@@ -104,7 +104,10 @@ function connectionToRoute(connection: Connection): RouteProps {
   if (!sourceId || !sourceIOId || !destinationId || !destinationIOId)
     throw Error("Some value is null");
 
-  return { sourceId, sourceIOId, destinationId, destinationIOId };
+  return {
+    source: { moduleId: sourceId, ioName: sourceIOId },
+    destination: { moduleId: destinationId, ioName: destinationIOId },
+  };
 }
 
 export default gridNodesSlice.reducer;

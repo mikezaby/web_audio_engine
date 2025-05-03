@@ -1,6 +1,6 @@
 "use client";
 
-import Engine from "@blibliki/engine";
+import { Engine } from "@blibliki/engine";
 import { useAuth, useUser } from "@clerk/nextjs";
 import { getAuth, signInWithCustomToken } from "firebase/auth";
 import { useCallback, useEffect, useState } from "react";
@@ -100,11 +100,9 @@ export function useGridNodes() {
     const { source, sourceHandle, target, targetHandle } = connection;
     if (!source || !sourceHandle || !target || !targetHandle) return false;
 
-    return Engine.validRoute({
-      sourceId: source,
-      sourceIOId: sourceHandle,
-      destinationId: target,
-      destinationIOId: targetHandle,
+    return Engine.current.validRoute({
+      source: { moduleId: source, ioName: sourceHandle },
+      destination: { moduleId: target, ioName: targetHandle },
     });
   }, []);
 
