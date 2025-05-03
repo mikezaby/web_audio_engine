@@ -80,7 +80,7 @@ export default class Time {
   }
 
   toNumber(): number {
-    if (this._number) return this._number;
+    if (isNumber(this._number)) return this._number;
 
     const [beatsPerBar, sixteenths] = this.transport.timeSignature;
     const secondsPerBeat = 60 / this.transport.bpm;
