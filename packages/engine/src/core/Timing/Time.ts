@@ -1,4 +1,4 @@
-import { isNumber } from "lodash";
+import { isNumber } from "@blibliki/utils";
 import { Engine } from "@/Engine";
 import { now } from ".";
 

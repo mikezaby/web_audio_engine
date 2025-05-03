@@ -1,5 +1,4 @@
-import { Optional } from "@blibliki/utils";
-import { pick } from "lodash";
+import { Optional, pick } from "@blibliki/utils";
 import {
   IAnyAudioContext,
   IModuleSerialize,

@@ -55,3 +55,30 @@ export function notImplemented(message?: string): never {
   console.error(message);
   throw Error(message);
 }
+
+export const isNumber = (value: unknown): value is number =>
+  typeof value === "number" && !isNaN(value);
+
+export const pick = <T extends object, K extends keyof T>(
+  obj: T,
+  keys: K[],
+): Pick<T, K> => {
+  return Object.fromEntries(keys.map((k) => [k, obj[k]])) as Pick<T, K>;
+};
+
+export const upperFirst = (str: string): string =>
+  str.charAt(0).toUpperCase() + str.slice(1);
+
+export function throttle<T extends (...args: any[]) => any>(
+  callback: T,
+  wait: number,
+): (...args: Parameters<T>) => void {
+  let lastCall = 0;
+  return function (...args: Parameters<T>) {
+    const now = Date.now();
+    if (now - lastCall >= wait) {
+      lastCall = now;
+      callback(...args);
+    }
+  };
+}

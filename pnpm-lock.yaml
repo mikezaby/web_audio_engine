@@ -48,9 +48,6 @@ importers:
       '@ircam/sc-scheduling':
         specifier: ^1.0.0
         version: 1.0.0
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       node-web-audio-api:
         specifier: ^1.0.3
         version: 1.0.4
@@ -61,9 +58,6 @@ importers:
       '@types/audioworklet':
         specifier: ^0.0.71
         version: 0.0.71
-      '@types/lodash':
-        specifier: ^4.17.0
-        version: 4.17.16
       vite-tsconfig-paths:
         specifier: ^5.1.4
         version: 5.1.4(typescript@5.8.3)(vite@6.2.6(jiti@1.21.7)(yaml@2.7.1))
@@ -115,9 +109,6 @@ importers:
       firebase:
         specifier: ^10.8.1
         version: 10.14.1
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       lucide-react:
         specifier: ^0.334.0
         version: 0.334.0(react@18.3.1)
@@ -152,9 +143,6 @@ importers:
         specifier: ^9.0.0
         version: 9.0.1
     devDependencies:
-      '@types/lodash':
-        specifier: ^4.14.186
-        version: 4.17.16
       '@types/node':
         specifier: ^16.7.13
         version: 16.18.126
@@ -1565,9 +1553,6 @@ packages:
 
   '@types/keygrip@1.0.6':
     resolution: {integrity: sha512-lZuNAY9xeJt7Bx4t4dx0rYCDqGPW8RXhQZK1td7d4H6E9zYbLoOtjBvfwdTKpsyxQI/2jv+armjX/RW+ZNpXOQ==}
-
-  '@types/lodash@4.17.16':
-    resolution: {integrity: sha512-HX7Em5NYQAXKW+1T+FiuG27NGwzJfCX3s1GjOa7ujxZa52kjJLOr4FUxT+giF6Tgxv1e+/czV/iTtBw27WTU9g==}
 
   '@types/mime@1.3.5':
     resolution: {integrity: sha512-/pyBZWSLD2n0dcHE3hq8s8ZvcETHtEuF+3E7XVt0Ig2nvsVQXdghHVcEkIWjy9A0wKfTn97a/PSDYohKIlnP/w==}
@@ -5550,8 +5535,6 @@ snapshots:
   '@types/json5@0.0.29': {}
 
   '@types/keygrip@1.0.6': {}
-
-  '@types/lodash@4.17.16': {}
 
   '@types/mime@1.3.5': {}
 

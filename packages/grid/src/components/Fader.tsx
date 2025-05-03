@@ -1,4 +1,4 @@
-import { throttle } from "lodash";
+import { throttle } from "@blibliki/utils";
 import { Slider } from "./ui";
 
 export interface MarkProps {

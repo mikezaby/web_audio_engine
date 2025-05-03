@@ -1,3 +1,4 @@
+import { pick } from "@blibliki/utils";
 import {
   collection,
   addDoc,
@@ -7,7 +8,6 @@ import {
   getDocs,
   deleteDoc,
 } from "firebase/firestore";
-import { pick } from "lodash";
 import { ModuleProps } from "@/components/AudioModule/modulesSlice";
 import { IGridNodes } from "@/components/Grid/gridNodesSlice";
 import { Optional } from "@/types";
