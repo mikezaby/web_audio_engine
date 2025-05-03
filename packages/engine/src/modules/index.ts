@@ -1,5 +1,5 @@
+import { assertNever } from "@blibliki/utils";
 import { IAnyAudioContext, IModule, Module } from "@/core";
-import { assertNever } from "@/utils";
 import Constant, { IConstantProps } from "./Constant";
 import Envelope, { IEnvelopeProps } from "./Envelope";
 import Filter, { IFilterProps } from "./Filter";

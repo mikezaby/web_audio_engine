@@ -45,3 +45,13 @@ export function createScaleNormalized({
 }): (value: number) => number {
   return (value: number) => scaleNormalized({ value, min, max, type });
 }
+
+export function sleep(time: number): Promise<unknown> {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
+
+export function notImplemented(message?: string): never {
+  message ??= "Not implemented";
+  console.error(message);
+  throw Error(message);
+}

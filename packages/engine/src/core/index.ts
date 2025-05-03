@@ -7,5 +7,15 @@ export { Routes } from "./Route";
 export type { IRoute } from "./Route";
 
 export { default as MidiDeviceManager } from "./midi/MidiDeviceManager";
+export { default as MidiDevice } from "./midi/MidiDevice";
+export type { IMidiDevice } from "./midi/MidiDevice";
 
-export type { MidiOutput, MidiInput, AudioInput, AudioOutput } from "./IO";
+export type {
+  MidiOutput,
+  MidiInput,
+  AudioInput,
+  AudioOutput,
+  IIOSerialize,
+} from "./IO";
+
+export { TransportState } from "./Timing";

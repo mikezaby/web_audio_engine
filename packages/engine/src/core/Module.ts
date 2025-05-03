@@ -1,7 +1,7 @@
+import { Optional, uuidv4 } from "@blibliki/utils";
 import { upperFirst } from "lodash";
 import { Engine } from "@/Engine";
 import { AnyModule, ModuleType, ModuleTypeToPropsMapping } from "@/modules";
-import { Optional, uuidv4 } from "@/utils";
 import { IAnyAudioContext } from ".";
 import {
   AudioInputProps,
@@ -155,6 +155,11 @@ export default abstract class Module<T extends ModuleType>
         throw Error("This type is not a note");
     }
   };
+
+  dispose() {
+    this.inputs.unPlugAll();
+    this.outputs.unPlugAll();
+  }
 
   private triggerer(
     trigger: (note: Note, triggeredAt: TTime) => void,

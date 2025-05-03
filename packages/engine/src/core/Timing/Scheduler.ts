@@ -1,5 +1,5 @@
 import { Scheduler as InternalScheduler } from "@ircam/sc-scheduling";
-import { now } from "@/utils/time";
+import { now } from ".";
 import { nt, t, TTime } from "./Time";
 import Transport from "./Transport";
 

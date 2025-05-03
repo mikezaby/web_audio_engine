@@ -7,10 +7,12 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "tsc": "tsc --noEmit",
+    "lint": "eslint src",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
     "preview": "vite preview"
   },
   "devDependencies": {
-    "typescript": "~5.7.2",
     "vite": "^6.2.0"
   },
   "dependencies": {

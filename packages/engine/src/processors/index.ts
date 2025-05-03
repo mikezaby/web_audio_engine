@@ -1,5 +1,5 @@
+import { assertNever } from "@blibliki/utils";
 import { IAnyAudioContext } from "@/core";
-import { assertNever } from "@/utils";
 import { scaleProcessorURL } from "./scale-processor";
 
 export enum CustomWorklet {

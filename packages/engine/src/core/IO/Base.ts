@@ -1,5 +1,7 @@
+import { deterministicId } from "@blibliki/utils";
 import { AnyModule } from "@/modules";
-import { deterministicId } from "@/utils";
+import { AudioInput, AudioOutput } from "./AudioIO";
+import { MidiInput, MidiOutput } from "./MidiIO";
 
 export interface IOProps {
   name: string;
@@ -64,6 +66,18 @@ export abstract class Base implements IIO {
     this.connections.forEach((otherIO) => {
       this.unPlug(otherIO);
     });
+  }
+
+  isAudio(): this is AudioInput | AudioOutput {
+    return (
+      this.ioType === IOType.AudioInput || this.ioType === IOType.AudioOutput
+    );
+  }
+
+  isMidi(): this is MidiInput | MidiOutput {
+    return (
+      this.ioType === IOType.MidiInput || this.ioType === IOType.MidiOutput
+    );
   }
 
   serialize(): IIOSerialize {

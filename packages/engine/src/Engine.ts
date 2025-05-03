@@ -1,3 +1,4 @@
+import { Optional } from "@blibliki/utils";
 import { pick } from "lodash";
 import {
   IAnyAudioContext,
@@ -9,11 +10,10 @@ import {
 } from "@/core";
 import { Transport } from "@/core/Timing";
 import { AnyModule, ICreateParams, ModuleType, createModule } from "@/modules";
-import { Optional } from "@/utils";
 import { TTime } from "./core/Timing/Time";
 import { loadProcessors } from "./processors";
 
-interface IUpdateModule<T extends ModuleType> {
+export interface IUpdateModule<T extends ModuleType> {
   id: string;
   moduleType: T;
   changes: Partial<Omit<ICreateParams<T>, "id" | "moduleType">>;
@@ -102,12 +102,28 @@ export class Engine {
     this.modules.delete(id);
   }
 
-  addRoute(props: Optional<IRoute, "id">) {
-    this.routes.addRoute(props);
+  addRoute(props: Optional<IRoute, "id">): IRoute {
+    return this.routes.addRoute(props);
   }
 
   removeRoute(id: string) {
     this.routes.removeRoute(id);
+  }
+
+  validRoute(props: Optional<IRoute, "id">): boolean {
+    const { source, destination } = props;
+
+    const output = this.findIO(source.moduleId, source.ioName, "output");
+    const input = this.findIO(
+      destination.moduleId,
+      destination.ioName,
+      "input",
+    );
+
+    return (
+      (output.isMidi() && input.isMidi()) ||
+      (output.isAudio() && input.isAudio())
+    );
   }
 
   start(props: { offset?: TTime; actionAt?: TTime } = {}) {
@@ -122,8 +138,22 @@ export class Engine {
     this.transport.pause(props);
   }
 
+  get bpm() {
+    return this.transport.bpm;
+  }
+
+  set bpm(value: number) {
+    this.transport.bpm = value;
+  }
+
   async resume() {
     await this.context.resume();
+  }
+
+  dispose() {
+    this.modules.forEach((module) => {
+      module.dispose();
+    });
   }
 
   findModule(id: string) {

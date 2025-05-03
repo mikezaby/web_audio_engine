@@ -1,8 +1,8 @@
+import { sleep } from "@blibliki/utils";
 import { describe, it, expect, beforeEach } from "vitest";
 import { createModule, ModuleType } from "@/modules";
 import Inspector from "@/modules/Inspector";
 import Scale from "@/modules/Scale";
-import { sleep } from "@/utils/time";
 
 describe("Scale", () => {
   let scale: Scale;

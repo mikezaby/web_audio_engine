@@ -1,7 +1,7 @@
+import { createScaleNormalized } from "@blibliki/utils";
 import { IAnyAudioContext, Module } from "@/core";
 import Note from "@/core/Note";
 import { nt, TTime } from "@/core/Timing/Time";
-import { createScaleNormalized } from "@/utils";
 import { ICreateParams, ModuleType } from ".";
 
 export interface IEnvelopeProps {

@@ -1,5 +1,5 @@
+import { EmptyObject } from "@blibliki/utils";
 import { IAnyAudioContext, IModule, Module } from "@/core";
-import { EmptyObject } from "@/utils";
 import { ICreateParams, ModuleType } from ".";
 
 export type IMaster = IModule<ModuleType.Master>;
