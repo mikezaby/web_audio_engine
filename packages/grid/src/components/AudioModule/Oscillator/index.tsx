@@ -1,10 +1,11 @@
+import { ModuleType } from "@blibliki/engine";
 import Fader, { MarkProps } from "@/components/Fader";
-import { TUpdateProps } from "..";
+import { ModuleComponent } from "..";
 import Container from "../Container";
 
 const Center: MarkProps[] = [{ value: 0, label: "-" }];
 
-const WAVES = ["sine", "triangle", "square", "sawtooth"];
+const WAVES: OscillatorType[] = ["sine", "triangle", "square", "sawtooth"];
 
 const WAVE_MARKS: MarkProps[] = [
   { value: 0, label: "sin" },
@@ -20,24 +21,16 @@ const RANGES: MarkProps[] = [
   { value: 2, label: "" },
 ];
 
-export default function Oscillator(props: {
-  id: string;
-  name: string;
-  props: { range: number; coarse: number; fine: number; wave: string };
-  updateProps: TUpdateProps;
-}) {
+const Oscillator: ModuleComponent<ModuleType.Oscillator> = (props) => {
   const {
-    id,
-    updateProps,
-    props: { range, coarse, fine, wave: waveName },
+    updateProp,
+    props: { octave, coarse, fine, wave: waveName },
   } = props;
 
   const waveIndex = WAVES.findIndex((w) => w === waveName);
 
-  const updateProp = (propName: string) => (value: number) => {
-    const updatedValue = propName === "wave" ? WAVES[value] : value;
-
-    updateProps(id, { [propName]: updatedValue });
+  const updateWaveProp = (value: number) => {
+    updateProp("wave")(WAVES[value]);
   };
 
   return (
@@ -48,7 +41,7 @@ export default function Oscillator(props: {
         min={-1}
         max={2}
         onChange={updateProp("octave")}
-        value={range}
+        value={octave}
       />
       <Fader
         name="Coarse"
@@ -71,9 +64,11 @@ export default function Oscillator(props: {
       <Fader
         name="Wave"
         marks={WAVE_MARKS}
-        onChange={updateProp("wave")}
+        onChange={updateWaveProp}
         value={waveIndex}
       />
     </Container>
   );
-}
+};
+
+export default Oscillator;

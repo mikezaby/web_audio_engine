@@ -1,8 +1,7 @@
-import { ModuleType } from "@blibliki/engine";
+import { ModuleType, ModuleTypeToPropsMapping } from "@blibliki/engine";
 import { assertNever, notImplemented } from "@blibliki/utils";
 import { JSX } from "react";
 import { useAppDispatch } from "@/hooks";
-import { AnyObject } from "@/types";
 import Envelope from "./Envelope";
 import Filter from "./Filter";
 import Gain from "./Gain";
@@ -11,51 +10,68 @@ import MidiDeviceSelector from "./MidiDeviceSelector";
 import Oscillator from "./Oscillator";
 import { updateModule } from "./modulesSlice";
 
-export interface AudioModuleProps {
+export interface AudioModuleProps<T extends ModuleType> {
   id: string;
   name: string;
-  moduleType: ModuleType;
-  props: any; // TODO: Make a solid solution with specific typy
+  moduleType: T;
+  props: ModuleTypeToPropsMapping[T];
 }
 
-export type TUpdateProps = (id: string, props?: object) => void;
+export type ModuleComponent<T extends ModuleType> = (
+  props: AudioModuleProps<T> & {
+    updateProp: <K extends keyof ModuleTypeToPropsMapping[T]>(
+      propName: K,
+    ) => (value: ModuleTypeToPropsMapping[T][K]) => void;
+  },
+) => JSX.Element;
 
-export default function AudioModule(audioModuleProps: {
-  audioModule: AudioModuleProps;
-  componentType?: string;
+type TUpdateProps<T extends ModuleType> = (
+  props: Partial<ModuleTypeToPropsMapping[T]>,
+) => void;
+
+export default function AudioModule<T extends ModuleType>(audioModuleProps: {
+  audioModule: AudioModuleProps<T>;
 }) {
   const dispatch = useAppDispatch();
 
   const { id, name, moduleType, props } = audioModuleProps.audioModule;
 
-  let Component: (
-    props: AudioModuleProps & {
-      updateProps: (id: string, props: AnyObject) => void;
-    },
-  ) => JSX.Element;
+  let Component: ModuleComponent<T>;
 
-  const updateProps = (id: string, props: AnyObject) => {
+  const updateProps: TUpdateProps<T> = (props) => {
     dispatch(updateModule({ id, moduleType, changes: { props } }));
   };
+
+  const updateProp =
+    <K extends keyof ModuleTypeToPropsMapping[T]>(propName: K) =>
+    (value: ModuleTypeToPropsMapping[T][K]) => {
+      const patch = {
+        [propName]: value,
+      } as { [P in K]: ModuleTypeToPropsMapping[T][P] } as Partial<
+        ModuleTypeToPropsMapping[T]
+      >;
+
+      updateProps(patch);
+    };
 
   switch (moduleType) {
     case ModuleType.Master:
       Component = Master;
       break;
     case ModuleType.Oscillator:
-      Component = Oscillator;
+      Component = Oscillator as ModuleComponent<T>;
       break;
     case ModuleType.Filter:
-      Component = Filter;
+      Component = Filter as ModuleComponent<T>;
       break;
     case ModuleType.Gain:
-      Component = Gain;
+      Component = Gain as ModuleComponent<T>;
       break;
     case ModuleType.Envelope:
-      Component = Envelope;
+      Component = Envelope as ModuleComponent<T>;
       break;
     case ModuleType.MidiSelector:
-      Component = MidiDeviceSelector;
+      Component = MidiDeviceSelector as ModuleComponent<T>;
       break;
     case ModuleType.Inspector:
       notImplemented();
@@ -73,7 +89,7 @@ export default function AudioModule(audioModuleProps: {
       moduleType={moduleType}
       name={name}
       props={props}
-      updateProps={updateProps}
+      updateProp={updateProp}
     />
   );
 }

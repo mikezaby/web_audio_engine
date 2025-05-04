@@ -1,30 +1,19 @@
+import { ModuleType } from "@blibliki/engine";
 import Fader from "@/components/Fader";
-import { TUpdateProps } from "..";
+import { ModuleComponent } from "..";
 import Container from "../Container";
 
-interface GainProps {
-  id: string;
-  name: string;
-  updateProps: TUpdateProps;
-  props: { gain: number };
-}
-
-export default function Gain(props: GainProps) {
+const Gain: ModuleComponent<ModuleType.Gain> = (props) => {
   const {
-    id,
-    updateProps,
+    updateProp,
     props: { gain },
   } = props;
-
-  const updateGain = (value: number) => {
-    updateProps(id, { gain: value });
-  };
 
   return (
     <Container>
       <Fader
         name="Gain"
-        onChange={updateGain}
+        onChange={updateProp("gain")}
         value={gain}
         min={0}
         max={2}
@@ -32,4 +21,6 @@ export default function Gain(props: GainProps) {
       />
     </Container>
   );
-}
+};
+
+export default Gain;
