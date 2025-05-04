@@ -12,7 +12,6 @@ interface GainProps {
 export default function Gain(props: GainProps) {
   const {
     id,
-    name,
     updateProps,
     props: { gain },
   } = props;
@@ -24,7 +23,7 @@ export default function Gain(props: GainProps) {
   return (
     <Container>
       <Fader
-        name={name || ""}
+        name="Gain"
         onChange={updateGain}
         value={gain}
         min={0}
