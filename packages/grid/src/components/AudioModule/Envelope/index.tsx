@@ -1,23 +1,13 @@
+import { ModuleType } from "@blibliki/engine";
 import Fader from "@/components/Fader";
-import { TUpdateProps } from "..";
+import { ModuleComponent } from "..";
 import Container from "../Container";
 
-interface EnvelopeProps {
-  id: string;
-  updateProps: TUpdateProps;
-  props: { attack: number; decay: number; sustain: number; release: number };
-}
-
-export default function Envelope(props: EnvelopeProps) {
+const Envelope: ModuleComponent<ModuleType.Envelope> = (props) => {
   const {
-    id,
-    updateProps,
+    updateProp,
     props: { attack, decay, sustain, release },
   } = props;
-
-  const updateProp = (propName: string) => (value: number | string) => {
-    updateProps(id, { [propName]: value });
-  };
 
   return (
     <Container>
@@ -27,4 +17,6 @@ export default function Envelope(props: EnvelopeProps) {
       <Fader name="R" onChange={updateProp("release")} value={release} />
     </Container>
   );
-}
+};
+
+export default Envelope;
