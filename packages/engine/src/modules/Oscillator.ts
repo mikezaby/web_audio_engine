@@ -108,7 +108,7 @@ export default class Oscillator
 
   private get finalFrequency(): number | undefined {
     const { frequency, coarse, octave, fine } = this.props;
-    if ([frequency, coarse, octave, fine].some((v) => v === undefined)) return;
+    if (!this.superInitialized) return;
 
     const transposed = frequency * Math.pow(2, coarse + octave + fine / 12);
     return transposed;

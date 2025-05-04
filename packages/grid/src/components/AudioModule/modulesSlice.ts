@@ -37,7 +37,7 @@ export const AvailableModules: Record<
   },
   [ModuleType.Envelope]: { name: "Envelope", moduleType: ModuleType.Envelope },
   [ModuleType.Filter]: { name: "Filter", moduleType: ModuleType.Filter },
-  [ModuleType.Volume]: { name: "Volume", moduleType: ModuleType.Volume },
+  [ModuleType.Gain]: { name: "Gain", moduleType: ModuleType.Gain },
   [ModuleType.MidiSelector]: {
     name: "Midi Selector",
     moduleType: ModuleType.MidiSelector,

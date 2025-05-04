@@ -5,10 +5,10 @@ import { useAppDispatch } from "@/hooks";
 import { AnyObject } from "@/types";
 import Envelope from "./Envelope";
 import Filter from "./Filter";
+import Gain from "./Gain";
 import Master from "./Master";
 import MidiDeviceSelector from "./MidiDeviceSelector";
 import Oscillator from "./Oscillator";
-import Volume from "./Volume";
 import { updateModule } from "./modulesSlice";
 
 export interface AudioModuleProps {
@@ -48,8 +48,8 @@ export default function AudioModule(audioModuleProps: {
     case ModuleType.Filter:
       Component = Filter;
       break;
-    case ModuleType.Volume:
-      Component = Volume;
+    case ModuleType.Gain:
+      Component = Gain;
       break;
     case ModuleType.Envelope:
       Component = Envelope;

@@ -2,34 +2,34 @@ import Fader from "@/components/Fader";
 import { TUpdateProps } from "..";
 import Container from "../Container";
 
-interface VolumeProps {
+interface GainProps {
   id: string;
   name: string;
   updateProps: TUpdateProps;
-  props: { volume: number };
+  props: { gain: number };
 }
 
-export default function Volume(props: VolumeProps) {
+export default function Gain(props: GainProps) {
   const {
     id,
     name,
     updateProps,
-    props: { volume },
+    props: { gain },
   } = props;
 
-  const updateVolume = (value: number) => {
-    updateProps(id, { volume: value });
+  const updateGain = (value: number) => {
+    updateProps(id, { gain: value });
   };
 
   return (
     <Container>
       <Fader
         name={name || ""}
-        onChange={updateVolume}
-        value={volume}
-        min={-100}
-        max={0}
-        step={1}
+        onChange={updateGain}
+        value={gain}
+        min={0}
+        max={2}
+        step={0.01}
       />
     </Container>
   );

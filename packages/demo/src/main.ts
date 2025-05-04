@@ -23,10 +23,10 @@ const osc2 = engine.addModule({
   props: { wave: "sine", frequency: 0.5 },
 });
 
-const vol = engine.addModule({
-  name: "vol",
-  moduleType: ModuleType.Volume,
-  props: { volume: 0.1 },
+const gain = engine.addModule({
+  name: "gain",
+  moduleType: ModuleType.Gain,
+  props: { gain: 0.1 },
 });
 
 const envelope = engine.addModule({
@@ -65,10 +65,10 @@ const master = engine.addModule({
 
 engine.addRoute({
   source: { moduleId: osc.id, ioName: "out" },
-  destination: { moduleId: vol.id, ioName: "in" },
+  destination: { moduleId: gain.id, ioName: "in" },
 });
 engine.addRoute({
-  source: { moduleId: vol.id, ioName: "out" },
+  source: { moduleId: gain.id, ioName: "out" },
   destination: { moduleId: envelope.id, ioName: "in" },
 });
 engine.addRoute({
