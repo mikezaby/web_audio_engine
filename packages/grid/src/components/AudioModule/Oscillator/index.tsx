@@ -47,14 +47,15 @@ export default function Oscillator(props: {
         marks={RANGES}
         min={-1}
         max={2}
-        onChange={updateProp("range")}
+        onChange={updateProp("octave")}
         value={range}
       />
       <Fader
         name="Coarse"
         marks={Center}
-        min={-12}
-        max={12}
+        min={-1}
+        max={1}
+        step={0.01}
         onChange={updateProp("coarse")}
         value={coarse}
       />

@@ -91,6 +91,14 @@ export default abstract class Module<T extends ModuleType>
     });
 
     this._props = { ...this._props, ...value };
+
+    Object.keys(value).forEach((key) => {
+      const onSetAttr = `onAfterSet${upperFirst(key)}`;
+
+      // @ts-expect-error TS7053 ignore this error
+      // eslint-disable-next-line
+      this[onSetAttr]?.(value[key]);
+    });
   }
 
   serialize(): IModuleSerialize<T> {
