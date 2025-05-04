@@ -34,11 +34,13 @@ export const globalSlice = createSlice({
 });
 
 export const initialize =
-  (patchId?: string) => (dispatch: AppDispatch, getState: () => RootState) => {
+  (patchId?: string) =>
+  async (dispatch: AppDispatch, getState: () => RootState) => {
     const { context: contextConf, bpm } = getState().global;
 
     const context = new AudioContext(contextConf);
     const engine = new Engine(context);
+    await engine.initialize();
     engine.bpm = bpm;
     Engine.current = engine;
 

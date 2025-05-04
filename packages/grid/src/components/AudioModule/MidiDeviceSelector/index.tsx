@@ -1,18 +1,14 @@
+import { ModuleType } from "@blibliki/engine";
 import { useEffect } from "react";
 import Select from "@/components/Select";
 import { useAppSelector, useAppDispatch } from "@/hooks";
-import { TUpdateProps } from "..";
+import { ModuleComponent } from "..";
 import Container from "../Container";
 import { initialize, devicesSelector } from "./midiDevicesSlice";
 
-export default function MidiDeviceSelector(props: {
-  id: string;
-  props: { selectedId: string };
-  updateProps: TUpdateProps;
-}) {
+const MidiSelector: ModuleComponent<ModuleType.MidiSelector> = (props) => {
   const {
-    id,
-    updateProps,
+    updateProp,
     props: { selectedId },
   } = props;
 
@@ -23,18 +19,16 @@ export default function MidiDeviceSelector(props: {
     dispatch(initialize());
   }, [dispatch]);
 
-  const updateSelectedId = (value: string) => {
-    updateProps(id, { selectedId: value });
-  };
-
   return (
     <Container>
       <Select
         label="Select MIDI device"
         value={selectedId || ""}
         options={devices}
-        onChange={updateSelectedId}
+        onChange={updateProp("selectedId")}
       />
     </Container>
   );
-}
+};
+
+export default MidiSelector;

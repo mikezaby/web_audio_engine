@@ -22,7 +22,9 @@ export const initialize =
     const any = devicesSelector.selectAll(getState()).length;
     if (any) return;
 
-    const devices = Object.values(Engine.current.midiDeviceManager.devices);
+    const devices = Array.from(
+      Engine.current.midiDeviceManager.devices.values(),
+    );
     dispatch(setDevices(devices.map((d) => d.serialize())));
 
     Engine.current.midiDeviceManager.addListener((device: MidiDevice) => {
