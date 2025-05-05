@@ -1,17 +1,15 @@
 import Fader from "@/components/Fader";
-import { TUpdateProps } from "..";
 
 interface CutoffProps {
-  id: string;
   value: number;
-  updateProps: TUpdateProps;
+  updateProp: (value: number) => void;
 }
 
 export default function Cutoff(props: CutoffProps) {
-  const { id, value, updateProps } = props;
+  const { value, updateProp } = props;
 
-  const updateProp = (_: number, calcValue: number) => {
-    updateProps(id, { cutoff: calcValue });
+  const onChange = (_: number, calcValue: number) => {
+    updateProp(calcValue);
   };
 
   return (
@@ -19,7 +17,7 @@ export default function Cutoff(props: CutoffProps) {
       name="Hz"
       min={20}
       max={20000}
-      onChange={updateProp}
+      onChange={onChange}
       value={value}
       exp={4}
     />

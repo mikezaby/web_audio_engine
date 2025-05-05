@@ -1,10 +1,8 @@
 import Fader, { MarkProps } from "@/components/Fader";
-import { TUpdateProps } from "..";
 
 interface FilterTypeProps {
-  id: string;
   value: BiquadFilterType;
-  updateProps: TUpdateProps;
+  updateProp: (value: BiquadFilterType) => void;
 }
 
 const FILTER_TYPES: MarkProps[] = [
@@ -14,23 +12,18 @@ const FILTER_TYPES: MarkProps[] = [
 ];
 
 export default function FilterType(props: FilterTypeProps) {
-  const { id, value, updateProps } = props;
+  const { value, updateProp } = props;
 
   const index = FILTER_TYPES.find((t) => t.label === value)?.value;
 
-  const updateProp = (value: number) => {
+  const onChange = (value: number) => {
     const val =
       FILTER_TYPES.find((t) => t.value === value)?.label ||
       FILTER_TYPES[0].label;
-    updateProps(id, { filterType: val });
+    updateProp(val as BiquadFilterType);
   };
 
   return (
-    <Fader
-      name="Type"
-      marks={FILTER_TYPES}
-      onChange={updateProp}
-      value={index}
-    />
+    <Fader name="Type" marks={FILTER_TYPES} onChange={onChange} value={index} />
   );
 }
