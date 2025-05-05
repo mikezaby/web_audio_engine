@@ -1,6 +1,6 @@
 import { afterEach, beforeEach } from "vitest";
+import "@/nodePolyfill";
 import { loadProcessors } from "@/processors";
-import "@/utils/nodePolyfill";
 
 declare module "vitest" {
   export interface TestContext {
