@@ -83,4 +83,16 @@ describe("Scale", () => {
       expect(inspector.getValue()).to.be.closeTo(93, 1);
     });
   });
+
+  describe("when current is updated", () => {
+    beforeEach(async () => {
+      amount.offset.value = 0;
+      scale.props = { current: 220 };
+      await sleep(50);
+    });
+
+    it("it returns the new updated value", () => {
+      expect(inspector.getValue()).to.be.closeTo(220, 1);
+    });
+  });
 });
