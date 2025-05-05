@@ -88,7 +88,7 @@ export default class Oscillator
     this.rePlugAll(() => {
       this.audioNode = new OscillatorNode(this.context, {
         type: this.props["wave"],
-        frequency: this.props["frequency"],
+        frequency: this.finalFrequency,
       });
       this.detuneGain.connect(this.audioNode.detune);
     });
