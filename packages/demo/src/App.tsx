@@ -1,4 +1,5 @@
 import { JSX, LazyExoticComponent, Suspense, lazy, useState } from "react";
+import { useEngine } from "./hooks";
 
 const Example1 = lazy(() => import("./examples/Example1"));
 
@@ -17,37 +18,56 @@ const Page = (props: { currentPage: PageName | null }) => {
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageName | null>(null);
+  const { start, stop, isStarted } = useEngine();
 
   const handleClick = (page: PageName) => {
-    console.log(page);
     setCurrentPage(page);
   };
 
+  const btnClassName = isStarted
+    ? "bg-red-500 hover:bg-red-600"
+    : "bg-green-500 hover:bg-green-600";
+
   return (
-    <div className="h-full flex font-sans text-sm">
-      <aside className="w-48 bg-gray-100 p-4 border-r">
-        <ul className="space-y-2">
-          {Object.keys(pages).map((key) => (
-            <li key={key}>
-              <button
-                onClick={() => {
-                  handleClick(key as PageName);
-                }}
-                className="w-full text-left px-2 py-1 rounded hover:bg-gray-200"
-              >
-                {key}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </aside>
-      <main className="flex-1 p-4 overflow-auto">
-        <Suspense
-          fallback={<div className="text-gray-500">Loading example...</div>}
-        >
-          <Page currentPage={currentPage} />
-        </Suspense>
-      </main>
+    <div className="h-screen flex flex-col font-sans text-sm text-gray-900 bg-gray-50">
+      <header className="flex items-center justify-between px-4 py-2 border-b bg-white shadow-sm">
+        <div className="text-lg font-semibold w-400">Blibliki examples</div>
+        <div className="w-full">
+          <button
+            onClick={isStarted ? stop : start}
+            className={`px-3 py-1 rounded text-white transition ${btnClassName}`}
+          >
+            {isStarted ? "Stop" : "Start"}
+          </button>
+        </div>
+      </header>
+
+      <div className="flex flex-1 overflow-hidden">
+        <aside className="w-56 bg-white p-4 border-r border-gray-200 shadow-sm">
+          <ul className="space-y-2">
+            {Object.keys(pages).map((key) => (
+              <li key={key}>
+                <button
+                  onClick={() => {
+                    handleClick(key as PageName);
+                  }}
+                  className="w-full text-left px-3 py-2 rounded hover:bg-gray-100 transition-colors"
+                >
+                  {key}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </aside>
+
+        <main className="flex-1 p-6 overflow-auto bg-white">
+          <Suspense
+            fallback={<div className="text-gray-500">Loading example...</div>}
+          >
+            <Page currentPage={currentPage} />
+          </Suspense>
+        </main>
+      </div>
     </div>
   );
 }
