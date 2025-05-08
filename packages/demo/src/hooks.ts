@@ -1,4 +1,10 @@
-import { Engine, ModuleType, type IModule } from "@blibliki/engine";
+import {
+  Engine,
+  ModuleType,
+  ICreateModule,
+  ICreateRoute,
+  IUpdateModule,
+} from "@blibliki/engine";
 import { assertDefined } from "@blibliki/utils";
 import { useEffect, useState } from "react";
 
@@ -34,27 +40,34 @@ export const useEngine = () => {
     setStarted(false);
   };
 
-  const addModule = <T extends ModuleType>(params: {
-    name: string;
-    moduleType: T;
-    props: any;
-  }): IModule<T> => {
+  const addModule = <T extends ModuleType>(params: ICreateModule<T>) => {
     assertDefined(engine);
 
-    return engine.addModule({
-      name: params.name,
-      moduleType: params.moduleType,
-      props: params.props,
-    });
+    return engine.addModule(params);
   };
 
-  const addRoute = (
-    source: { moduleId: string; ioName: string },
-    destination: { moduleId: string; ioName: string },
-  ) => {
+  const updateModule = <T extends ModuleType>(params: IUpdateModule<T>) => {
     assertDefined(engine);
 
-    engine.addRoute({ source, destination });
+    return engine.updateModule(params);
+  };
+
+  const removeModule = (id: string) => {
+    assertDefined(engine);
+
+    engine.removeModule(id);
+  };
+
+  const addRoute = (params: ICreateRoute) => {
+    assertDefined(engine);
+
+    engine.addRoute(params);
+  };
+
+  const removeRoute = (id: string) => {
+    assertDefined(engine);
+
+    engine.removeRoute(id);
   };
 
   return {
@@ -64,6 +77,9 @@ export const useEngine = () => {
     start,
     stop,
     addModule,
+    updateModule,
+    removeModule,
     addRoute,
+    removeRoute,
   };
 };
