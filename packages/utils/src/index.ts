@@ -7,6 +7,16 @@ export function assertNever(value: never, message?: string): never {
   throw Error(message);
 }
 
+type UnlessUndefined<T> = T extends undefined ? never : T;
+
+export function assertDefined<T>(
+  value: T | undefined,
+): asserts value is UnlessUndefined<T> {
+  if (value === undefined) {
+    throw new Error("Value is undefined");
+  }
+}
+
 export function uuidv4() {
   return crypto.randomUUID();
 }
