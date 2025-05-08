@@ -18,6 +18,8 @@ export interface IUpdateModule<T extends ModuleType> {
   changes: Partial<Omit<ICreateModule<T>, "id" | "moduleType">>;
 }
 
+export type ICreateRoute = Optional<IRoute, "id">;
+
 export class Engine {
   private static _current?: Engine;
 
@@ -101,7 +103,7 @@ export class Engine {
     this.modules.delete(id);
   }
 
-  addRoute(props: Optional<IRoute, "id">): IRoute {
+  addRoute(props: ICreateRoute): IRoute {
     return this.routes.addRoute(props);
   }
 
