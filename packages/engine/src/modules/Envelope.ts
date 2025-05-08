@@ -2,7 +2,7 @@ import { createScaleNormalized } from "@blibliki/utils";
 import { IAnyAudioContext, Module } from "@/core";
 import Note from "@/core/Note";
 import { nt, TTime } from "@/core/Timing/Time";
-import { ICreateParams, ModuleType } from ".";
+import { ICreateModule, ModuleType } from ".";
 
 export interface IEnvelopeProps {
   attack: number;
@@ -34,7 +34,7 @@ export default class Envelope extends Module<ModuleType.Envelope> {
 
   constructor(
     context: IAnyAudioContext,
-    params: ICreateParams<ModuleType.Envelope>,
+    params: ICreateModule<ModuleType.Envelope>,
   ) {
     const props = { ...DEFAULT_PROPS, ...params.props };
     const audioNode = new GainNode(context);

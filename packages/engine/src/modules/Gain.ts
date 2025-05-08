@@ -1,5 +1,5 @@
 import { IAnyAudioContext, IModule, Module } from "@/core";
-import { ICreateParams, ModuleType } from ".";
+import { ICreateModule, ModuleType } from ".";
 
 export type IGain = IModule<ModuleType.Gain>;
 export type IGainProps = {
@@ -13,7 +13,7 @@ export default class Gain extends Module<ModuleType.Gain> {
 
   constructor(
     context: IAnyAudioContext,
-    params: ICreateParams<ModuleType.Gain>,
+    params: ICreateModule<ModuleType.Gain>,
   ) {
     const props = { ...DEFAULT_PROPS, ...params.props };
     const audioNode = new GainNode(context);

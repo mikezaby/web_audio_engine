@@ -1,6 +1,6 @@
 import { EmptyObject } from "@blibliki/utils";
 import { IAnyAudioContext, IModule, Module } from "@/core";
-import { ICreateParams, ModuleType } from ".";
+import { ICreateModule, ModuleType } from ".";
 
 export type IMaster = IModule<ModuleType.Master>;
 export type IMasterProps = EmptyObject;
@@ -12,7 +12,7 @@ export default class Master extends Module<ModuleType.Master> {
 
   constructor(
     context: IAnyAudioContext,
-    params: ICreateParams<ModuleType.Master>,
+    params: ICreateModule<ModuleType.Master>,
   ) {
     const props = { ...DEFAULT_PROPS, ...params.props };
     const audioNode = context.destination;

@@ -42,7 +42,7 @@ export type { IMidiSelector } from "./MidiSelector";
 export type AnyModule = Module<ModuleType>;
 export type IAnyModule = IModule<ModuleType>;
 
-export interface ICreateParams<T extends ModuleType> {
+export interface ICreateModule<T extends ModuleType> {
   id?: string;
   name: string;
   moduleType: T;
@@ -51,41 +51,41 @@ export interface ICreateParams<T extends ModuleType> {
 
 export function createModule<T extends ModuleType>(
   context: IAnyAudioContext,
-  params: ICreateParams<T>,
+  params: ICreateModule<T>,
 ): AnyModule {
   switch (params.moduleType) {
     case ModuleType.Oscillator:
       return new Oscillator(
         context,
-        params as ICreateParams<ModuleType.Oscillator>,
+        params as ICreateModule<ModuleType.Oscillator>,
       );
     case ModuleType.Gain:
-      return new Gain(context, params as ICreateParams<ModuleType.Gain>);
+      return new Gain(context, params as ICreateModule<ModuleType.Gain>);
     case ModuleType.Master:
-      return new Master(context, params as ICreateParams<ModuleType.Master>);
+      return new Master(context, params as ICreateModule<ModuleType.Master>);
     case ModuleType.MidiSelector:
       return new MidiSelector(
         context,
-        params as ICreateParams<ModuleType.MidiSelector>,
+        params as ICreateModule<ModuleType.MidiSelector>,
       );
     case ModuleType.Envelope:
       return new Envelope(
         context,
-        params as ICreateParams<ModuleType.Envelope>,
+        params as ICreateModule<ModuleType.Envelope>,
       );
     case ModuleType.Filter:
-      return new Filter(context, params as ICreateParams<ModuleType.Filter>);
+      return new Filter(context, params as ICreateModule<ModuleType.Filter>);
     case ModuleType.Scale:
-      return new Scale(context, params as ICreateParams<ModuleType.Scale>);
+      return new Scale(context, params as ICreateModule<ModuleType.Scale>);
     case ModuleType.Inspector:
       return new Inspector(
         context,
-        params as ICreateParams<ModuleType.Inspector>,
+        params as ICreateModule<ModuleType.Inspector>,
       );
     case ModuleType.Constant:
       return new Constant(
         context,
-        params as ICreateParams<ModuleType.Constant>,
+        params as ICreateModule<ModuleType.Constant>,
       );
     default:
       assertNever(params.moduleType);

@@ -1,5 +1,5 @@
 import { IAnyAudioContext, Module } from "@/core";
-import { createModule, ICreateParams, ModuleType } from ".";
+import { createModule, ICreateModule, ModuleType } from ".";
 import Scale from "./Scale";
 
 export interface IFilterProps {
@@ -25,7 +25,7 @@ export default class FilterModule extends Module<ModuleType.Filter> {
 
   constructor(
     context: IAnyAudioContext,
-    params: ICreateParams<ModuleType.Filter>,
+    params: ICreateModule<ModuleType.Filter>,
   ) {
     const props = { ...DEFAULT_PROPS, ...params.props };
 

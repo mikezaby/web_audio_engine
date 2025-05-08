@@ -1,6 +1,6 @@
 import { IAnyAudioContext, IModule, Module, MidiOutput } from "@/core";
 import MidiEvent from "@/core/midi/MidiEvent";
-import { ICreateParams, ModuleType } from ".";
+import { ICreateModule, ModuleType } from ".";
 
 export type IMidiSelector = IModule<ModuleType.MidiSelector>;
 export type IMidiSelectorProps = {
@@ -15,7 +15,7 @@ export default class MidiSelector extends Module<ModuleType.MidiSelector> {
 
   constructor(
     context: IAnyAudioContext,
-    params: ICreateParams<ModuleType.MidiSelector>,
+    params: ICreateModule<ModuleType.MidiSelector>,
   ) {
     const props = { ...DEFAULT_PROPS, ...params.props };
 

@@ -1,7 +1,7 @@
 import { IAnyAudioContext, IModule, Module, Startable } from "@/core";
 import Note from "@/core/Note";
 import { nt, TTime } from "@/core/Timing/Time";
-import { ICreateParams, ModuleType } from ".";
+import { ICreateModule, ModuleType } from ".";
 
 export type IOscillator = IModule<ModuleType.Oscillator>;
 
@@ -41,7 +41,7 @@ export default class Oscillator
 
   constructor(
     context: IAnyAudioContext,
-    params: ICreateParams<ModuleType.Oscillator>,
+    params: ICreateModule<ModuleType.Oscillator>,
   ) {
     const props = { ...DEFAULT_PROPS, ...params.props };
     const audioNode = new OscillatorNode(context);

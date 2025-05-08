@@ -1,5 +1,5 @@
 import { IAnyAudioContext, IModule, Module } from "@/core";
-import { ICreateParams, ModuleType } from ".";
+import { ICreateModule, ModuleType } from ".";
 
 export type IInspector = IModule<ModuleType.Inspector>;
 export type IInspectorProps = {
@@ -14,7 +14,7 @@ export default class Inspector extends Module<ModuleType.Inspector> {
 
   constructor(
     context: IAnyAudioContext,
-    params: ICreateParams<ModuleType.Inspector>,
+    params: ICreateModule<ModuleType.Inspector>,
   ) {
     const props = { ...DEFAULT_PROPS, ...params.props };
     const audioNode = new AnalyserNode(context);

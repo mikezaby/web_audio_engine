@@ -1,7 +1,7 @@
 import { IAnyAudioContext, IModule, Module, Startable } from "@/core";
 import Note from "@/core/Note";
 import { nt, TTime } from "@/core/Timing/Time";
-import { ICreateParams, ModuleType } from ".";
+import { ICreateModule, ModuleType } from ".";
 
 export type IConstant = IModule<ModuleType.Constant>;
 export type IConstantProps = {
@@ -19,7 +19,7 @@ export default class Constant
 
   constructor(
     context: IAnyAudioContext,
-    params: ICreateParams<ModuleType.Constant>,
+    params: ICreateModule<ModuleType.Constant>,
   ) {
     const props = { ...DEFAULT_PROPS, ...params.props };
     const audioNode = new ConstantSourceNode(context);

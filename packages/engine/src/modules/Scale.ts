@@ -1,6 +1,6 @@
 import { IAnyAudioContext, IModule, Module } from "@/core";
 import { CustomWorklet, newAudioWorklet } from "@/processors";
-import { ICreateParams, ModuleType } from ".";
+import { ICreateModule, ModuleType } from ".";
 
 export type IScale = IModule<ModuleType.Scale>;
 export type IScaleProps = {
@@ -16,7 +16,7 @@ export default class Scale extends Module<ModuleType.Scale> {
 
   constructor(
     context: IAnyAudioContext,
-    params: ICreateParams<ModuleType.Scale>,
+    params: ICreateModule<ModuleType.Scale>,
   ) {
     const props = { ...DEFAULT_PROPS, ...params.props };
     const audioNode = newAudioWorklet(context, CustomWorklet.ScaleProcessor);

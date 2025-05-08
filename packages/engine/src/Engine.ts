@@ -8,14 +8,14 @@ import {
   MidiDeviceManager,
 } from "@/core";
 import { Transport } from "@/core/Timing";
-import { AnyModule, ICreateParams, ModuleType, createModule } from "@/modules";
+import { AnyModule, ICreateModule, ModuleType, createModule } from "@/modules";
 import { TTime } from "./core/Timing/Time";
 import { loadProcessors } from "./processors";
 
 export interface IUpdateModule<T extends ModuleType> {
   id: string;
   moduleType: T;
-  changes: Partial<Omit<ICreateParams<T>, "id" | "moduleType">>;
+  changes: Partial<Omit<ICreateModule<T>, "id" | "moduleType">>;
 }
 
 export class Engine {
@@ -76,7 +76,7 @@ export class Engine {
     this.isInitialized = true;
   }
 
-  addModule<T extends ModuleType>(params: ICreateParams<T>) {
+  addModule<T extends ModuleType>(params: ICreateModule<T>) {
     const module = createModule<T>(this.context, params);
     this.modules.set(module.id, module);
 
