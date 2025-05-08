@@ -15,6 +15,12 @@ export const useEngine = () => {
 
   useEffect(() => {
     const init = async () => {
+      if (Engine.hasCurrent) {
+        setEngine(Engine.current);
+        setInitialized(true);
+        return;
+      }
+
       const context = new AudioContext();
       const newEngine = new Engine(context);
       await newEngine.initialize();
