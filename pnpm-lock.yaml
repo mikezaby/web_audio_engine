@@ -35,6 +35,9 @@ importers:
       '@blibliki/engine':
         specifier: workspace:^
         version: link:../engine
+      '@blibliki/utils':
+        specifier: workspace:^
+        version: link:../utils
       react:
         specifier: ^19.1.0
         version: 19.1.0
