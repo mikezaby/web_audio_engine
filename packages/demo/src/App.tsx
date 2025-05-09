@@ -18,9 +18,13 @@ const Page = (props: { currentPage: PageName | null }) => {
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageName | null>(null);
-  const { start, stop, isStarted } = useEngine();
+  const { start, stop, isStarted, dispose } = useEngine();
 
   const handleClick = (page: PageName) => {
+    if (page !== currentPage) {
+      dispose();
+    }
+
     setCurrentPage(page);
   };
 
