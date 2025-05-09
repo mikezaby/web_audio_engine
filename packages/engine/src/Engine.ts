@@ -148,6 +148,8 @@ export class Engine {
   }
 
   dispose() {
+    this.stop();
+    this.routes.clear();
     this.modules.forEach((module) => {
       module.dispose();
     });

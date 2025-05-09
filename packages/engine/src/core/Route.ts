@@ -36,6 +36,12 @@ export class Routes {
     this.routes.delete(id);
   }
 
+  clear() {
+    for (const id in this.routes) {
+      this.removeRoute(id);
+    }
+  }
+
   private plug(id: string) {
     const { sourceIO, destinationIO } = this.getIOs(id);
     sourceIO.plug(destinationIO);
