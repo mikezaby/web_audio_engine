@@ -76,6 +76,13 @@ export const useEngine = () => {
     engine.removeRoute(id);
   };
 
+  const dispose = () => {
+    assertDefined(engine);
+
+    engine.dispose();
+    setStarted(false);
+  };
+
   return {
     engine,
     isInitialized,
@@ -87,5 +94,6 @@ export const useEngine = () => {
     removeModule,
     addRoute,
     removeRoute,
+    dispose,
   };
 };
