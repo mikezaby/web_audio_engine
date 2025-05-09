@@ -1,4 +1,4 @@
-import { Optional, pick } from "@blibliki/utils";
+import { assertDefined, Optional, pick, uuidv4 } from "@blibliki/utils";
 import {
   IAnyAudioContext,
   IModuleSerialize,
@@ -21,8 +21,10 @@ export interface IUpdateModule<T extends ModuleType> {
 export type ICreateRoute = Optional<IRoute, "id">;
 
 export class Engine {
-  private static _current?: Engine;
+  private static _engines: Map<string, Engine> = new Map();
+  private static _currentId: string;
 
+  readonly id: string;
   context: IAnyAudioContext;
   isInitialized: boolean = false;
   routes: Routes;
@@ -31,23 +33,22 @@ export class Engine {
 
   midiDeviceManager: MidiDeviceManager;
 
-  public static get current(): Engine {
-    if (!Engine._current) {
-      throw Error("There is not current engine");
-    }
+  static getById(id: string): Engine {
+    const engine = Engine._engines.get(id);
+    assertDefined(engine);
 
-    return Engine._current;
+    return engine;
   }
 
-  public static set current(engine: Engine) {
-    Engine._current = engine;
-  }
+  static get current(): Engine {
+    assertDefined(this._currentId);
 
-  public static get hasCurrent(): boolean {
-    return !!Engine._current;
+    return this.getById(this._currentId);
   }
 
   constructor(context: IAnyAudioContext) {
+    this.id = uuidv4();
+
     this.context = context;
     this.transport = new Transport({
       onStart: this.onStart,
@@ -57,9 +58,8 @@ export class Engine {
     this.modules = new Map();
     this.midiDeviceManager = new MidiDeviceManager();
 
-    if (!Engine.hasCurrent) {
-      Engine.current = this;
-    }
+    Engine._engines.set(this.id, this);
+    Engine._currentId = this.id;
   }
 
   get state() {
