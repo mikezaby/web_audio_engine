@@ -1,9 +1,9 @@
 import { ModuleType } from "@blibliki/engine";
 import { useEffect } from "react";
-import { useEngine } from "../hooks";
+import { useEngineStore } from "../store/useEngineStore";
 
 const Example1 = () => {
-  const { isInitialized, addModule, addRoute, dispose } = useEngine();
+  const { isInitialized, addModule, addRoute, dispose } = useEngineStore();
 
   useEffect(() => {
     if (!isInitialized) return;
@@ -34,6 +34,8 @@ const Example1 = () => {
       source: { moduleId: gain.id, ioName: "out" },
       destination: { moduleId: master.id, ioName: "in" },
     });
+
+    return () => dispose();
   }, [isInitialized, addRoute, addModule, dispose]);
 
   return <div>Osc -&gt; Gain -&gt; Master</div>;

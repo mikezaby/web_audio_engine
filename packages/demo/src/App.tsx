@@ -1,5 +1,13 @@
-import { JSX, LazyExoticComponent, Suspense, lazy, useState } from "react";
-import { useEngine } from "./hooks";
+import {
+  JSX,
+  LazyExoticComponent,
+  Suspense,
+  lazy,
+  useEffect,
+  useState,
+} from "react";
+import ModuleList from "./components/ModuleList";
+import { useEngineStore } from "./store/useEngineStore";
 
 const Example1 = lazy(() => import("./examples/Example1"));
 
@@ -18,7 +26,11 @@ const Page = (props: { currentPage: PageName | null }) => {
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageName | null>(null);
-  const { start, stop, isStarted, dispose } = useEngine();
+  const { init, start, stop, isStarted, dispose } = useEngineStore();
+
+  useEffect(() => {
+    init();
+  }, []);
 
   const handleClick = (page: PageName) => {
     if (page !== currentPage) {
@@ -70,6 +82,7 @@ export default function App() {
           >
             <Page currentPage={currentPage} />
           </Suspense>
+          <ModuleList />
         </main>
       </div>
     </div>
