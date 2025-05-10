@@ -12,17 +12,15 @@ export default class Inspector extends Module<ModuleType.Inspector> {
   declare audioNode: AnalyserNode;
   private _buffer?: Float32Array;
 
-  constructor(
-    context: IAnyAudioContext,
-    params: ICreateModule<ModuleType.Inspector>,
-  ) {
+  constructor(engineId: string, params: ICreateModule<ModuleType.Inspector>) {
     const props = { ...DEFAULT_PROPS, ...params.props };
-    const audioNode = new AnalyserNode(context);
+    const audioNodeConstructor = (context: IAnyAudioContext) =>
+      new AnalyserNode(context);
 
-    super(context, {
+    super(engineId, {
       ...params,
       props,
-      audioNode,
+      audioNodeConstructor,
     });
 
     this.registerDefaultIOs("in");

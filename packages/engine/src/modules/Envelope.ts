@@ -32,18 +32,18 @@ export default class Envelope extends Module<ModuleType.Envelope> {
   declare audioNode: GainNode;
   currentNote?: Note;
 
-  constructor(
-    context: IAnyAudioContext,
-    params: ICreateModule<ModuleType.Envelope>,
-  ) {
+  constructor(engineId: string, params: ICreateModule<ModuleType.Envelope>) {
     const props = { ...DEFAULT_PROPS, ...params.props };
-    const audioNode = new GainNode(context);
-    audioNode.gain.value = 0;
+    const audioNodeConstructor = (context: IAnyAudioContext) => {
+      const audioNode = new GainNode(context);
+      audioNode.gain.value = 0;
+      return audioNode;
+    };
 
-    super(context, {
+    super(engineId, {
       ...params,
       props,
-      audioNode,
+      audioNodeConstructor,
     });
 
     this.registerDefaultIOs();

@@ -44,30 +44,30 @@ export function isStartable<T>(value: T): value is T & Startable {
 
 interface IModuleConstructor<T extends ModuleType>
   extends Optional<IModule<T>, "id"> {
-  audioNode: AudioNode | undefined;
+  audioNodeConstructor?: (context: IAnyAudioContext) => AudioNode;
 }
 
 export default abstract class Module<T extends ModuleType>
   implements IModule<T>
 {
   id: string;
+  engineId: string;
   name: string;
   moduleType: T;
-  context: IAnyAudioContext;
   audioNode: AudioNode | undefined;
   inputs: InputCollection;
   outputs: OutputCollection;
   protected _props!: ModuleTypeToPropsMapping[T];
   protected superInitialized: boolean = false;
 
-  constructor(context: IAnyAudioContext, params: IModuleConstructor<T>) {
-    const { id, name, moduleType, audioNode, props } = params;
+  constructor(engineId: string, params: IModuleConstructor<T>) {
+    const { id, name, moduleType, audioNodeConstructor, props } = params;
 
     this.id = id || uuidv4();
+    this.engineId = engineId;
     this.name = name;
     this.moduleType = moduleType;
-    this.context = context;
-    this.audioNode = audioNode;
+    this.audioNode = audioNodeConstructor?.(this.context);
     this._props = {} as ModuleTypeToPropsMapping[T];
     this.props = props;
 
@@ -221,6 +221,10 @@ export default abstract class Module<T extends ModuleType>
   }
 
   protected get engine() {
-    return Engine.current;
+    return Engine.getById(this.engineId);
+  }
+
+  protected get context() {
+    return this.engine.context;
   }
 }

@@ -39,17 +39,15 @@ export default class Oscillator
   isStated: boolean = false;
   detuneGain!: GainNode;
 
-  constructor(
-    context: IAnyAudioContext,
-    params: ICreateModule<ModuleType.Oscillator>,
-  ) {
+  constructor(engineId: string, params: ICreateModule<ModuleType.Oscillator>) {
     const props = { ...DEFAULT_PROPS, ...params.props };
-    const audioNode = new OscillatorNode(context);
+    const audioNodeConstructor = (context: IAnyAudioContext) =>
+      new OscillatorNode(context);
 
-    super(context, {
+    super(engineId, {
       ...params,
       props,
-      audioNode,
+      audioNodeConstructor,
     });
 
     this.initializeGainDetune();

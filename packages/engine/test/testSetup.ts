@@ -1,19 +1,22 @@
 import { afterEach, beforeEach } from "vitest";
+import { Engine } from "@/Engine";
 import "@/nodePolyfill";
-import { loadProcessors } from "@/processors";
 
 declare module "vitest" {
   export interface TestContext {
     audioContext: AudioContext;
+    engine: Engine;
   }
 }
 
 beforeEach(async (ctx) => {
   ctx.audioContext = new AudioContext();
-  await ctx.audioContext.resume();
-  await loadProcessors(ctx.audioContext);
+  ctx.engine = new Engine(ctx.audioContext);
+  await ctx.engine.initialize();
+  await ctx.engine.resume();
 });
 
 afterEach(async (ctx) => {
   await ctx.audioContext.close();
+  ctx.engine.dispose();
 });

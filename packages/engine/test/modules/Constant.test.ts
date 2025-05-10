@@ -9,14 +9,14 @@ describe("Constant", () => {
   let inspector: Inspector;
 
   beforeEach((ctx) => {
-    constant = createModule(ctx.audioContext, {
+    constant = createModule(ctx.engine.id, {
       name: "constant",
       moduleType: ModuleType.Constant,
       props: { value: 23 },
     }) as Constant;
     constant.start(0);
 
-    inspector = createModule(ctx.audioContext, {
+    inspector = createModule(ctx.engine.id, {
       name: "inspector",
       moduleType: ModuleType.Inspector,
       props: {},

@@ -14,17 +14,15 @@ const DEFAULT_PROPS: IScaleProps = { min: 0, max: 1, current: 0.5 };
 export default class Scale extends Module<ModuleType.Scale> {
   declare audioNode: AudioWorkletNode;
 
-  constructor(
-    context: IAnyAudioContext,
-    params: ICreateModule<ModuleType.Scale>,
-  ) {
+  constructor(engineId: string, params: ICreateModule<ModuleType.Scale>) {
     const props = { ...DEFAULT_PROPS, ...params.props };
-    const audioNode = newAudioWorklet(context, CustomWorklet.ScaleProcessor);
+    const audioNodeConstructor = (context: IAnyAudioContext) =>
+      newAudioWorklet(context, CustomWorklet.ScaleProcessor);
 
-    super(context, {
+    super(engineId, {
       ...params,
       props,
-      audioNode,
+      audioNodeConstructor,
     });
 
     this.registerDefaultIOs();

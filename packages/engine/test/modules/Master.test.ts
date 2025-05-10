@@ -6,7 +6,7 @@ describe("Master", () => {
   let master: Master;
 
   beforeEach((ctx) => {
-    master = createModule(ctx.audioContext, {
+    master = createModule(ctx.engine.id, {
       name: "master",
       moduleType: ModuleType.Master,
       props: {},

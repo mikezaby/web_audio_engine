@@ -17,17 +17,15 @@ export default class Constant
   declare audioNode: ConstantSourceNode;
   isStated: boolean = false;
 
-  constructor(
-    context: IAnyAudioContext,
-    params: ICreateModule<ModuleType.Constant>,
-  ) {
+  constructor(engineId: string, params: ICreateModule<ModuleType.Constant>) {
     const props = { ...DEFAULT_PROPS, ...params.props };
-    const audioNode = new ConstantSourceNode(context);
+    const audioNodeConstructor = (context: IAnyAudioContext) =>
+      new ConstantSourceNode(context);
 
-    super(context, {
+    super(engineId, {
       ...params,
       props,
-      audioNode,
+      audioNodeConstructor,
     });
 
     this.registerDefaultIOs("out");

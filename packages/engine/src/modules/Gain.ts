@@ -11,16 +11,14 @@ const DEFAULT_PROPS: IGainProps = { gain: 1 };
 export default class Gain extends Module<ModuleType.Gain> {
   declare audioNode: GainNode;
 
-  constructor(
-    context: IAnyAudioContext,
-    params: ICreateModule<ModuleType.Gain>,
-  ) {
+  constructor(engineId: string, params: ICreateModule<ModuleType.Gain>) {
     const props = { ...DEFAULT_PROPS, ...params.props };
-    const audioNode = new GainNode(context);
+    const audioNodeConstructor = (context: IAnyAudioContext) =>
+      new GainNode(context);
 
-    super(context, {
+    super(engineId, {
       ...params,
-      audioNode,
+      audioNodeConstructor,
       props,
     });
 

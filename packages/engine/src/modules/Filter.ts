@@ -23,25 +23,23 @@ export default class FilterModule extends Module<ModuleType.Filter> {
   declare audioNode: BiquadFilterNode;
   private scale: Scale;
 
-  constructor(
-    context: IAnyAudioContext,
-    params: ICreateModule<ModuleType.Filter>,
-  ) {
+  constructor(engineId: string, params: ICreateModule<ModuleType.Filter>) {
     const props = { ...DEFAULT_PROPS, ...params.props };
 
-    const audioNode = new BiquadFilterNode(context, {
-      type: props.type,
-      frequency: props.cutoff,
-      Q: props.Q,
-    });
+    const audioNodeConstructor = (context: IAnyAudioContext) =>
+      new BiquadFilterNode(context, {
+        type: props.type,
+        frequency: props.cutoff,
+        Q: props.Q,
+      });
 
-    super(context, {
+    super(engineId, {
       ...params,
       props,
-      audioNode,
+      audioNodeConstructor,
     });
 
-    this.scale = createModule(context, {
+    this.scale = createModule(engineId, {
       name: "scale",
       moduleType: ModuleType.Scale,
       props: { min: MIN_FREQ, max: MAX_FREQ, current: this.props.cutoff },

@@ -10,7 +10,7 @@ describe("Scale", () => {
   let inspector: Inspector;
 
   beforeEach((ctx) => {
-    scale = createModule(ctx.audioContext, {
+    scale = createModule(ctx.engine.id, {
       name: "filterScale",
       moduleType: ModuleType.Scale,
       props: { min: 20, max: 20000, current: 440 },
@@ -19,7 +19,7 @@ describe("Scale", () => {
     amount = new ConstantSourceNode(ctx.audioContext);
     amount.start();
 
-    inspector = createModule(ctx.audioContext, {
+    inspector = createModule(ctx.engine.id, {
       name: "inspector",
       moduleType: ModuleType.Inspector,
       props: {},

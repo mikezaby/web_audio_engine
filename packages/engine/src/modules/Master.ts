@@ -10,14 +10,12 @@ const DEFAULT_PROPS: IMasterProps = {};
 export default class Master extends Module<ModuleType.Master> {
   declare audioNode: AudioDestinationNode;
 
-  constructor(
-    context: IAnyAudioContext,
-    params: ICreateModule<ModuleType.Master>,
-  ) {
+  constructor(engineId: string, params: ICreateModule<ModuleType.Master>) {
     const props = { ...DEFAULT_PROPS, ...params.props };
-    const audioNode = context.destination;
+    const audioNodeConstructor = (context: IAnyAudioContext) =>
+      context.destination;
 
-    super(context, { ...params, audioNode, props });
+    super(engineId, { ...params, audioNodeConstructor, props });
 
     this.registerDefaultIOs("in");
   }

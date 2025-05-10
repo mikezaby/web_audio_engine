@@ -1,4 +1,4 @@
-import { IAnyAudioContext, IModule, Module, MidiOutput } from "@/core";
+import { IModule, Module, MidiOutput } from "@/core";
 import MidiEvent from "@/core/midi/MidiEvent";
 import { ICreateModule, ModuleType } from ".";
 
@@ -10,19 +10,19 @@ export type IMidiSelectorProps = {
 const DEFAULT_PROPS: IMidiSelectorProps = { selectedId: null };
 
 export default class MidiSelector extends Module<ModuleType.MidiSelector> {
+  declare audioNode: undefined;
   midiOutput!: MidiOutput;
   _forwardMidiEvent?: (midiEvent: MidiEvent) => void;
 
   constructor(
-    context: IAnyAudioContext,
+    engineId: string,
     params: ICreateModule<ModuleType.MidiSelector>,
   ) {
     const props = { ...DEFAULT_PROPS, ...params.props };
 
-    super(context, {
+    super(engineId, {
       ...params,
       props,
-      audioNode: undefined,
     });
 
     this.registerOutputs();

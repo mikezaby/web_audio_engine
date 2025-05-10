@@ -75,7 +75,7 @@ export class Engine {
   }
 
   addModule<T extends ModuleType>(params: ICreateModule<T>) {
-    const module = createModule<T>(this.context, params);
+    const module = createModule<T>(this.id, params);
     this.modules.set(module.id, module);
 
     return module.serialize() as IModuleSerialize<T>;

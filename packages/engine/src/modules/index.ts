@@ -1,5 +1,5 @@
 import { assertNever } from "@blibliki/utils";
-import { IAnyAudioContext, IModule, Module } from "@/core";
+import { IModule, Module } from "@/core";
 import Constant, { IConstantProps } from "./Constant";
 import Envelope, { IEnvelopeProps } from "./Envelope";
 import Filter, { IFilterProps } from "./Filter";
@@ -50,41 +50,41 @@ export interface ICreateModule<T extends ModuleType> {
 }
 
 export function createModule<T extends ModuleType>(
-  context: IAnyAudioContext,
+  engineId: string,
   params: ICreateModule<T>,
 ): AnyModule {
   switch (params.moduleType) {
     case ModuleType.Oscillator:
       return new Oscillator(
-        context,
+        engineId,
         params as ICreateModule<ModuleType.Oscillator>,
       );
     case ModuleType.Gain:
-      return new Gain(context, params as ICreateModule<ModuleType.Gain>);
+      return new Gain(engineId, params as ICreateModule<ModuleType.Gain>);
     case ModuleType.Master:
-      return new Master(context, params as ICreateModule<ModuleType.Master>);
+      return new Master(engineId, params as ICreateModule<ModuleType.Master>);
     case ModuleType.MidiSelector:
       return new MidiSelector(
-        context,
+        engineId,
         params as ICreateModule<ModuleType.MidiSelector>,
       );
     case ModuleType.Envelope:
       return new Envelope(
-        context,
+        engineId,
         params as ICreateModule<ModuleType.Envelope>,
       );
     case ModuleType.Filter:
-      return new Filter(context, params as ICreateModule<ModuleType.Filter>);
+      return new Filter(engineId, params as ICreateModule<ModuleType.Filter>);
     case ModuleType.Scale:
-      return new Scale(context, params as ICreateModule<ModuleType.Scale>);
+      return new Scale(engineId, params as ICreateModule<ModuleType.Scale>);
     case ModuleType.Inspector:
       return new Inspector(
-        context,
+        engineId,
         params as ICreateModule<ModuleType.Inspector>,
       );
     case ModuleType.Constant:
       return new Constant(
-        context,
+        engineId,
         params as ICreateModule<ModuleType.Constant>,
       );
     default:

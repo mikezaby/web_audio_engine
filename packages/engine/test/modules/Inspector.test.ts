@@ -6,7 +6,7 @@ describe("Inspector", () => {
   let currentModule: Inspector;
 
   beforeEach((ctx) => {
-    currentModule = createModule(ctx.audioContext, {
+    currentModule = createModule(ctx.engine.id, {
       name: "inspector",
       moduleType: ModuleType.Inspector,
       props: {},
