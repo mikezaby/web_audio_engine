@@ -30,7 +30,7 @@ export default function App() {
 
   useEffect(() => {
     init();
-  }, []);
+  }, [init]);
 
   const handleClick = (page: PageName) => {
     if (page !== currentPage) {

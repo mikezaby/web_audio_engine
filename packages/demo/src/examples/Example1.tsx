@@ -1,4 +1,4 @@
-import { ModuleType } from "@blibliki/engine";
+import { ModuleType, OscillatorWave } from "@blibliki/engine";
 import { useEffect } from "react";
 import { useEngineStore } from "../store/useEngineStore";
 
@@ -11,7 +11,7 @@ const Example1 = () => {
     const osc = addModule({
       name: "Oscillator",
       moduleType: ModuleType.Oscillator,
-      props: { wave: "sawtooth" },
+      props: { wave: OscillatorWave.sawtooth },
     });
 
     const gain = addModule({
@@ -35,7 +35,9 @@ const Example1 = () => {
       destination: { moduleId: master.id, ioName: "in" },
     });
 
-    return () => dispose();
+    return () => {
+      dispose();
+    };
   }, [isInitialized, addRoute, addModule, dispose]);
 
   return <div>Osc -&gt; Gain -&gt; Master</div>;
