@@ -19,3 +19,5 @@ export type {
 } from "./IO";
 
 export { TransportState } from "./Timing";
+
+export type { PropDefinition, PropSchema } from "./schema";

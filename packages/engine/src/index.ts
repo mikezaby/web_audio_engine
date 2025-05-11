@@ -7,6 +7,8 @@ export type {
   IModule,
   IModuleSerialize,
   IMidiDevice,
+  PropDefinition,
+  PropSchema,
 } from "./core";
 export { TransportState, MidiDevice } from "./core";
 

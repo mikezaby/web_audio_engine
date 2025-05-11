@@ -24,7 +24,7 @@ type BooleanProp = BasePropType & {
   kind: "boolean";
 };
 
-type PropDefinition<T> = T extends number
+export type PropDefinition<T> = T extends number
   ? NumberProp | EnumProp<number>
   : T extends boolean
     ? BooleanProp
