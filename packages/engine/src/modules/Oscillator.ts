@@ -1,9 +1,17 @@
 import { IAnyAudioContext, IModule, Module, Startable } from "@/core";
 import Note from "@/core/Note";
 import { nt, TTime } from "@/core/Timing/Time";
+import { PropSchema } from "@/core/schema";
 import { ICreateModule, ModuleType } from ".";
 
 export type IOscillator = IModule<ModuleType.Oscillator>;
+
+export enum OscillatorWave {
+  sawtooth = "sawtooth",
+  sine = "sine",
+  square = "square",
+  triangle = "triangle",
+}
 
 /**
  * Props for the Oscillator module.
@@ -16,15 +24,51 @@ export type IOscillator = IModule<ModuleType.Oscillator>;
  * @property octave - Octave transposition value (e.g. +1 for one octave up, -2 for two octaves down).
  */
 export type IOscillatorProps = {
-  wave: OscillatorType;
+  wave: OscillatorWave;
   frequency: number;
   fine: number;
   coarse: number;
   octave: number;
 };
 
+export const oscillatorPropSchema: PropSchema<IOscillatorProps> = {
+  wave: {
+    kind: "enum",
+    options: Object.values(OscillatorWave),
+    label: "Waveform",
+  },
+  frequency: {
+    kind: "number",
+    min: 0,
+    max: 25000,
+    step: 1,
+    label: "Frequency",
+  },
+  fine: {
+    kind: "number",
+    min: -1,
+    max: 1,
+    step: 0.01,
+    label: "Fine",
+  },
+  coarse: {
+    kind: "number",
+    min: -1,
+    max: 1,
+    step: 0.01,
+    label: "Coarse",
+  },
+  octave: {
+    kind: "number",
+    min: -1,
+    max: 1,
+    step: 0.01,
+    label: "Octave",
+  },
+};
+
 const DEFAULT_PROPS: IOscillatorProps = {
-  wave: "sine",
+  wave: OscillatorWave.sine,
   frequency: 440,
   fine: 0,
   coarse: 0,
@@ -55,7 +99,7 @@ export default class Oscillator
     this.registerDefaultIOs("out");
   }
 
-  protected onAfterSetWave(value: IOscillatorProps["wave"]) {
+  protected onAfterSetWave(value: OscillatorWave) {
     this.audioNode.type = value;
   }
 

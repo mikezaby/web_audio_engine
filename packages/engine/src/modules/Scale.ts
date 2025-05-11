@@ -1,4 +1,5 @@
 import { IAnyAudioContext, IModule, Module } from "@/core";
+import { PropSchema } from "@/core/schema";
 import { CustomWorklet, newAudioWorklet } from "@/processors";
 import { ICreateModule, ModuleType } from ".";
 
@@ -7,6 +8,30 @@ export type IScaleProps = {
   min: number;
   max: number;
   current: number;
+};
+
+export const scalePropSchema: PropSchema<IScaleProps> = {
+  min: {
+    kind: "number",
+    min: -Infinity,
+    max: Infinity,
+    step: 0.01,
+    label: "Min",
+  },
+  max: {
+    kind: "number",
+    min: -Infinity,
+    max: Infinity,
+    step: 0.01,
+    label: "Max",
+  },
+  current: {
+    kind: "number",
+    min: -Infinity,
+    max: Infinity,
+    step: 0.01,
+    label: "Current",
+  },
 };
 
 const DEFAULT_PROPS: IScaleProps = { min: 0, max: 1, current: 0.5 };

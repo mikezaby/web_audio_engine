@@ -1,9 +1,18 @@
 import { IAnyAudioContext, IModule, Module } from "@/core";
+import { PropSchema } from "@/core/schema";
 import { ICreateModule, ModuleType } from ".";
 
 export type IInspector = IModule<ModuleType.Inspector>;
 export type IInspectorProps = {
   fftSize: number;
+};
+
+export const inspectorPropSchema: PropSchema<IInspectorProps> = {
+  fftSize: {
+    kind: "enum",
+    options: [32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768],
+    label: "FFT size",
+  },
 };
 
 const DEFAULT_PROPS: IInspectorProps = { fftSize: 256 };

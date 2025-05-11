@@ -1,9 +1,20 @@
 import { IAnyAudioContext, IModule, Module } from "@/core";
+import { PropSchema } from "@/core/schema";
 import { ICreateModule, ModuleType } from ".";
 
 export type IGain = IModule<ModuleType.Gain>;
 export type IGainProps = {
   gain: number;
+};
+
+export const gainPropSchema: PropSchema<IGainProps> = {
+  gain: {
+    kind: "number",
+    min: 0,
+    max: Infinity,
+    step: 0.01,
+    label: "Gain",
+  },
 };
 
 const DEFAULT_PROPS: IGainProps = { gain: 1 };

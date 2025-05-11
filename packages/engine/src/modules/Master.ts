@@ -1,11 +1,14 @@
 import { EmptyObject } from "@blibliki/utils";
 import { IAnyAudioContext, IModule, Module } from "@/core";
+import { PropSchema } from "@/core/schema";
 import { ICreateModule, ModuleType } from ".";
 
 export type IMaster = IModule<ModuleType.Master>;
 export type IMasterProps = EmptyObject;
 
 const DEFAULT_PROPS: IMasterProps = {};
+
+export const masterPropSchema: PropSchema<IMasterProps> = {};
 
 export default class Master extends Module<ModuleType.Master> {
   declare audioNode: AudioDestinationNode;

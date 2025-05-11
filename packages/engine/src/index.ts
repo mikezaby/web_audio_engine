@@ -10,7 +10,7 @@ export type {
 } from "./core";
 export { TransportState, MidiDevice } from "./core";
 
-export { ModuleType } from "./modules";
+export { ModuleType, moduleSchemas } from "./modules";
 export type {
   IOscillator,
   IGain,

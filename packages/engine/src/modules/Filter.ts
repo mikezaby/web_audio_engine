@@ -1,13 +1,14 @@
 import { IAnyAudioContext, Module } from "@/core";
+import { PropSchema } from "@/core/schema";
 import { createModule, ICreateModule, ModuleType } from ".";
 import Scale from "./Scale";
 
-export interface IFilterProps {
+export type IFilterProps = {
   cutoff: number;
   envelopeAmount: number;
   type: BiquadFilterType;
   Q: number;
-}
+};
 
 const MIN_FREQ = 20;
 const MAX_FREQ = 20000;
@@ -17,6 +18,35 @@ const DEFAULT_PROPS: IFilterProps = {
   envelopeAmount: 1,
   type: "lowpass",
   Q: 0,
+};
+
+export const filterPropSchema: PropSchema<IFilterProps> = {
+  cutoff: {
+    kind: "number",
+    min: MIN_FREQ,
+    max: MAX_FREQ,
+    step: 1,
+    label: "Cutoff",
+  },
+  envelopeAmount: {
+    kind: "number",
+    min: 0,
+    max: 1,
+    step: 0.01,
+    label: "Envelope Amount",
+  },
+  type: {
+    kind: "enum",
+    options: ["lowpass", "highpass", "bandpass"] satisfies BiquadFilterType[],
+    label: "Type",
+  },
+  Q: {
+    kind: "number",
+    min: 0,
+    max: 1,
+    step: 0.01,
+    label: "Q",
+  },
 };
 
 export default class FilterModule extends Module<ModuleType.Filter> {

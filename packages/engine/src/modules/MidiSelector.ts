@@ -1,13 +1,21 @@
 import { IModule, Module, MidiOutput } from "@/core";
 import MidiEvent from "@/core/midi/MidiEvent";
+import { PropSchema } from "@/core/schema";
 import { ICreateModule, ModuleType } from ".";
 
 export type IMidiSelector = IModule<ModuleType.MidiSelector>;
 export type IMidiSelectorProps = {
-  selectedId: string | null;
+  selectedId?: string;
 };
 
-const DEFAULT_PROPS: IMidiSelectorProps = { selectedId: null };
+export const midiSelectorPropSchema: PropSchema<IMidiSelectorProps> = {
+  selectedId: {
+    kind: "string",
+    label: "Midi device ID",
+  },
+};
+
+const DEFAULT_PROPS: IMidiSelectorProps = { selectedId: undefined };
 
 export default class MidiSelector extends Module<ModuleType.MidiSelector> {
   declare audioNode: undefined;

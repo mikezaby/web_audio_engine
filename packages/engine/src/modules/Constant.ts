@@ -1,11 +1,22 @@
 import { IAnyAudioContext, IModule, Module, Startable } from "@/core";
 import Note from "@/core/Note";
 import { nt, TTime } from "@/core/Timing/Time";
+import { PropSchema } from "@/core/schema";
 import { ICreateModule, ModuleType } from ".";
 
 export type IConstant = IModule<ModuleType.Constant>;
 export type IConstantProps = {
   value: number;
+};
+
+export const constantPropSchema: PropSchema<IConstantProps> = {
+  value: {
+    kind: "number",
+    min: -Infinity,
+    max: Infinity,
+    step: 0.01,
+    label: "Value",
+  },
 };
 
 const DEFAULT_PROPS: IConstantProps = { value: 1 };

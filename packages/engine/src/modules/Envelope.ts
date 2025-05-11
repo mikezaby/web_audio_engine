@@ -2,20 +2,52 @@ import { createScaleNormalized } from "@blibliki/utils";
 import { IAnyAudioContext, Module } from "@/core";
 import Note from "@/core/Note";
 import { nt, TTime } from "@/core/Timing/Time";
+import { PropSchema } from "@/core/schema";
 import { ICreateModule, ModuleType } from ".";
 
-export interface IEnvelopeProps {
+export type IEnvelopeProps = {
   attack: number;
   decay: number;
   sustain: number;
   release: number;
-}
+};
 
 const DEFAULT_PROPS: IEnvelopeProps = {
   attack: 0.1,
   decay: 0.2,
   sustain: 0,
   release: 0.3,
+};
+
+export const envelopePropSchema: PropSchema<IEnvelopeProps> = {
+  attack: {
+    kind: "number",
+    min: 0.0001,
+    max: 1,
+    step: 0.01,
+    label: "Attack",
+  },
+  decay: {
+    kind: "number",
+    min: 0,
+    max: 1,
+    step: 0.01,
+    label: "Decay",
+  },
+  sustain: {
+    kind: "number",
+    min: 0,
+    max: 1,
+    step: 0.01,
+    label: "Sustain",
+  },
+  release: {
+    kind: "number",
+    min: 0,
+    max: 1,
+    step: 0.01,
+    label: "Release",
+  },
 };
 
 const scaleToTen = createScaleNormalized({

@@ -1,14 +1,21 @@
 import { assertNever } from "@blibliki/utils";
 import { IModule, Module } from "@/core";
-import Constant, { IConstantProps } from "./Constant";
-import Envelope, { IEnvelopeProps } from "./Envelope";
-import Filter, { IFilterProps } from "./Filter";
-import Gain, { IGainProps } from "./Gain";
-import Inspector, { IInspectorProps } from "./Inspector";
-import Master, { IMasterProps } from "./Master";
-import MidiSelector, { IMidiSelectorProps } from "./MidiSelector";
-import Oscillator, { IOscillatorProps } from "./Oscillator";
-import Scale, { IScaleProps } from "./Scale";
+import { PropSchema } from "@/core/schema";
+import Constant, { constantPropSchema, IConstantProps } from "./Constant";
+import Envelope, { envelopePropSchema, IEnvelopeProps } from "./Envelope";
+import Filter, { filterPropSchema, IFilterProps } from "./Filter";
+import Gain, { gainPropSchema, IGainProps } from "./Gain";
+import Inspector, { IInspectorProps, inspectorPropSchema } from "./Inspector";
+import Master, { IMasterProps, masterPropSchema } from "./Master";
+import MidiSelector, {
+  IMidiSelectorProps,
+  midiSelectorPropSchema,
+} from "./MidiSelector";
+import Oscillator, {
+  IOscillatorProps,
+  oscillatorPropSchema,
+} from "./Oscillator";
+import Scale, { IScaleProps, scalePropSchema } from "./Scale";
 
 export enum ModuleType {
   Master = "Master",
@@ -22,6 +29,17 @@ export enum ModuleType {
   Constant = "Constant",
 }
 
+type AnyModuleProps =
+  | IOscillatorProps
+  | IGainProps
+  | IMasterProps
+  | IMidiSelectorProps
+  | IEnvelopeProps
+  | IFilterProps
+  | IScaleProps
+  | IInspectorProps
+  | IConstantProps;
+
 export interface ModuleTypeToPropsMapping {
   [ModuleType.Oscillator]: IOscillatorProps;
   [ModuleType.Gain]: IGainProps;
@@ -33,6 +51,18 @@ export interface ModuleTypeToPropsMapping {
   [ModuleType.Inspector]: IInspectorProps;
   [ModuleType.Constant]: IConstantProps;
 }
+
+export const moduleSchemas: Record<ModuleType, PropSchema<AnyModuleProps>> = {
+  [ModuleType.Oscillator]: oscillatorPropSchema,
+  [ModuleType.Gain]: gainPropSchema,
+  [ModuleType.Master]: masterPropSchema,
+  [ModuleType.MidiSelector]: midiSelectorPropSchema,
+  [ModuleType.Envelope]: envelopePropSchema,
+  [ModuleType.Filter]: filterPropSchema,
+  [ModuleType.Scale]: scalePropSchema,
+  [ModuleType.Inspector]: inspectorPropSchema,
+  [ModuleType.Constant]: constantPropSchema,
+};
 
 export type { IOscillator } from "./Oscillator";
 export type { IGain } from "./Gain";
