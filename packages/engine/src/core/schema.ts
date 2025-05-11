@@ -32,6 +32,4 @@ export type PropDefinition<T> = T extends number
       ? StringProp | EnumProp<string>
       : never;
 
-export type PropSchema<T extends Record<string, string | number | boolean>> = {
-  [K in keyof T]: PropDefinition<T[K]>;
-};
+export type PropSchema<T> = Record<keyof T, PropDefinition<T[keyof T]>>;

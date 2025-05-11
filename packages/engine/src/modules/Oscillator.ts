@@ -53,16 +53,16 @@ export const oscillatorPropSchema: PropSchema<IOscillatorProps> = {
   },
   coarse: {
     kind: "number",
-    min: -1,
-    max: 1,
-    step: 0.01,
+    min: -12,
+    max: 12,
+    step: 1,
     label: "Coarse",
   },
   octave: {
     kind: "number",
-    min: -1,
-    max: 1,
-    step: 0.01,
+    min: -4,
+    max: 4,
+    step: 1,
     label: "Octave",
   },
 };
@@ -152,7 +152,8 @@ export default class Oscillator
     const { frequency, coarse, octave, fine } = this.props;
     if (!this.superInitialized) return;
 
-    const transposed = frequency * Math.pow(2, coarse + octave + fine / 12);
+    const transposed =
+      frequency * Math.pow(2, coarse / 12 + octave + fine / 12);
     return transposed;
   }
 

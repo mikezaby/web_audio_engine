@@ -1,6 +1,5 @@
 import { assertNever } from "@blibliki/utils";
-import { IModule, Module } from "@/core";
-import { PropSchema } from "@/core/schema";
+import { IModule, Module, PropSchema } from "@/core";
 import Constant, { constantPropSchema, IConstantProps } from "./Constant";
 import Envelope, { envelopePropSchema, IEnvelopeProps } from "./Envelope";
 import Filter, { filterPropSchema, IFilterProps } from "./Filter";
@@ -29,17 +28,6 @@ export enum ModuleType {
   Constant = "Constant",
 }
 
-type AnyModuleProps =
-  | IOscillatorProps
-  | IGainProps
-  | IMasterProps
-  | IMidiSelectorProps
-  | IEnvelopeProps
-  | IFilterProps
-  | IScaleProps
-  | IInspectorProps
-  | IConstantProps;
-
 export interface ModuleTypeToPropsMapping {
   [ModuleType.Oscillator]: IOscillatorProps;
   [ModuleType.Gain]: IGainProps;
@@ -52,7 +40,9 @@ export interface ModuleTypeToPropsMapping {
   [ModuleType.Constant]: IConstantProps;
 }
 
-export const moduleSchemas: Record<ModuleType, PropSchema<AnyModuleProps>> = {
+export const moduleSchemas: {
+  [K in ModuleType]: PropSchema<ModuleTypeToPropsMapping[K]>;
+} = {
   [ModuleType.Oscillator]: oscillatorPropSchema,
   [ModuleType.Gain]: gainPropSchema,
   [ModuleType.Master]: masterPropSchema,
