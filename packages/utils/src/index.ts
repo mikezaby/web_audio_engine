@@ -92,3 +92,17 @@ export function throttle<T extends (...args: any[]) => any>(
     }
   };
 }
+
+export function toPrimitive(value: unknown): string | number | boolean {
+  if (
+    typeof value === "string" ||
+    typeof value === "number" ||
+    typeof value === "boolean"
+  ) {
+    return value;
+  }
+
+  throw new Error(
+    `Unsupported value for toPrimitive: ${JSON.stringify(value)}`,
+  );
+}
