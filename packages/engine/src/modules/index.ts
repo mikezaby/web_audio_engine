@@ -65,6 +65,7 @@ export const moduleSchemas: Record<ModuleType, PropSchema<AnyModuleProps>> = {
 };
 
 export type { IOscillator } from "./Oscillator";
+export { OscillatorWave } from "./Oscillator";
 export type { IGain } from "./Gain";
 export type { IMaster } from "./Master";
 export type { IMidiSelector } from "./MidiSelector";
