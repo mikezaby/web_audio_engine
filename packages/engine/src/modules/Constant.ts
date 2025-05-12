@@ -55,6 +55,12 @@ export default class Constant
 
   stop(time: TTime) {
     this.audioNode.stop(nt(time));
+    this.rePlugAll(() => {
+      this.audioNode = new ConstantSourceNode(this.context, {
+        offset: this.props.value,
+      });
+    });
+
     this.isStated = false;
   }
 
