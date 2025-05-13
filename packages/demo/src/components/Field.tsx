@@ -24,7 +24,7 @@ const Field = <T extends string | number | boolean>({
             {label}
           </label>
           <input
-            type="number"
+            type="range"
             value={value as number}
             min={schema.min}
             max={schema.max}
@@ -32,7 +32,7 @@ const Field = <T extends string | number | boolean>({
             onChange={(e) => {
               onChange(Number(e.target.value) as T);
             }}
-            className="w-full px-2 py-1 border rounded"
+            className="w-full"
           />
         </div>
       );
