@@ -1,12 +1,14 @@
 import { sleep } from "@blibliki/utils";
 import { describe, it, expect, beforeEach } from "vitest";
+import { now } from "@/core/Timing";
 import { createModule, ModuleType } from "@/modules";
+import Constant from "@/modules/Constant";
 import Inspector from "@/modules/Inspector";
 import Scale from "@/modules/Scale";
 
 describe("Scale", () => {
   let scale: Scale;
-  let amount: ConstantSourceNode;
+  let amount: Constant;
   let inspector: Inspector;
 
   beforeEach((ctx) => {
@@ -16,8 +18,12 @@ describe("Scale", () => {
       props: { min: 20, max: 20000, current: 440 },
     }) as Scale;
 
-    amount = new ConstantSourceNode(ctx.audioContext);
-    amount.start();
+    amount = createModule(ctx.engine.id, {
+      name: "amount",
+      moduleType: ModuleType.Constant,
+      props: { value: 1 },
+    }) as Constant;
+    amount.start(now());
 
     inspector = createModule(ctx.engine.id, {
       name: "inspector",
@@ -25,13 +31,13 @@ describe("Scale", () => {
       props: {},
     }) as Inspector;
 
-    amount.connect(scale.audioNode);
+    amount.plug({ audioModule: scale, from: "out", to: "in" });
     scale.audioNode.connect(inspector.audioNode);
   });
 
   describe("when amount is 1", () => {
     beforeEach(async () => {
-      amount.offset.value = 1;
+      amount.props = { value: 1 };
       await sleep(50);
     });
 
@@ -42,7 +48,7 @@ describe("Scale", () => {
 
   describe("when amount is -1", () => {
     beforeEach(async () => {
-      amount.offset.value = -1;
+      amount.props = { value: -1 };
       await sleep(50);
     });
 
@@ -53,7 +59,7 @@ describe("Scale", () => {
 
   describe("when amount is 0", () => {
     beforeEach(async () => {
-      amount.offset.value = 0;
+      amount.props = { value: 0 };
       await sleep(50);
     });
 
@@ -64,7 +70,7 @@ describe("Scale", () => {
 
   describe("when amount is 0.5", () => {
     beforeEach(async () => {
-      amount.offset.value = 0.5;
+      amount.props = { value: 0.5 };
       await sleep(50);
     });
 
@@ -75,7 +81,7 @@ describe("Scale", () => {
 
   describe("when amount is -0.5", () => {
     beforeEach(async () => {
-      amount.offset.value = -0.5;
+      amount.props = { value: -0.5 };
       await sleep(50);
     });
 
@@ -86,7 +92,7 @@ describe("Scale", () => {
 
   describe("when current is updated", () => {
     beforeEach(async () => {
-      amount.offset.value = 0;
+      amount.props = { value: 0 };
       scale.props = { current: 220 };
       await sleep(50);
     });

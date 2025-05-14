@@ -25,13 +25,24 @@ describe("Constant", () => {
     constant.audioNode.connect(inspector.audioNode);
   });
 
-  describe("when amount is 1", () => {
+  describe("Initialize", () => {
     beforeEach(async () => {
       await sleep(50);
     });
 
-    it("it returns max value", () => {
+    it("it returns proper value", () => {
       expect(inspector.getValue()).to.be.closeTo(23, 1);
+    });
+  });
+
+  describe("Update value", () => {
+    beforeEach(async () => {
+      constant.props = { value: 30 };
+      await sleep(50);
+    });
+
+    it("it returns proper value", () => {
+      expect(inspector.getValue()).to.be.closeTo(30, 1);
     });
   });
 });
