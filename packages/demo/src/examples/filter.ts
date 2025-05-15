@@ -19,7 +19,7 @@ export function load() {
   const gain = addModule({
     name: "Gain",
     moduleType: ModuleType.Gain,
-    props: { gain: 0.01 },
+    props: { gain: 0.2 },
   });
 
   const env = addModule({
