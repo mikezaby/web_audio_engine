@@ -1,6 +1,7 @@
 import { IAnyAudioContext, Module } from "@/core";
 import { PropSchema } from "@/core/schema";
 import { createModule, ICreateModule, ModuleType } from ".";
+import Gain from "./Gain";
 import Scale from "./Scale";
 
 export type IFilterProps = {
@@ -15,9 +16,9 @@ const MAX_FREQ = 20000;
 
 const DEFAULT_PROPS: IFilterProps = {
   cutoff: MAX_FREQ,
-  envelopeAmount: 1,
+  envelopeAmount: 0,
   type: "lowpass",
-  Q: 0,
+  Q: 1,
 };
 
 export const filterPropSchema: PropSchema<IFilterProps> = {
@@ -30,7 +31,7 @@ export const filterPropSchema: PropSchema<IFilterProps> = {
   },
   envelopeAmount: {
     kind: "number",
-    min: 0,
+    min: -1,
     max: 1,
     step: 0.01,
     label: "Envelope Amount",
@@ -42,16 +43,17 @@ export const filterPropSchema: PropSchema<IFilterProps> = {
   },
   Q: {
     kind: "number",
-    min: 0,
-    max: 1,
-    step: 0.01,
+    min: -100,
+    max: 100,
+    step: 0.1,
     label: "Q",
   },
 };
 
-export default class FilterModule extends Module<ModuleType.Filter> {
+export default class Filter extends Module<ModuleType.Filter> {
   declare audioNode: BiquadFilterNode;
   private scale: Scale;
+  private amount: Gain;
 
   constructor(engineId: string, params: ICreateModule<ModuleType.Filter>) {
     const props = { ...DEFAULT_PROPS, ...params.props };
@@ -69,12 +71,19 @@ export default class FilterModule extends Module<ModuleType.Filter> {
       audioNodeConstructor,
     });
 
+    this.amount = createModule(engineId, {
+      name: "amount",
+      moduleType: ModuleType.Gain,
+      props: { gain: props.envelopeAmount },
+    }) as Gain;
+
     this.scale = createModule(engineId, {
       name: "scale",
       moduleType: ModuleType.Scale,
       props: { min: MIN_FREQ, max: MAX_FREQ, current: this.props.cutoff },
     }) as Scale;
 
+    this.amount.plug({ audioModule: this.scale, from: "out", to: "in" });
     this.scale.audioNode.connect(this.audioNode.frequency);
 
     this.registerDefaultIOs();
@@ -95,6 +104,12 @@ export default class FilterModule extends Module<ModuleType.Filter> {
     this.audioNode.Q.value = value;
   }
 
+  protected onSetEnvelopeAmount(value: IFilterProps["envelopeAmount"]) {
+    if (!this.superInitialized) return;
+
+    this.amount.props = { gain: value };
+  }
+
   private registerInputs() {
     this.registerAudioInput({
       name: "cutoff",
@@ -103,7 +118,7 @@ export default class FilterModule extends Module<ModuleType.Filter> {
 
     this.registerAudioInput({
       name: "cutoffMod",
-      getAudioNode: () => this.scale.audioNode,
+      getAudioNode: () => this.amount.audioNode,
     });
 
     this.registerAudioInput({
