@@ -99,11 +99,14 @@ export function throttle<T extends (...args: any[]) => any>(
   };
 }
 
-export function toPrimitive(value: unknown): string | number | boolean {
+export function toPrimitive(
+  value: unknown,
+): string | number | boolean | undefined {
   if (
     typeof value === "string" ||
     typeof value === "number" ||
-    typeof value === "boolean"
+    typeof value === "boolean" ||
+    typeof value === "undefined"
   ) {
     return value;
   }
