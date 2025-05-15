@@ -3,17 +3,43 @@ import ModuleList from "./components/ModuleList";
 import { ExampleKey, exampleList, useExample } from "./examples";
 import { useEngineStore } from "./store/useEngineStore";
 
+function getExampleFromPath(): ExampleKey | undefined {
+  const match = window.location.pathname.match(
+    /^\/examples\/([a-zA-Z0-9_-]+)$/,
+  );
+  const key = match?.[1];
+
+  if (key && exampleList.some((e) => e.key === key)) {
+    return key as ExampleKey;
+  }
+
+  return undefined;
+}
+
 export default function App() {
   const { init, start, stop, isStarted, dispose } = useEngineStore();
   const { setExample } = useExample();
 
   useEffect(() => {
-    init().catch(() => {});
-  }, [init]);
+    const exampleFromPath = getExampleFromPath();
+
+    init()
+      .then(() => {
+        if (
+          exampleFromPath &&
+          exampleList.some((e) => e.key === exampleFromPath)
+        ) {
+          setExample(exampleFromPath);
+        }
+      })
+      .catch(() => {});
+  }, [init, setExample]);
 
   const handleClick = (example: ExampleKey) => {
     dispose();
-    setExample(example).catch(() => {});
+
+    window.history.pushState({}, "", `/examples/${example}`);
+    setExample(example);
   };
 
   const btnClassName = isStarted
