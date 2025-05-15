@@ -4,6 +4,12 @@ import { useEngineStore } from "../store/useEngineStore";
 export function load() {
   const { addModule, addRoute } = useEngineStore.getState();
 
+  const midi = addModule({
+    name: "Midi",
+    moduleType: ModuleType.MidiSelector,
+    props: { selectedId: "1695389404" },
+  });
+
   const osc = addModule({
     name: "Oscillator",
     moduleType: ModuleType.Oscillator,
@@ -16,10 +22,28 @@ export function load() {
     props: { gain: 0.01 },
   });
 
+  const env = addModule({
+    name: "Env",
+    moduleType: ModuleType.Envelope,
+    props: { attack: 0, decay: 0, sustain: 1, release: 0 },
+  });
+
   const filter = addModule({
     name: "Filter",
     moduleType: ModuleType.Filter,
-    props: { cutoff: 200 },
+    props: { cutoff: 200, envelopeAmount: 1 },
+  });
+
+  const constant = addModule({
+    name: "Filter Const",
+    moduleType: ModuleType.Constant,
+    props: { value: 1 },
+  });
+
+  const filterEnv = addModule({
+    name: "Filter Env",
+    moduleType: ModuleType.Envelope,
+    props: {},
   });
 
   const master = addModule({
@@ -35,11 +59,41 @@ export function load() {
 
   addRoute({
     source: { moduleId: gain.id, ioName: "out" },
+    destination: { moduleId: env.id, ioName: "in" },
+  });
+
+  addRoute({
+    source: { moduleId: env.id, ioName: "out" },
     destination: { moduleId: filter.id, ioName: "in" },
   });
 
   addRoute({
     source: { moduleId: filter.id, ioName: "out" },
     destination: { moduleId: master.id, ioName: "in" },
+  });
+
+  addRoute({
+    source: { moduleId: constant.id, ioName: "out" },
+    destination: { moduleId: filterEnv.id, ioName: "in" },
+  });
+
+  addRoute({
+    source: { moduleId: filterEnv.id, ioName: "out" },
+    destination: { moduleId: filter.id, ioName: "cutoffMod" },
+  });
+
+  addRoute({
+    source: { moduleId: midi.id, ioName: "midi out" },
+    destination: { moduleId: osc.id, ioName: "midi in" },
+  });
+
+  addRoute({
+    source: { moduleId: midi.id, ioName: "midi out" },
+    destination: { moduleId: env.id, ioName: "midi in" },
+  });
+
+  addRoute({
+    source: { moduleId: midi.id, ioName: "midi out" },
+    destination: { moduleId: filterEnv.id, ioName: "midi in" },
   });
 }
