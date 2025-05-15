@@ -3,7 +3,7 @@ import { assertNever } from "@blibliki/utils";
 
 type FieldProps<T extends string | number | boolean> = {
   name: string;
-  value: T;
+  value?: T;
   schema: PropDefinition<T>;
   onChange: (value: T) => void;
 };
