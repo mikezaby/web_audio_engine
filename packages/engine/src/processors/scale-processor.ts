@@ -29,11 +29,23 @@ export const scaleProcessorURL = URL.createObjectURL(
             const input = inputs[0];
             const output = outputs[0];
 
-            if (!input.length) return true;
-
             const minValues = parameters.min;
             const maxValues = parameters.max;
             const currentValues = parameters.current;
+
+            if (!input.length || input[0].length === 0) {
+              for (let channel = 0; channel < output.length; channel++) {
+                const outputChannel = output[channel];
+                const current =
+                  parameters.current.length > 1
+                    ? parameters.current[0]
+                    : parameters.current[0];
+
+                outputChannel.fill(current);
+              }
+
+              return true;
+            }
 
             for (let channel = 0; channel < input.length; channel++) {
               const inputChannel = input[channel];
