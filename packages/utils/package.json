@@ -25,6 +25,7 @@
     "tsup": "^8.4.0"
   },
   "dependencies": {
-    "crypto-js": "^4.2.0"
+    "crypto-js": "^4.2.0",
+    "deepmerge-ts": "^7.1.5"
   }
 }
