@@ -18,7 +18,7 @@ function getExampleFromPath(): ExampleKey | undefined {
 
 export default function App() {
   const { init, start, stop, isStarted, dispose } = useEngineStore();
-  const { setExample } = useExample();
+  const { currentExample, setExample } = useExample();
 
   useEffect(() => {
     const exampleFromPath = getExampleFromPath();
@@ -34,8 +34,9 @@ export default function App() {
   }, [init, setExample]);
 
   const handleClick = (example: ExampleKey) => {
-    dispose();
+    if (example === currentExample) return;
 
+    dispose();
     window.history.pushState({}, "", `/examples/${example}`);
     void setExample(example);
   };
