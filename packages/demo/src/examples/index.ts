@@ -13,7 +13,6 @@ const exampleRegistry: Record<ExampleKey, () => Promise<() => void>> = {
   filter: () => import("./filter").then((m) => m.load),
 };
 
-// Optional: example metadata for dropdowns, listings, etc.
 export const exampleList: ExampleMeta[] = [
   { key: "example1", label: "Oscillator → Gain → Master" },
   { key: "filter", label: "Filter" },
@@ -24,10 +23,13 @@ type ExampleState = {
   setExample: (key: ExampleKey) => Promise<void>;
 };
 
-export const useExample = create<ExampleState>((set) => ({
+export const useExample = create<ExampleState>((set, get) => ({
   currentExample: null,
 
   setExample: async (key) => {
+    const { currentExample } = get();
+    if (currentExample === key) return;
+
     set({ currentExample: key });
 
     const loadFn = await exampleRegistry[key]();
