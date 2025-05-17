@@ -9,12 +9,10 @@ export default class MidiDeviceManager {
   private listeners: ListenerCallback[] = [];
 
   async initialize() {
-    await this.initializeDevices()
-      .then(() => {
-        this.listenChanges();
-        this.initialized = true;
-      })
-      .catch(() => {});
+    await this.initializeDevices();
+
+    this.listenChanges();
+    this.initialized = true;
   }
 
   find(id: string): MidiDevice | undefined {

@@ -23,23 +23,21 @@ export default function App() {
   useEffect(() => {
     const exampleFromPath = getExampleFromPath();
 
-    init()
-      .then(() => {
-        if (
-          exampleFromPath &&
-          exampleList.some((e) => e.key === exampleFromPath)
-        ) {
-          setExample(exampleFromPath);
-        }
-      })
-      .catch(() => {});
+    void init().then(() => {
+      if (
+        exampleFromPath &&
+        exampleList.some((e) => e.key === exampleFromPath)
+      ) {
+        void setExample(exampleFromPath);
+      }
+    });
   }, [init, setExample]);
 
   const handleClick = (example: ExampleKey) => {
     dispose();
 
     window.history.pushState({}, "", `/examples/${example}`);
-    setExample(example);
+    void setExample(example);
   };
 
   const btnClassName = isStarted
