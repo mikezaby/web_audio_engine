@@ -11,7 +11,7 @@ export const gainPropSchema: PropSchema<IGainProps> = {
   gain: {
     kind: "number",
     min: 0,
-    max: 1,
+    max: Infinity,
     step: 0.01,
     label: "Gain",
   },

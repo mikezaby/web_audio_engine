@@ -1,16 +1,37 @@
 import {
   IModuleSerialize,
-  moduleSchemas,
+  moduleSchemas as originalModuleSchemas,
   ModuleType,
   ModuleTypeToPropsMapping,
+  PropSchema,
 } from "@blibliki/engine";
-import { toPrimitive } from "@blibliki/utils";
+import { deepmerge, toPrimitive } from "@blibliki/utils";
 import { useEngineStore } from "../store/useEngineStore";
 import Field from "./Field";
 
 type ModuleCardProps<T extends ModuleType> = {
   module: IModuleSerialize<T>;
 };
+
+const overrides: {
+  [K in ModuleType]?: {
+    [P in keyof ModuleTypeToPropsMapping[K]]?: Partial<
+      PropSchema<ModuleTypeToPropsMapping[K]>[P]
+    >;
+  };
+} = {
+  [ModuleType.Gain]: {
+    gain: {
+      min: 0,
+      max: 1,
+    },
+  },
+};
+
+const moduleSchemas = deepmerge(
+  originalModuleSchemas,
+  overrides,
+) as typeof originalModuleSchemas;
 
 function typedEntries<T extends object>(obj: T): [keyof T, T[keyof T]][] {
   return Object.entries(obj) as [keyof T, T[keyof T]][];
