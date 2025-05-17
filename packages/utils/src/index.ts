@@ -86,12 +86,12 @@ export const pick = <T extends object, K extends keyof T>(
 export const upperFirst = (str: string): string =>
   str.charAt(0).toUpperCase() + str.slice(1);
 
-export function throttle<T extends (...args: any[]) => any>(
+export function throttle<T extends (...args: unknown[]) => unknown>(
   callback: T,
   wait: number,
 ): (...args: Parameters<T>) => void {
   let lastCall = 0;
-  return function (...args: Parameters<T>) {
+  return function (...args: Parameters<T>): void {
     const now = Date.now();
     if (now - lastCall >= wait) {
       lastCall = now;
