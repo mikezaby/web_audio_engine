@@ -9,7 +9,7 @@ const ModuleList = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    <div className="flex flex-wrap gap-2">
       {modules.map((module) => (
         <ModuleCard key={module.id} module={module} />
       ))}
