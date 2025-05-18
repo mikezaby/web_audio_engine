@@ -1,5 +1,9 @@
 packages:
   - "packages/*"
+  - "apps/*"
+
+catalog:
+  vite-tsconfig-paths: 5.1.4
 
 catalogs:
   react-19:
