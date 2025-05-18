@@ -14,18 +14,18 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.5",
-    "@types/react": "^19.1.0",
-    "@types/react-dom": "^19.1.0",
-    "@vitejs/plugin-react": "^4.4.1",
-    "babel-plugin-react-compiler": "19.1.0-rc.1",
+    "@types/react": "catalog:react-19",
+    "@types/react-dom": "catalog:react-19",
+    "@vitejs/plugin-react": "catalog:react-19",
+    "babel-plugin-react-compiler": "catalog:react-19",
     "tailwindcss": "^4.1.5",
     "vite": "^6.3.5"
   },
   "dependencies": {
     "@blibliki/engine": "workspace:^",
     "@blibliki/utils": "workspace:^",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "catalog:react-19",
+    "react-dom": "catalog:react-19",
     "zustand": "^5.0.4"
   }
 }
