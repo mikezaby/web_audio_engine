@@ -6,6 +6,7 @@ import {
 } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import Providers from "@/Providers";
+import appCss from "@/app.css?url";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -20,6 +21,12 @@ export const Route = createRootRoute({
       {
         title: "Blibliki Grid",
         description: "Modular synthesizer for web",
+      },
+    ],
+    links: [
+      {
+        rel: "stylesheet",
+        href: appCss,
       },
     ],
   }),
