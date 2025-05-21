@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import ReactFlow, {
+import {
+  ReactFlow,
   MiniMap,
   Controls,
   Background,
@@ -7,7 +7,8 @@ import ReactFlow, {
   useOnViewportChange,
   Viewport,
   useReactFlow,
-} from "reactflow";
+} from "@xyflow/react";
+import { useEffect } from "react";
 import { useAppDispatch, useGridNodes, usePatch } from "@/hooks";
 import { NodeTypes } from "./AudioNode";
 import { setViewport } from "./gridNodesSlice";

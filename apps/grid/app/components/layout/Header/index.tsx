@@ -1,8 +1,10 @@
-"use client";
-
-import { SignedIn, SignedOut, UserButton, useClerk } from "@clerk/nextjs";
+import {
+  SignedIn,
+  SignedOut,
+  UserButton,
+  useClerk,
+} from "@clerk/tanstack-react-start";
 import { LogIn, Octagon, Play } from "lucide-react";
-import Link from "next/link";
 import { ChangeEvent, ReactNode } from "react";
 import { Button, Input, buttonVariants } from "@/components/ui";
 import { start, stop, setBpm } from "@/globalSlice";
@@ -40,9 +42,9 @@ export default function Header() {
         <Input
           className="w-20"
           type="number"
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            dispatch(setBpm(+event.target.value))
-          }
+          onChange={(event: ChangeEvent<HTMLInputElement>) => {
+            dispatch(setBpm(+event.target.value));
+          }}
           value={bpm}
         />
       </Group>
@@ -53,20 +55,25 @@ export default function Header() {
       </Group>
       <Group>
         <ColorSchemeToggle />
-        <Link
+        <a
           href="https://github.com/blibliki-js"
           target="_blank"
           rel="noreferrer"
           className={buttonVariants({ variant: "outline" })}
         >
           <Github />
-        </Link>
+        </a>
 
         <SignedIn>
-          <UserButton userProfileUrl="/user" afterSignOutUrl="/" />
+          <UserButton userProfileUrl="/user" />
         </SignedIn>
         <SignedOut>
-          <Button variant="outline" onClick={() => openSignIn()}>
+          <Button
+            variant="outline"
+            onClick={() => {
+              openSignIn();
+            }}
+          >
             <LogIn />
           </Button>
         </SignedOut>

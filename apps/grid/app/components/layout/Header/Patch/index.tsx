@@ -1,8 +1,5 @@
-"use client";
-
-import { useUser } from "@clerk/nextjs";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
-import Link from "next/link";
+import { Link } from "@tanstack/react-router";
 import { ReactNode } from "react";
 import { TriggerModal } from "@/components/Modal";
 import {
@@ -29,7 +26,7 @@ export default function Patch() {
       <DropdownMenuContent className="w-56 p-3">
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <Link href="/patch/new">New</Link>
+            <Link to="/patch/new">New</Link>
           </DropdownMenuItem>
 
           {(canCreate || canUpdate) && (

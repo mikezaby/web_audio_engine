@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@tanstack/react-router";
 import Modal, { close as closeModal } from "@/components/Modal";
 import { buttonVariants } from "@/components/ui";
 import { useAppDispatch, usePatches } from "@/hooks";
@@ -21,7 +21,7 @@ export default function SavePatch() {
               <Link
                 className={buttonVariants({ variant: "link" })}
                 onClick={close}
-                href={`/patch/${id}`}
+                to={`/patch/${id}`}
               >
                 {name}
               </Link>

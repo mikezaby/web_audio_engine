@@ -1,5 +1,5 @@
+import { useReactFlow } from "@xyflow/react";
 import { DragEvent } from "react";
-import { useReactFlow } from "reactflow";
 import { useAppDispatch } from "@/hooks";
 import { addNewModule } from "../AudioModule/modulesSlice";
 

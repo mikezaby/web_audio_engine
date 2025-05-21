@@ -1,6 +1,6 @@
 import { IIOSerialize } from "@blibliki/engine";
+import { Handle, HandleType, NodeProps, Position } from "@xyflow/react";
 import { ReactNode, useMemo } from "react";
-import { Handle, HandleType, NodeProps, Position } from "reactflow";
 import AudioModule from "@/components/AudioModule";
 import { useAudioModule } from "@/hooks";
 import Name from "../AudioModule/attributes/Name";

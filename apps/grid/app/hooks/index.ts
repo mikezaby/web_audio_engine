@@ -77,7 +77,9 @@ export function useGridNodes() {
   const { nodes, edges, viewport } = useAppSelector((state) => state.gridNodes);
 
   const onNodesChange = useCallback(
-    (changes: NodeChange[]) => dispatch(_onNodesChange(changes)),
+    (changes: NodeChange[]) => {
+      dispatch(_onNodesChange(changes));
+    },
     [dispatch],
   );
 

@@ -8,7 +8,7 @@ export interface MarkProps {
 
 interface FaderProps {
   name: string;
-  onChange(value: number, calculatedValue: number): void;
+  onChange: (value: number, calculatedValue: number) => void;
   defaultValue?: number;
   value?: number;
   marks?: MarkProps[];

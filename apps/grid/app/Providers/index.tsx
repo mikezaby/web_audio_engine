@@ -13,7 +13,7 @@ export default function Providers(props: { children: ReactNode }) {
 
   return (
     <Provider store={store}>
-      <ClerkProvider>
+      <ClerkProvider afterSignOutUrl="/">
         <ReactFlowProvider>
           <FirebaseInitializer />
           <EngineInitializer />
