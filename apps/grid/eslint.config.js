@@ -3,6 +3,8 @@ import baseConfig from "../../eslint.config.js";
 export default [
   ...baseConfig,
   {
-    rules: {},
+    rules: {
+      "react-refresh/only-export-components": "off",
+    },
   },
 ];
