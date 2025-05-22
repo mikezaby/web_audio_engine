@@ -43,6 +43,7 @@ export default function Grid() {
         onDrop={onDrop}
         onDragOver={onDragOver}
         isValidConnection={isValidConnection}
+        fitView
         proOptions={DEFAULT_REACT_FLOW_PROPS}
       >
         <Controls className="dark:bg-gray-500" />

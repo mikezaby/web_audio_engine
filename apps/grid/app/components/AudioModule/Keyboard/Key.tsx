@@ -9,18 +9,18 @@ interface StyleProps {
 }
 
 const Keys: { [key: string]: string } = {
-  C: "c-key",
-  "C#": "c-sharp-key",
-  D: "d-key",
-  "D#": "d-sharp-key",
-  E: "e-key",
-  F: "f-key",
-  "F#": "f-sharp-key",
-  G: "g-key",
-  "G#": "g-sharp-key",
-  A: "a-key",
-  "A#": "a-sharp-key",
-  B: "b-key",
+  C: "white-key c-key",
+  "C#": "black-key c-sharp-key",
+  D: "white-key d-key",
+  "D#": "black-key d-sharp-key",
+  E: "white-key e-key",
+  F: "white-key f-key",
+  "F#": "black-key f-sharp-key",
+  G: "white-key g-key",
+  "G#": "black-key g-sharp-key",
+  A: "white-key a-key",
+  "A#": "black-key a-sharp-key",
+  B: "white-key b-key",
 };
 
 interface KeyProps extends StyleProps {

@@ -54,7 +54,6 @@ export default function Header() {
         </Button>
       </Group>
       <Group>
-        <ColorSchemeToggle />
         <a
           href="https://github.com/blibliki-js"
           target="_blank"

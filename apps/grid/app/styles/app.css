@@ -1,0 +1,17 @@
+.grid-container {
+  width: 100vw;
+  height: calc(100vh - 62px);
+}
+
+.slider-vertical {
+  writing-mode: tb-rl;
+  transform: rotate(-180deg);
+}
+
+g path.react-flow__edge-path {
+  stroke-width: 4;
+}
+
+g.selected path.react-flow__edge-path {
+  stroke: #6793c6 !important;
+}

@@ -6,7 +6,9 @@ import {
 } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import Providers from "@/Providers";
-import appCss from "@/app.css?url";
+import AudioModules from "@/components/layout/AudioModules";
+import Header from "@/components/layout/Header";
+import indexCss from "@/styles/index.css?url";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -26,7 +28,7 @@ export const Route = createRootRoute({
     links: [
       {
         rel: "stylesheet",
-        href: appCss,
+        href: indexCss,
       },
     ],
   }),
@@ -50,6 +52,8 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         <HeadContent />
       </head>
       <body>
+        <AudioModules />
+        <Header />
         {children}
         <Scripts />
       </body>
