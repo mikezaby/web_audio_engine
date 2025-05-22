@@ -1,5 +1,4 @@
 import { ModuleType, ModuleTypeToPropsMapping } from "@blibliki/engine";
-import { assertNever, notImplemented } from "@blibliki/utils";
 import { JSX } from "react";
 import { useAppDispatch } from "@/hooks";
 import Envelope from "./Envelope";
@@ -29,6 +28,17 @@ type TUpdateProps<T extends ModuleType> = (
   props: Partial<ModuleTypeToPropsMapping[T]>,
 ) => void;
 
+const COMPONENT_MAPPING: {
+  [K in ModuleType]?: ModuleComponent<K>;
+} = {
+  [ModuleType.Oscillator]: Oscillator,
+  [ModuleType.Master]: Master,
+  [ModuleType.Filter]: Filter,
+  [ModuleType.Gain]: Gain,
+  [ModuleType.Envelope]: Envelope,
+  [ModuleType.MidiSelector]: MidiDeviceSelector,
+};
+
 export default function AudioModule<T extends ModuleType>(audioModuleProps: {
   audioModule: AudioModuleProps<T>;
 }) {
@@ -36,7 +46,7 @@ export default function AudioModule<T extends ModuleType>(audioModuleProps: {
 
   const { id, name, moduleType, props } = audioModuleProps.audioModule;
 
-  let Component: ModuleComponent<T>;
+  const Component = COMPONENT_MAPPING[moduleType] as ModuleComponent<T>;
 
   const updateProps: TUpdateProps<T> = (props) => {
     dispatch(updateModule({ id, moduleType, changes: { props } }));
@@ -53,35 +63,6 @@ export default function AudioModule<T extends ModuleType>(audioModuleProps: {
 
       updateProps(patch);
     };
-
-  switch (moduleType) {
-    case ModuleType.Master:
-      Component = Master;
-      break;
-    case ModuleType.Oscillator:
-      Component = Oscillator as ModuleComponent<T>;
-      break;
-    case ModuleType.Filter:
-      Component = Filter as ModuleComponent<T>;
-      break;
-    case ModuleType.Gain:
-      Component = Gain as ModuleComponent<T>;
-      break;
-    case ModuleType.Envelope:
-      Component = Envelope as ModuleComponent<T>;
-      break;
-    case ModuleType.MidiSelector:
-      Component = MidiDeviceSelector as ModuleComponent<T>;
-      break;
-    case ModuleType.Inspector:
-      notImplemented();
-    case ModuleType.Constant:
-      notImplemented();
-    case ModuleType.Scale:
-      notImplemented();
-    default:
-      assertNever(moduleType);
-  }
 
   return (
     <Component

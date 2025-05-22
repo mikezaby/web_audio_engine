@@ -1,11 +1,11 @@
-import { ModuleType } from "@blibliki/engine";
+import { ModuleType, OscillatorWave } from "@blibliki/engine";
 import Fader, { MarkProps } from "@/components/Fader";
 import { ModuleComponent } from "..";
 import Container from "../Container";
 
 const Center: MarkProps[] = [{ value: 0, label: "-" }];
 
-const WAVES: OscillatorType[] = ["sine", "triangle", "square", "sawtooth"];
+const WAVES: OscillatorWave[] = Object.values(OscillatorWave);
 
 const WAVE_MARKS: MarkProps[] = [
   { value: 0, label: "sin" },
@@ -30,7 +30,8 @@ const Oscillator: ModuleComponent<ModuleType.Oscillator> = (props) => {
   const waveIndex = WAVES.findIndex((w) => w === waveName);
 
   const updateWaveProp = (value: number) => {
-    updateProp("wave")(WAVES[value]);
+    const wave = WAVES[value];
+    updateProp("wave")(wave);
   };
 
   return (

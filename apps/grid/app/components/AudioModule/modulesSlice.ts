@@ -7,7 +7,6 @@ import {
 } from "@blibliki/engine";
 import {
   createSlice,
-  createSelector,
   createEntityAdapter,
   PayloadAction,
 } from "@reduxjs/toolkit";
@@ -95,7 +94,7 @@ export const addModule =
   };
 
 export const addNewModule =
-  (params: { type: string; position?: XYPosition }) =>
+  (params: { type: ModuleType; position?: XYPosition }) =>
   (dispatch: AppDispatch) => {
     const { type, position } = params;
     const modulePayload = AvailableModules[type];
@@ -115,13 +114,6 @@ export const removeModule =
 
 export const modulesSelector = modulesAdapter.getSelectors(
   (state: RootState) => state.modules,
-);
-
-export const selectModulesByType = createSelector(
-  (state: RootState) => modulesSelector.selectAll(state),
-  (_: RootState, type: string) => type,
-  (modules: ModuleProps[], type: ModuleType) =>
-    modules.filter((m) => m.moduleType === type),
 );
 
 export default modulesSlice.reducer;

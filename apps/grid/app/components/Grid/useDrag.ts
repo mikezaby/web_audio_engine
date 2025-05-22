@@ -1,3 +1,4 @@
+import { ModuleType } from "@blibliki/engine";
 import { useReactFlow } from "@xyflow/react";
 import { DragEvent } from "react";
 import { useAppDispatch } from "@/hooks";
@@ -20,7 +21,9 @@ export default function useDrag() {
   const onDrop = (event: DragEvent) => {
     event.preventDefault();
 
-    const type = event.dataTransfer.getData("application/reactflow");
+    const type = event.dataTransfer.getData(
+      "application/reactflow",
+    ) as ModuleType;
     const position = screenToFlowPosition({
       x: event.clientX - 20,
       y: event.clientY - 20,

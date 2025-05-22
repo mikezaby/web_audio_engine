@@ -1,3 +1,4 @@
+import { useUser } from "@clerk/tanstack-react-start";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { Link } from "@tanstack/react-router";
 import { ReactNode } from "react";
@@ -72,7 +73,7 @@ function Save(props: { asNew: boolean; children: ReactNode }) {
   const onSave = () => {
     if (!user) throw Error("You can't save without login");
 
-    dispatch(save({ userId: user.id, asNew }));
+    void dispatch(save({ userId: user.id, asNew }));
   };
 
   return <button onClick={onSave}>{children}</button>;
@@ -83,7 +84,7 @@ function Destroy(props: { disabled: boolean; children: ReactNode }) {
   const { disabled, children } = props;
 
   const onDestroy = () => {
-    dispatch(destroy());
+    void dispatch(destroy());
   };
 
   return (
