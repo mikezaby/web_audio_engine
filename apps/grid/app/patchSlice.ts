@@ -62,7 +62,7 @@ export const save =
   (props: { userId: string; asNew: boolean }) =>
   async (dispatch: AppDispatch, getState: () => RootState) => {
     const { asNew } = props;
-    const state = getState() as RootState;
+    const state = getState();
     const { patch: originalPatch } = state.patch;
     const modules = modulesSelector.selectAll(state);
     const gridNodes = state.gridNodes;
@@ -73,12 +73,12 @@ export const save =
     const patch = new Patch({ id, userId, name: originalPatch.name, config });
     await patch.save();
 
-    dispatch(loadById(patch.id));
+    void dispatch(loadById(patch.id));
   };
 
 export const destroy =
   () => async (dispatch: AppDispatch, getState: () => RootState) => {
-    const state = getState() as RootState;
+    const state = getState();
     const { patch } = state.patch;
     if (!patch.id) throw Error("This patch isn't saved yet");
 
@@ -98,7 +98,7 @@ const clearEngine = () => (dispatch: AppDispatch) => {
 
 const loadModules = (modules: ModuleProps[]) => (dispatch: AppDispatch) => {
   modules.forEach((m) => {
-    (dispatch as AppDispatch)(addModule({ audioModule: m }));
+    dispatch(addModule({ audioModule: m }));
   });
 };
 

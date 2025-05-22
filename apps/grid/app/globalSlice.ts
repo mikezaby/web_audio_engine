@@ -1,5 +1,5 @@
 import { Engine, TransportState } from "@blibliki/engine";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initialize as patchInitialize, loadById } from "@/patchSlice";
 import { AppDispatch, RootState } from "@/store";
 
@@ -28,7 +28,7 @@ export const globalSlice = createSlice({
   name: "global",
   initialState,
   reducers: {
-    setAttributes: (state, action) => {
+    setAttributes: (state, action: PayloadAction<Partial<GlobalProps>>) => {
       return { ...state, ...action.payload };
     },
   },
@@ -45,7 +45,7 @@ export const initialize =
     engine.bpm = bpm;
 
     if (patchId) {
-      dispatch(loadById(patchId));
+      void dispatch(loadById(patchId));
     } else {
       dispatch(patchInitialize());
     }
