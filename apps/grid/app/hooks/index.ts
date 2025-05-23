@@ -21,6 +21,8 @@ import type { RootState, AppDispatch } from "@/store";
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
+export { ColorScheme, useColorScheme } from "./useColorScheme";
+
 export function useFirebase() {
   const { user } = useUser();
   const { getToken } = useAuth();
@@ -121,34 +123,4 @@ export function useGridNodes() {
     onConnect,
     isValidConnection,
   };
-}
-
-export enum ColorScheme {
-  Light = "light",
-  Dark = "dark",
-}
-
-export function useColorScheme() {
-  const [color, setColor] = useState<ColorScheme>(ColorScheme.Light);
-
-  useEffect(() => {
-    const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setColor(isDark ? ColorScheme.Dark : ColorScheme.Light);
-
-    const onColorSchemeUpdate = (event: MediaQueryListEvent) => {
-      setColor(event.matches ? ColorScheme.Dark : ColorScheme.Light);
-    };
-
-    window
-      .matchMedia("(prefers-color-scheme: dark)")
-      .addEventListener("change", onColorSchemeUpdate);
-
-    return () => {
-      window
-        .matchMedia("(prefers-color-scheme: dark)")
-        .removeEventListener("change", onColorSchemeUpdate);
-    };
-  }, []);
-
-  return color;
 }

@@ -1,7 +1,4 @@
-"use client";
-
 import { Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
 import {
   Button,
   DropdownMenu,
@@ -9,9 +6,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui";
+import { ColorScheme, useColorScheme } from "@/hooks";
 
 export default function ColorSchemToggle() {
-  const { setTheme } = useTheme();
+  const { setColorScheme } = useColorScheme();
 
   return (
     <DropdownMenu>
@@ -23,13 +21,25 @@ export default function ColorSchemToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+        <DropdownMenuItem
+          onClick={() => {
+            setColorScheme(ColorScheme.Light);
+          }}
+        >
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem
+          onClick={() => {
+            setColorScheme(ColorScheme.Dark);
+          }}
+        >
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem
+          onClick={() => {
+            setColorScheme(ColorScheme.System);
+          }}
+        >
           System
         </DropdownMenuItem>
       </DropdownMenuContent>
