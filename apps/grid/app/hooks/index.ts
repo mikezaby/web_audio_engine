@@ -2,7 +2,7 @@
 
 import { Engine } from "@blibliki/engine";
 import { useAuth, useUser } from "@clerk/tanstack-react-start";
-import { Connection, EdgeChange, Node, NodeChange } from "@xyflow/react";
+import { Connection, Edge, EdgeChange, Node, NodeChange } from "@xyflow/react";
 import { getAuth, signInWithCustomToken } from "firebase/auth";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -98,15 +98,18 @@ export function useGridNodes() {
     [dispatch],
   );
 
-  const isValidConnection = useCallback((connection: Connection): boolean => {
-    const { source, sourceHandle, target, targetHandle } = connection;
-    if (!source || !sourceHandle || !target || !targetHandle) return false;
+  const isValidConnection = useCallback(
+    (connection: Connection | Edge): boolean => {
+      const { source, sourceHandle, target, targetHandle } = connection;
+      if (!source || !sourceHandle || !target || !targetHandle) return false;
 
-    return Engine.current.validRoute({
-      source: { moduleId: source, ioName: sourceHandle },
-      destination: { moduleId: target, ioName: targetHandle },
-    });
-  }, []);
+      return Engine.current.validRoute({
+        source: { moduleId: source, ioName: sourceHandle },
+        destination: { moduleId: target, ioName: targetHandle },
+      });
+    },
+    [],
+  );
 
   return {
     nodes,
