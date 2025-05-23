@@ -58,15 +58,14 @@ export default class Patch implements IPatch {
     Object.assign(this, pick(props, ["id", "name", "userId", "config"]));
   }
 
-  async save() {
+  async save(): Promise<void> {
     const db = getDb();
 
     if (this.id) {
-      return await updateDoc(this.docRef, this.props);
+      await updateDoc(this.docRef, this.props);
     } else {
       const docRef = await addDoc(collection(db, "patches"), this.props);
       this.id = docRef.id;
-      return docRef;
     }
   }
 

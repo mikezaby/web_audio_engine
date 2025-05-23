@@ -10,7 +10,9 @@ export default function AudioModules() {
   const [visible, setVisible] = useState<boolean>(true);
   const { onDragStart } = useDrag();
 
-  const onClick = () => setVisible(!visible);
+  const onClick = () => {
+    setVisible(!visible);
+  };
   const left = visible ? "0px" : "-150px";
 
   return (
@@ -32,9 +34,9 @@ export default function AudioModules() {
               <Button
                 variant="outline"
                 className="w-full cursor-move"
-                onDragStart={(event: DragEvent) =>
-                  onDragStart(event, moduleName)
-                }
+                onDragStart={(event: DragEvent) => {
+                  onDragStart(event, moduleName);
+                }}
                 draggable
               >
                 {moduleName}

@@ -70,10 +70,10 @@ function OnViewportChange({ viewport }: { viewport: Viewport }) {
 
   // Set the initial viewport from saved patch
   useEffect(() => {
-    if (!patch?.id) return;
+    if (!patch.id) return;
 
     setInitialViewport(viewport);
-  }, [setInitialViewport, patch?.id]);
+  }, [setInitialViewport, patch.id]);
 
   return null;
 }
