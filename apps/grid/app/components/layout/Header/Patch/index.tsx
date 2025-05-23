@@ -27,7 +27,9 @@ export default function Patch() {
       <DropdownMenuContent className="w-56 p-3">
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <Link to="/patch/new">New</Link>
+            <Link to="/patch/$patchId" params={{ patchId: "new" }}>
+              New
+            </Link>
           </DropdownMenuItem>
 
           {(canCreate || canUpdate) && (

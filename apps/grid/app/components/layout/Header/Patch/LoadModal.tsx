@@ -21,7 +21,8 @@ export default function SavePatch() {
               <Link
                 className={buttonVariants({ variant: "link" })}
                 onClick={close}
-                to={`/patch/${id}`}
+                to={"/patch/$patchId"}
+                params={{ patchId: id }}
               >
                 {name}
               </Link>
