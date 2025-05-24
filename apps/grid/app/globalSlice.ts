@@ -2,6 +2,7 @@ import { Engine, TransportState } from "@blibliki/engine";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initialize as patchInitialize, loadById } from "@/patchSlice";
 import { AppDispatch, RootState } from "@/store";
+import { updatePlainModule } from "./components/AudioModule/modulesSlice";
 
 interface IContext {
   latencyHint: "interactive" | "playback";
@@ -49,6 +50,10 @@ export const initialize =
     } else {
       dispatch(patchInitialize());
     }
+
+    engine.onPropsUpdate(({ id, props }) => {
+      dispatch(updatePlainModule({ id, changes: { props } }));
+    });
 
     return dispatch(
       setAttributes({

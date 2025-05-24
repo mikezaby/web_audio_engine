@@ -15,6 +15,10 @@ import Oscillator, {
   oscillatorPropSchema,
 } from "./Oscillator";
 import Scale, { IScaleProps, scalePropSchema } from "./Scale";
+import VirtualMidi, {
+  IVirtualMidiProps,
+  virtualMidiPropSchema,
+} from "./VirtualMidi";
 
 export enum ModuleType {
   Master = "Master",
@@ -26,6 +30,7 @@ export enum ModuleType {
   Scale = "Scale",
   Inspector = "Inspector",
   Constant = "Constant",
+  VirtualMidi = "VirtualMidi",
 }
 
 export interface ModuleTypeToPropsMapping {
@@ -38,6 +43,7 @@ export interface ModuleTypeToPropsMapping {
   [ModuleType.Scale]: IScaleProps;
   [ModuleType.Inspector]: IInspectorProps;
   [ModuleType.Constant]: IConstantProps;
+  [ModuleType.VirtualMidi]: IVirtualMidiProps;
 }
 
 export const moduleSchemas: {
@@ -52,6 +58,7 @@ export const moduleSchemas: {
   [ModuleType.Scale]: scalePropSchema,
   [ModuleType.Inspector]: inspectorPropSchema,
   [ModuleType.Constant]: constantPropSchema,
+  [ModuleType.VirtualMidi]: virtualMidiPropSchema,
 };
 
 export type { IOscillator } from "./Oscillator";
@@ -107,6 +114,11 @@ export function createModule<T extends ModuleType>(
       return new Constant(
         engineId,
         params as ICreateModule<ModuleType.Constant>,
+      );
+    case ModuleType.VirtualMidi:
+      return new VirtualMidi(
+        engineId,
+        params as ICreateModule<ModuleType.VirtualMidi>,
       );
     default:
       assertNever(params.moduleType);

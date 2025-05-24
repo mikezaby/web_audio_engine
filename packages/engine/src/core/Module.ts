@@ -163,6 +163,15 @@ export default abstract class Module<T extends ModuleType>
     }
   };
 
+  protected triggerPropsUpdate() {
+    this.engine._triggerPropsUpdate({
+      id: this.id,
+      moduleType: this.moduleType,
+      name: this.name,
+      props: this.props,
+    });
+  }
+
   dispose() {
     this.inputs.unPlugAll();
     this.outputs.unPlugAll();

@@ -43,7 +43,7 @@ const ModuleCard = <T extends ModuleType>({ module }: ModuleCardProps<T>) => {
 
   const onChange =
     (key: keyof ModuleTypeToPropsMapping[T]) =>
-    (value: string | number | boolean) => {
+    (value: string | number | boolean | Array<string | number>) => {
       const { id, moduleType } = module;
       const props = { [key]: value } as ModuleTypeToPropsMapping[T];
 

@@ -43,6 +43,10 @@ export default class Note implements INote {
     return new Note(`${name}${octave}`);
   }
 
+  static notes(octave = 3) {
+    return Notes.map((note: string) => new Note(`${note}${octave}`));
+  }
+
   constructor(note: Omit<INote, "frequency"> | string) {
     if (typeof note === "string") {
       this.fromString(note);
@@ -65,7 +69,7 @@ export default class Note implements INote {
 
   midiData(noteOn: boolean = true): Uint8Array {
     const statusByte = noteOn ? 0x90 : 0x80;
-    return new Uint8Array([statusByte, 0, this.velocity * 100]);
+    return new Uint8Array([statusByte, this.midiNumber, this.velocity * 100]);
   }
 
   get midiNumber(): number {

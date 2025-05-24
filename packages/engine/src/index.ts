@@ -9,8 +9,9 @@ export type {
   IMidiDevice,
   PropDefinition,
   PropSchema,
+  INote,
 } from "./core";
-export { TransportState, MidiDevice } from "./core";
+export { TransportState, MidiDevice, Note } from "./core";
 
 export { ModuleType, moduleSchemas, OscillatorWave } from "./modules";
 export type {

@@ -4,6 +4,7 @@ import { useAppDispatch } from "@/hooks";
 import Envelope from "./Envelope";
 import Filter from "./Filter";
 import Gain from "./Gain";
+import Keyboard from "./Keyboard";
 import Master from "./Master";
 import MidiDeviceSelector from "./MidiDeviceSelector";
 import Oscillator from "./Oscillator";
@@ -37,6 +38,7 @@ const COMPONENT_MAPPING: {
   [ModuleType.Gain]: Gain,
   [ModuleType.Envelope]: Envelope,
   [ModuleType.MidiSelector]: MidiDeviceSelector,
+  [ModuleType.VirtualMidi]: Keyboard,
 };
 
 export default function AudioModule<T extends ModuleType>(audioModuleProps: {

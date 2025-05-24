@@ -47,6 +47,10 @@ export const AvailableModules: Record<
     moduleType: ModuleType.Inspector,
   },
   [ModuleType.Constant]: { name: "Constant", moduleType: ModuleType.Constant },
+  [ModuleType.VirtualMidi]: {
+    name: "Keyboard",
+    moduleType: ModuleType.VirtualMidi,
+  },
 };
 
 const modulesAdapter = createEntityAdapter<ModuleProps>({});

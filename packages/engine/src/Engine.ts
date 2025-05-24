@@ -6,10 +6,13 @@ import {
   Routes,
   isStartable,
   MidiDeviceManager,
+  IModule,
 } from "@/core";
 import { Transport } from "@/core/Timing";
 import { AnyModule, ICreateModule, ModuleType, createModule } from "@/modules";
 import { TTime } from "./core/Timing/Time";
+import MidiEvent from "./core/midi/MidiEvent";
+import VirtualMidi from "./modules/VirtualMidi";
 import { loadProcessors } from "./processors";
 
 export interface IUpdateModule<T extends ModuleType> {
@@ -23,6 +26,9 @@ export type ICreateRoute = Optional<IRoute, "id">;
 export class Engine {
   private static _engines: Map<string, Engine> = new Map();
   private static _currentId: string;
+  private propsUpdateCallbacks: {
+    <T extends ModuleType>(params: IModule<T>): void;
+  }[] = [];
 
   readonly id: string;
   context: IAnyAudioContext;
@@ -169,6 +175,27 @@ export class Engine {
 
   findMidiDevice(id: string) {
     return this.midiDeviceManager.find(id);
+  }
+
+  onPropsUpdate(callback: <T extends ModuleType>(params: IModule<T>) => void) {
+    this.propsUpdateCallbacks.push(callback);
+  }
+
+  _triggerPropsUpdate<T extends ModuleType>(params: IModule<T>) {
+    this.propsUpdateCallbacks.forEach((callback) => {
+      callback(params);
+    });
+  }
+
+  // TODO: Find better way to support this
+  triggerVirtualMidi(id: string, noteName: string, type: "noteOn" | "noteOff") {
+    const virtualMidi = this.findModule(id);
+    if (virtualMidi.moduleType !== ModuleType.VirtualMidi)
+      throw Error("This is not a virtual mid");
+
+    (virtualMidi as VirtualMidi).sendMidi(
+      MidiEvent.fromNote(noteName, type === "noteOn"),
+    );
   }
 
   private onStart = (actionAt: TTime) => {

@@ -1,14 +1,15 @@
 import { PropDefinition } from "@blibliki/engine";
-import { assertNever } from "@blibliki/utils";
+import { assertNever, notImplemented } from "@blibliki/utils";
 
-type FieldProps<T extends string | number | boolean> = {
-  name: string;
-  value?: T;
-  schema: PropDefinition<T>;
-  onChange: (value: T) => void;
-};
+type FieldProps<T extends string | number | boolean | Array<string | number>> =
+  {
+    name: string;
+    value?: T;
+    schema: PropDefinition<T>;
+    onChange: (value: T) => void;
+  };
 
-const Field = <T extends string | number | boolean>({
+const Field = <T extends string | number | boolean | Array<string | number>>({
   name,
   value,
   schema,
@@ -90,6 +91,8 @@ const Field = <T extends string | number | boolean>({
           <label className="text-sm font-medium text-gray-700">{label}</label>
         </div>
       );
+    case "array":
+      return notImplemented();
 
     default:
       return assertNever(schema);

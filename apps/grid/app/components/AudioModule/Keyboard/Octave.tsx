@@ -2,8 +2,6 @@ import { Note } from "@blibliki/engine";
 import Key from "./Key";
 
 const toneWidth = 25.3;
-const toneHeight = toneWidth * 5;
-const semiToneWidth = toneWidth * 0.8;
 const semiToneHeight = 24 * 4;
 
 const toneWidthColumn = `${(toneWidth * 2.0) / 3}px`;
@@ -43,10 +41,6 @@ export default function Octave(params: OctaveProps) {
           key={note.fullName}
           id={id}
           triggerable={triggerable}
-          toneWidth={toneWidth}
-          semiToneWidth={semiToneWidth}
-          toneHeight={toneHeight}
-          semiToneHeight={semiToneHeight}
           note={note}
           active={activeNote(activeNotes, note)}
         />

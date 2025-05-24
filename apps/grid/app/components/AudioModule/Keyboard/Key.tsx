@@ -1,12 +1,5 @@
-import Engine, { Note } from "@blibliki/engine";
+import { Engine, Note } from "@blibliki/engine";
 import { useCallback, useMemo, useState } from "react";
-
-interface StyleProps {
-  toneWidth: number;
-  toneHeight: number;
-  semiToneWidth: number;
-  semiToneHeight: number;
-}
 
 const Keys: { [key: string]: string } = {
   C: "white-key c-key",
@@ -23,7 +16,7 @@ const Keys: { [key: string]: string } = {
   B: "white-key b-key",
 };
 
-interface KeyProps extends StyleProps {
+interface KeyProps {
   id: string;
   note: Note;
   active: boolean;
@@ -49,7 +42,7 @@ export default function Key(props: KeyProps) {
         if (!triggerable && !force) return;
 
         setMouseDown(type === "noteOn");
-        Engine.triggerVirtualMidi(id, note.fullName, type);
+        Engine.current.triggerVirtualMidi(id, note.fullName, type);
       },
     [id, triggerable, note.fullName],
   );
