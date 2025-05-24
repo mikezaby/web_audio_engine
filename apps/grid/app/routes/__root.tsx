@@ -6,6 +6,7 @@ import {
 } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import Providers from "@/Providers";
+import { ColorSchemeBlockingScript } from "@/components/ColorSchemeBlockingScript";
 import AudioModules from "@/components/layout/AudioModules";
 import Header from "@/components/layout/Header";
 import indexCss from "@/styles/index.css?url";
@@ -55,6 +56,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         <AudioModules />
         <Header />
         {children}
+        <ColorSchemeBlockingScript />
         <Scripts />
       </body>
     </html>
