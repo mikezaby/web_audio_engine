@@ -4,6 +4,7 @@ import {
   ModuleType,
   ModuleTypeToPropsMapping,
   PropSchema,
+  PropDefinition,
 } from "@blibliki/engine";
 import { deepmerge, toPrimitive } from "@blibliki/utils";
 import { useEngineStore } from "../store/useEngineStore";
@@ -63,7 +64,7 @@ const ModuleCard = <T extends ModuleType>({ module }: ModuleCardProps<T>) => {
       <div className="mb-2">
         <h3 className="text-sm font-semibold text-gray-700">Props</h3>
         {typedEntries(module.props).map(([key, value]) => {
-          const fieldSchema = schema[key];
+          const fieldSchema = schema[key] as PropDefinition<typeof value>;
 
           return (
             <Field
