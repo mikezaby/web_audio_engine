@@ -3,28 +3,28 @@ type BasePropType = {
   description?: string;
 };
 
-type NumberProp = BasePropType & {
+export type NumberProp = BasePropType & {
   kind: "number";
   min?: number;
   max?: number;
   step?: number;
 };
 
-type EnumProp<T extends string | number> = BasePropType & {
+export type EnumProp<T extends string | number> = BasePropType & {
   kind: "enum";
   options: T[];
 };
 
-type StringProp = BasePropType & {
+export type StringProp = BasePropType & {
   kind: "string";
   pattern?: RegExp;
 };
 
-type BooleanProp = BasePropType & {
+export type BooleanProp = BasePropType & {
   kind: "boolean";
 };
 
-type ArrayProp = BasePropType & {
+export type ArrayProp = BasePropType & {
   kind: "array";
 };
 

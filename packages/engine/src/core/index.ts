@@ -20,7 +20,15 @@ export type {
 
 export { TransportState } from "./Timing";
 
-export type { PropDefinition, PropSchema } from "./schema";
+export type {
+  PropDefinition,
+  PropSchema,
+  NumberProp,
+  StringProp,
+  EnumProp,
+  BooleanProp,
+  ArrayProp,
+} from "./schema";
 
 export { default as Note } from "./Note";
 export type { INote } from "./Note";

@@ -1,6 +1,7 @@
 import { ModuleType, ModuleTypeToPropsMapping } from "@blibliki/engine";
 import { JSX } from "react";
 import { useAppDispatch } from "@/hooks";
+import Constant from "./Constant";
 import Envelope from "./Envelope";
 import Filter from "./Filter";
 import Gain from "./Gain";
@@ -39,6 +40,7 @@ const COMPONENT_MAPPING: {
   [ModuleType.Envelope]: Envelope,
   [ModuleType.MidiSelector]: MidiDeviceSelector,
   [ModuleType.VirtualMidi]: Keyboard,
+  [ModuleType.Constant]: Constant,
 };
 
 export default function AudioModule<T extends ModuleType>(audioModuleProps: {

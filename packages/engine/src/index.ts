@@ -9,6 +9,11 @@ export type {
   IMidiDevice,
   PropDefinition,
   PropSchema,
+  StringProp,
+  NumberProp,
+  EnumProp,
+  BooleanProp,
+  ArrayProp,
   INote,
 } from "./core";
 export { TransportState, MidiDevice, Note } from "./core";
