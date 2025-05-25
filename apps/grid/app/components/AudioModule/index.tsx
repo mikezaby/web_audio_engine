@@ -9,6 +9,7 @@ import Keyboard from "./Keyboard";
 import Master from "./Master";
 import MidiDeviceSelector from "./MidiDeviceSelector";
 import Oscillator from "./Oscillator";
+import Scale from "./Scale";
 import { updateModule } from "./modulesSlice";
 
 export interface AudioModuleProps<T extends ModuleType> {
@@ -41,6 +42,7 @@ const COMPONENT_MAPPING: {
   [ModuleType.MidiSelector]: MidiDeviceSelector,
   [ModuleType.VirtualMidi]: Keyboard,
   [ModuleType.Constant]: Constant,
+  [ModuleType.Scale]: Scale,
 };
 
 export default function AudioModule<T extends ModuleType>(audioModuleProps: {
