@@ -7,10 +7,10 @@
   "scripts": {
     "dev": "pnpm -r --parallel run dev",
     "build": "pnpm -r --parallel run build",
-    "tsc": "pnpm -r --parallel --no-bail exec tsc --noEmit",
-    "lint": "pnpm -r --parallel --no-bail exec eslint src",
-    "format": "pnpm -r --parallel exec prettier . --write",
-    "format:check": "pnpm -r --parallel --no-bail exec prettier . --check",
+    "tsc": "pnpm -r --parallel --no-bail run tsc",
+    "lint": "pnpm -r --parallel --no-bail run lint",
+    "format": "pnpm -r --parallel run format",
+    "format:check": "pnpm -r --parallel --no-bail run format:check",
     "test": "pnpm -r --parallel --if-present run test"
   },
   "workspaces": [
