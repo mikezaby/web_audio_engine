@@ -46,6 +46,19 @@ export interface ModuleTypeToPropsMapping {
   [ModuleType.VirtualMidi]: IVirtualMidiProps;
 }
 
+export interface ModuleTypeToModuleMapping {
+  [ModuleType.Oscillator]: Oscillator;
+  [ModuleType.Gain]: Gain;
+  [ModuleType.Master]: Master;
+  [ModuleType.MidiSelector]: MidiSelector;
+  [ModuleType.Envelope]: Envelope;
+  [ModuleType.Filter]: Filter;
+  [ModuleType.Scale]: Scale;
+  [ModuleType.Inspector]: Inspector;
+  [ModuleType.Constant]: Constant;
+  [ModuleType.VirtualMidi]: VirtualMidi;
+}
+
 export const moduleSchemas: {
   [K in ModuleType]: PropSchema<ModuleTypeToPropsMapping[K]>;
 } = {
@@ -80,7 +93,7 @@ export interface ICreateModule<T extends ModuleType> {
 export function createModule<T extends ModuleType>(
   engineId: string,
   params: ICreateModule<T>,
-): AnyModule {
+): ModuleTypeToModuleMapping[keyof ModuleTypeToModuleMapping] {
   switch (params.moduleType) {
     case ModuleType.Oscillator:
       return new Oscillator(

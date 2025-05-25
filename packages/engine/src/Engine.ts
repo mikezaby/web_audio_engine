@@ -9,7 +9,12 @@ import {
   IModule,
 } from "@/core";
 import { Transport } from "@/core/Timing";
-import { AnyModule, ICreateModule, ModuleType, createModule } from "@/modules";
+import {
+  ICreateModule,
+  ModuleType,
+  ModuleTypeToModuleMapping,
+  createModule,
+} from "@/modules";
 import { TTime } from "./core/Timing/Time";
 import MidiEvent from "./core/midi/MidiEvent";
 import VirtualMidi from "./modules/VirtualMidi";
@@ -35,7 +40,10 @@ export class Engine {
   isInitialized: boolean = false;
   routes: Routes;
   transport: Transport;
-  modules: Map<string, AnyModule>;
+  modules: Map<
+    string,
+    ModuleTypeToModuleMapping[keyof ModuleTypeToModuleMapping]
+  >;
 
   midiDeviceManager: MidiDeviceManager;
 
@@ -161,7 +169,9 @@ export class Engine {
     });
   }
 
-  findModule(id: string) {
+  findModule(
+    id: string,
+  ): ModuleTypeToModuleMapping[keyof ModuleTypeToModuleMapping] {
     const module = this.modules.get(id);
     if (!module) throw Error(`The module with id ${id} is not exists`);
 

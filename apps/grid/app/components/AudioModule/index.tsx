@@ -5,6 +5,7 @@ import Constant from "./Constant";
 import Envelope from "./Envelope";
 import Filter from "./Filter";
 import Gain from "./Gain";
+import Inspector from "./Inspector";
 import Keyboard from "./Keyboard";
 import Master from "./Master";
 import MidiDeviceSelector from "./MidiDeviceSelector";
@@ -43,6 +44,7 @@ const COMPONENT_MAPPING: {
   [ModuleType.VirtualMidi]: Keyboard,
   [ModuleType.Constant]: Constant,
   [ModuleType.Scale]: Scale,
+  [ModuleType.Inspector]: Inspector,
 };
 
 export default function AudioModule<T extends ModuleType>(audioModuleProps: {

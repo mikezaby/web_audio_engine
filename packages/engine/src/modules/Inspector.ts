@@ -15,7 +15,7 @@ export const inspectorPropSchema: PropSchema<IInspectorProps> = {
   },
 };
 
-const DEFAULT_PROPS: IInspectorProps = { fftSize: 256 };
+const DEFAULT_PROPS: IInspectorProps = { fftSize: 512 };
 
 export default class Inspector extends Module<ModuleType.Inspector> {
   declare audioNode: AnalyserNode;

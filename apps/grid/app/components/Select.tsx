@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import {
-  Select,
+  Select as SelectUI,
   SelectContent,
   SelectGroup,
   SelectItem,
@@ -15,14 +15,14 @@ type TDefOption = { name: string; value: string | number };
 type TIDOption = { id: string; name: string };
 
 interface SelectProps {
-  value: string | number;
+  value: string | number | undefined;
   options: TOption;
   label?: string;
   className?: string;
   onChange: (value: string) => void;
 }
 
-export default function SelectDemo(props: SelectProps) {
+export default function Select(props: SelectProps) {
   const { value, options, label, onChange, className = "" } = props;
 
   const opts: TDefOption[] = useMemo(() => {
@@ -44,7 +44,7 @@ export default function SelectDemo(props: SelectProps) {
   }, [options]);
 
   return (
-    <Select value={value.toString()} onValueChange={onChange}>
+    <SelectUI value={value?.toString()} onValueChange={onChange}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder={label} />
       </SelectTrigger>
@@ -59,6 +59,6 @@ export default function SelectDemo(props: SelectProps) {
           ))}
         </SelectGroup>
       </SelectContent>
-    </Select>
+    </SelectUI>
   );
 }

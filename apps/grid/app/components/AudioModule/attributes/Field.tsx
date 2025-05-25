@@ -1,6 +1,12 @@
-import { NumberProp, PropDefinition, StringProp } from "@blibliki/engine";
+import {
+  EnumProp,
+  NumberProp,
+  PropDefinition,
+  StringProp,
+} from "@blibliki/engine";
 import { Label } from "@radix-ui/react-label";
 import { ChangeEvent } from "react";
+import Select from "@/components/Select";
 import { Input } from "@/components/ui";
 import { cn } from "@/lib/utils";
 
@@ -41,5 +47,35 @@ export const InputField = <T extends string | number>({
       <Label>{label}</Label>
       <Input type={inputType} value={value} onChange={internalOnChange} />
     </div>
+  );
+};
+
+type SelectProps<T extends string | number> = FieldProps<T> & {
+  schema: EnumProp<T>;
+};
+
+export const SelectField = <T extends string | number>({
+  name,
+  value,
+  schema,
+  onChange,
+  className,
+}: SelectProps<T>) => {
+  const label = schema.label ?? name;
+
+  const internalOnChange = (newValue: string) => {
+    const finalValue = typeof value === "number" ? Number(newValue) : newValue;
+
+    onChange(finalValue as T);
+  };
+
+  return (
+    <Select
+      label={label}
+      value={value}
+      options={schema.options}
+      onChange={internalOnChange}
+      className={className}
+    />
   );
 };
