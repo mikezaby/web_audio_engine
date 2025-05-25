@@ -7,10 +7,10 @@ import { ICreateModule, ModuleType } from ".";
 export type IOscillator = IModule<ModuleType.Oscillator>;
 
 export enum OscillatorWave {
-  sawtooth = "sawtooth",
   sine = "sine",
-  square = "square",
   triangle = "triangle",
+  square = "square",
+  sawtooth = "sawtooth",
 }
 
 /**
