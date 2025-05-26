@@ -5,7 +5,7 @@ type FieldProps<T extends string | number | boolean | Array<string | number>> =
   {
     name: string;
     value?: T;
-    schema: PropDefinition<T>;
+    schema: PropDefinition<T> | undefined;
     onChange: (value: T) => void;
   };
 
@@ -15,6 +15,8 @@ const Field = <T extends string | number | boolean | Array<string | number>>({
   schema,
   onChange,
 }: FieldProps<T>) => {
+  if (!schema) return null;
+
   const label = schema.label ?? name;
 
   switch (schema.kind) {

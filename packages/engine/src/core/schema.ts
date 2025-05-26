@@ -38,4 +38,4 @@ export type PropDefinition<T> = T extends number
         ? ArrayProp
         : never;
 
-export type PropSchema<T> = Record<keyof T, PropDefinition<T[keyof T]>>;
+export type PropSchema<T> = { [K in keyof T]: PropDefinition<T[K]> };

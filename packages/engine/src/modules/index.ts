@@ -57,10 +57,11 @@ export interface ModuleTypeToModuleMapping {
   [ModuleType.Inspector]: Inspector;
   [ModuleType.Constant]: Constant;
   [ModuleType.VirtualMidi]: VirtualMidi;
+  [ModuleType.StepSequencer]: StepSequencer;
 }
 
 export const moduleSchemas: {
-  [K in ModuleType]: PropSchema<ModuleTypeToPropsMapping[K]>;
+  [K in ModuleType]: PropSchema<Partial<ModuleTypeToPropsMapping[K]>>;
 } = {
   [ModuleType.Oscillator]: oscillatorPropSchema,
   [ModuleType.Gain]: gainPropSchema,
