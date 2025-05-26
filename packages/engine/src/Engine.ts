@@ -17,7 +17,6 @@ import {
 } from "@/modules";
 import { TTime } from "./core/Timing/Time";
 import MidiEvent from "./core/midi/MidiEvent";
-import VirtualMidi from "./modules/VirtualMidi";
 import { loadProcessors } from "./processors";
 
 export interface IUpdateModule<T extends ModuleType> {
@@ -203,9 +202,7 @@ export class Engine {
     if (virtualMidi.moduleType !== ModuleType.VirtualMidi)
       throw Error("This is not a virtual mid");
 
-    (virtualMidi as VirtualMidi).sendMidi(
-      MidiEvent.fromNote(noteName, type === "noteOn"),
-    );
+    virtualMidi.sendMidi(MidiEvent.fromNote(noteName, type === "noteOn"));
   }
 
   private onStart = (actionAt: TTime) => {
