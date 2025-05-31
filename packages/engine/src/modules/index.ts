@@ -15,6 +15,10 @@ import Oscillator, {
   oscillatorPropSchema,
 } from "./Oscillator";
 import Scale, { IScaleProps, scalePropSchema } from "./Scale";
+import StepSequencer, {
+  IStepSequencerProps,
+  stepSequencerPropSchema,
+} from "./StepSequencer";
 import VirtualMidi, {
   IVirtualMidiProps,
   virtualMidiPropSchema,
@@ -31,6 +35,7 @@ export enum ModuleType {
   Inspector = "Inspector",
   Constant = "Constant",
   VirtualMidi = "VirtualMidi",
+  StepSequencer = "StepSequencer",
 }
 
 export interface ModuleTypeToPropsMapping {
@@ -44,6 +49,7 @@ export interface ModuleTypeToPropsMapping {
   [ModuleType.Inspector]: IInspectorProps;
   [ModuleType.Constant]: IConstantProps;
   [ModuleType.VirtualMidi]: IVirtualMidiProps;
+  [ModuleType.StepSequencer]: IStepSequencerProps;
 }
 
 export interface ModuleTypeToModuleMapping {
@@ -73,6 +79,7 @@ export const moduleSchemas: {
   [ModuleType.Inspector]: inspectorPropSchema,
   [ModuleType.Constant]: constantPropSchema,
   [ModuleType.VirtualMidi]: virtualMidiPropSchema,
+  [ModuleType.StepSequencer]: stepSequencerPropSchema,
 };
 
 export type { IOscillator } from "./Oscillator";
@@ -80,6 +87,11 @@ export { OscillatorWave } from "./Oscillator";
 export type { IGain } from "./Gain";
 export type { IMaster } from "./Master";
 export type { IMidiSelector } from "./MidiSelector";
+export type {
+  IStepSequencer,
+  IStepSequencerProps,
+  ISequence,
+} from "./StepSequencer";
 
 export type AnyModule = Module<ModuleType>;
 export type IAnyModule = IModule<ModuleType>;
@@ -133,6 +145,11 @@ export function createModule<T extends ModuleType>(
       return new VirtualMidi(
         engineId,
         params as ICreateModule<ModuleType.VirtualMidi>,
+      );
+    case ModuleType.StepSequencer:
+      return new StepSequencer(
+        engineId,
+        params as ICreateModule<ModuleType.StepSequencer>,
       );
     default:
       assertNever(params.moduleType);

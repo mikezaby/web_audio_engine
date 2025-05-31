@@ -23,6 +23,9 @@ export type {
   IOscillator,
   IGain,
   IMaster,
+  ISequence,
+  IStepSequencerProps,
+  IStepSequencer,
   ModuleTypeToPropsMapping,
   ICreateModule,
 } from "./modules";
