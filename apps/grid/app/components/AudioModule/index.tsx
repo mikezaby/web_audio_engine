@@ -22,11 +22,15 @@ export interface AudioModuleProps<T extends ModuleType> {
 
 export type ModuleComponent<T extends ModuleType> = (
   props: AudioModuleProps<T> & {
-    updateProp: <K extends keyof ModuleTypeToPropsMapping[T]>(
-      propName: K,
-    ) => (value: ModuleTypeToPropsMapping[T][K]) => void;
+    updateProp: TUpdateProp<T>;
   },
 ) => JSX.Element;
+
+export type TUpdateProp<T extends ModuleType> = <
+  K extends keyof ModuleTypeToPropsMapping[T],
+>(
+  propName: K,
+) => (value: ModuleTypeToPropsMapping[T][K]) => void;
 
 type TUpdateProps<T extends ModuleType> = (
   props: Partial<ModuleTypeToPropsMapping[T]>,
@@ -45,6 +49,7 @@ const COMPONENT_MAPPING: {
   [ModuleType.Constant]: Constant,
   [ModuleType.Scale]: Scale,
   [ModuleType.Inspector]: Inspector,
+  [ModuleType.StepSequencer]: undefined,
 };
 
 export default function AudioModule<T extends ModuleType>(audioModuleProps: {

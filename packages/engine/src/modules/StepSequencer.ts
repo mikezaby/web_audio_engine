@@ -42,6 +42,7 @@ const DEFAULT_PROPS: IStepSequencerProps = {
   bars: 1,
 };
 
+// Not implemented yet, just the data modeling
 export default class StepSequencer extends Module<ModuleType.StepSequencer> {
   declare audioNode: undefined;
   midiOutput!: MidiOutput;
