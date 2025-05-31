@@ -6,7 +6,7 @@ interface SliderProps {
   value?: number;
   defaultValue?: number;
   step?: number;
-  marks?: MarkProps[];
+  marks?: readonly MarkProps[];
   orientation?: TOrientation;
   onChange: (newValue: number) => void;
 }
@@ -76,7 +76,7 @@ function Labels({
 }: {
   orientation: TOrientation;
   onClick: (newValue: number) => void;
-  marks?: MarkProps[];
+  marks?: readonly MarkProps[];
 }) {
   if (!marks) return null;
 

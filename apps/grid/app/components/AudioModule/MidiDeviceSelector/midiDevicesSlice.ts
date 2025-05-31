@@ -1,4 +1,9 @@
-import { Engine, MidiDevice, IMidiDevice } from "@blibliki/engine";
+import {
+  Engine,
+  MidiDevice,
+  IMidiDevice,
+  MidiPortState,
+} from "@blibliki/engine";
 import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
 import { RootState, AppDispatch } from "@/store";
 
@@ -8,10 +13,10 @@ export const midiDevicesSlice = createSlice({
   name: "midiDevices",
   initialState: devicesAdapter.getInitialState(),
   reducers: {
-    setDevices: devicesAdapter.setAll,
-    addDevice: devicesAdapter.addOne,
-    removeDevice: devicesAdapter.removeOne,
-    updateDevice: devicesAdapter.updateOne,
+    setDevices: (state, action) => devicesAdapter.setAll(state, action),
+    addDevice: (state, action) => devicesAdapter.addOne(state, action),
+    removeDevice: (state, action) => devicesAdapter.removeOne(state, action),
+    updateDevice: (state, action) => devicesAdapter.updateOne(state, action),
   },
 });
 
@@ -28,7 +33,7 @@ export const initialize =
     dispatch(setDevices(devices.map((d) => d.serialize())));
 
     Engine.current.midiDeviceManager.addListener((device: MidiDevice) => {
-      if (device.state === "disconnected") {
+      if (device.state === MidiPortState.disconnected) {
         device.disconnect();
         dispatch(removeDevice(device.id));
       } else {

@@ -72,8 +72,8 @@ function OnViewportChange({ viewport }: { viewport: Viewport }) {
   useEffect(() => {
     if (!patch.id) return;
 
-    setInitialViewport(viewport);
-  }, [setInitialViewport, patch.id]);
+    void setInitialViewport(viewport);
+  }, [viewport, setInitialViewport, patch.id]);
 
   return null;
 }

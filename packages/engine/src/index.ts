@@ -16,7 +16,7 @@ export type {
   ArrayProp,
   INote,
 } from "./core";
-export { TransportState, MidiDevice, Note } from "./core";
+export { TransportState, MidiDevice, MidiPortState, Note } from "./core";
 
 export { ModuleType, moduleSchemas, OscillatorWave } from "./modules";
 export type {

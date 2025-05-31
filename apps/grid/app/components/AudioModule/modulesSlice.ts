@@ -63,19 +63,22 @@ export const modulesSlice = createSlice({
   name: "modules",
   initialState: modulesAdapter.getInitialState(),
   reducers: {
-    addModule: modulesAdapter.addOne,
+    addModule: (state, action) => modulesAdapter.addOne(state, action),
     updateModule: (state, update: PayloadAction<IUpdateModule<ModuleType>>) => {
-      const { id, moduleType, ...changes } = Engine.current.updateModule(
-        update.payload,
-      );
+      const {
+        id,
+        moduleType: _,
+        ...changes
+      } = Engine.current.updateModule(update.payload);
       return modulesAdapter.updateOne(state, {
         id,
         changes,
       });
     },
-    removeModule: modulesAdapter.removeOne,
-    updatePlainModule: modulesAdapter.updateOne,
-    removeAllModules: modulesAdapter.removeAll,
+    removeModule: (state, action) => modulesAdapter.removeOne(state, action),
+    updatePlainModule: (state, action) =>
+      modulesAdapter.updateOne(state, action),
+    removeAllModules: (state) => modulesAdapter.removeAll(state),
   },
 });
 

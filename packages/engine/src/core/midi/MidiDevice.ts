@@ -2,7 +2,7 @@ import { Input, MessageEvent } from "webmidi";
 import { browserToContextTime } from "../Timing";
 import MidiEvent, { MidiEventType } from "./MidiEvent";
 
-export enum TMidiPortState {
+export enum MidiPortState {
   connected = "connected",
   disconnected = "disconnected",
 }
@@ -10,7 +10,7 @@ export enum TMidiPortState {
 export interface IMidiDevice {
   id: string;
   name: string;
-  state: TMidiPortState;
+  state: MidiPortState;
 }
 
 export type EventListerCallback = (event: MidiEvent) => void;
@@ -31,7 +31,7 @@ export default class MidiDevice implements IMidiDevice {
   }
 
   get state() {
-    return this.input.state as TMidiPortState;
+    return this.input.state as MidiPortState;
   }
 
   connect() {

@@ -1,15 +1,15 @@
-import Fader, { MarkProps } from "@/components/Fader";
+import Fader from "@/components/Fader";
 
 interface FilterTypeProps {
   value: BiquadFilterType;
   updateProp: (value: BiquadFilterType) => void;
 }
 
-const FILTER_TYPES: MarkProps[] = [
+const FILTER_TYPES = [
   { value: 0, label: "lowpass" },
   { value: 1, label: "highpass" },
   { value: 2, label: "bandpass" },
-];
+] as const;
 
 export default function FilterType(props: FilterTypeProps) {
   const { value, updateProp } = props;

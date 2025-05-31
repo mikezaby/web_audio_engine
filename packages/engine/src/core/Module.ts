@@ -137,12 +137,10 @@ export default abstract class Module<T extends ModuleType>
     this.outputs.unPlugAll();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   triggerAttack = (_note: Note, _triggeredAt: TTime): void => {
     throw Error("triggerAttack not implemented");
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   triggerRelease = (_note: Note, _triggeredAt: TTime): void => {
     throw Error("triggerRelease not implemented");
   };

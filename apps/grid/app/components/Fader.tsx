@@ -11,7 +11,7 @@ interface FaderProps {
   onChange: (value: number, calculatedValue: number) => void;
   defaultValue?: number;
   value?: number;
-  marks?: MarkProps[];
+  marks?: readonly MarkProps[];
   max?: number;
   min?: number;
   step?: number;

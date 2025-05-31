@@ -7,7 +7,7 @@ export { Routes } from "./Route";
 export type { IRoute } from "./Route";
 
 export { default as MidiDeviceManager } from "./midi/MidiDeviceManager";
-export { default as MidiDevice } from "./midi/MidiDevice";
+export { default as MidiDevice, MidiPortState } from "./midi/MidiDevice";
 export type { IMidiDevice } from "./midi/MidiDevice";
 
 export type {

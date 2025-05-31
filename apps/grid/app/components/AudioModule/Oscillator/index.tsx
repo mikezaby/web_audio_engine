@@ -31,6 +31,7 @@ const Oscillator: ModuleComponent<ModuleType.Oscillator> = (props) => {
 
   const updateWaveProp = (value: number) => {
     const wave = WAVES[value];
+    if (!wave) throw Error(`Out of bound value ${value}`);
     updateProp("wave")(wave);
   };
 

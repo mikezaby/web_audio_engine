@@ -1,6 +1,8 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "noUncheckedIndexedAccess": true,
+
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {

@@ -10,7 +10,7 @@ interface ModalProps {
   children: ReactNode;
   modalName: string;
   className?: string;
-  onClose?(): void;
+  onClose?: () => void;
 }
 
 export default function Modal(props: ModalProps) {
@@ -26,7 +26,7 @@ export default function Modal(props: ModalProps) {
 
   const close = () => {
     dispatch(_close(modalName));
-    onClose && onClose();
+    onClose?.();
   };
 
   return (

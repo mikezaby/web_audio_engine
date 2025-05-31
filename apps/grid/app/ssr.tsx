@@ -8,4 +8,4 @@ import { createRouter } from "./router";
 export default createStartHandler({
   createRouter,
   getRouterManifest,
-})(defaultStreamHandler);
+})(defaultStreamHandler); // eslint-disable-line @typescript-eslint/no-unsafe-argument
