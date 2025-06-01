@@ -25,6 +25,9 @@ jobs:
         with:
           run_install: true
 
+      - name: Build lib
+        run: pnpm build:packages
+
       - name: Typescript check
         run: pnpm tsc
   lint:
@@ -43,6 +46,9 @@ jobs:
         uses: pnpm/action-setup@v4
         with:
           run_install: true
+
+      - name: Build lib
+        run: pnpm build:packages
 
       - name: Lint code
         run: pnpm lint
