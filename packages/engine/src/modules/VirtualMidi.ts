@@ -1,10 +1,7 @@
-import { PropSchema } from "@/core";
+import { PropSchema, Module, IModule, MidiOutput, Note } from "@/core";
 import { TTime } from "@/core/Timing/Time";
 import MidiEvent from "@/core/midi/MidiEvent";
 import { ICreateModule, ModuleType } from ".";
-import { MidiOutput } from "../core/IO";
-import Module, { IModule } from "../core/Module";
-import Note from "../core/Note";
 
 export type IVirtualMidi = IModule<ModuleType.VirtualMidi>;
 export type IVirtualMidiProps = {

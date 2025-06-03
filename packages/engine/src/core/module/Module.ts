@@ -1,7 +1,7 @@
 import { Optional, upperFirst, uuidv4 } from "@blibliki/utils";
 import { Engine } from "@/Engine";
 import { AnyModule, ModuleType, ModuleTypeToPropsMapping } from "@/modules";
-import { IAnyAudioContext } from ".";
+import { IAnyAudioContext } from "../";
 import {
   AudioInputProps,
   AudioOutputProps,
@@ -11,10 +11,10 @@ import {
   OutputCollection,
   MidiInputProps,
   MidiOutputProps,
-} from "./IO";
-import Note from "./Note";
-import { t, TTime } from "./Timing/Time";
-import MidiEvent, { MidiEventType } from "./midi/MidiEvent";
+} from "../IO";
+import Note from "../Note";
+import { t, TTime } from "../Timing/Time";
+import MidiEvent, { MidiEventType } from "../midi/MidiEvent";
 
 export interface IModule<T extends ModuleType> {
   id: string;
@@ -47,9 +47,7 @@ interface IModuleConstructor<T extends ModuleType>
   audioNodeConstructor?: (context: IAnyAudioContext) => AudioNode;
 }
 
-export default abstract class Module<T extends ModuleType>
-  implements IModule<T>
-{
+export abstract class Module<T extends ModuleType> implements IModule<T> {
   id: string;
   engineId: string;
   name: string;

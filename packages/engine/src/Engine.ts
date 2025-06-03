@@ -7,16 +7,16 @@ import {
   isStartable,
   MidiDeviceManager,
   IModule,
+  TTime,
+  Transport,
+  MidiEvent,
 } from "@/core";
-import { Transport } from "@/core/Timing";
 import {
   ICreateModule,
   ModuleType,
   ModuleTypeToModuleMapping,
   createModule,
 } from "@/modules";
-import { TTime } from "./core/Timing/Time";
-import MidiEvent from "./core/midi/MidiEvent";
 import { loadProcessors } from "./processors";
 
 export interface IUpdateModule<T extends ModuleType> {

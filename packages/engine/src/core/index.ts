@@ -1,5 +1,5 @@
-export { default as Module, isStartable } from "./Module";
-export type { IModule, IModuleSerialize, Startable } from "./Module";
+export { Module, isStartable } from "./module";
+export type { IModule, IModuleSerialize, Startable } from "./module";
 
 export type IAnyAudioContext = AudioContext | OfflineAudioContext;
 
@@ -9,6 +9,7 @@ export type { IRoute } from "./Route";
 export { default as MidiDeviceManager } from "./midi/MidiDeviceManager";
 export { default as MidiDevice, MidiPortState } from "./midi/MidiDevice";
 export type { IMidiDevice } from "./midi/MidiDevice";
+export { default as MidiEvent, MidiEventType } from "./midi/MidiEvent";
 
 export type {
   MidiOutput,
@@ -18,7 +19,8 @@ export type {
   IIOSerialize,
 } from "./IO";
 
-export { TransportState } from "./Timing";
+export { Time, TransportState, Transport } from "./Timing";
+export type { TTime } from "./Timing";
 
 export type {
   PropDefinition,
